@@ -1,0 +1,49 @@
+.Clock {
+   position: relative;
+}
+
+.Clock__img {
+   display: block;
+   margin: 0 auto;
+}
+
+.Clock__acts{
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+
+.Clock__circle{
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+.Clock__icons {
+   position: absolute;
+   height: 100%;
+   width: 100%;
+   top: 0;
+   left: 0;
+}
+
+.Clock__arrow {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 100%;
+   height: 100%;
+}
+.Clock__arrow::before {
+   position: absolute;
+   top: calc(50% - 4px);
+   left: calc(50% - 4px);
+   width: 8px;
+   height: 93px;
+   content: '';
+   background-color: white;
+   border-radius: 4px;
+   transform-origin: top center;
+}

@@ -1,24 +1,20 @@
 import React from 'react';
-import logo from './logo.svg';
 import './App.css';
+import CurDate from "./components/Cur_date/CurDate";
+import Clock from "./components/Clock/Clock";
+// import { ActivityType, DataType } from '.';
 
-function App() {
+// type Props = {
+//   activity: ActivityType[]
+// }
+
+
+function App(props: any) {
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <CurDate/>
+      <Clock {...props}/>
     </div>
   );
 }
