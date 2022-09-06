@@ -1,5 +1,6 @@
 .Clock {
    position: relative;
+   padding: 15px;
 }
 
 .Clock__img {

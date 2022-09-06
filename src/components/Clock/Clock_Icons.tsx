@@ -15,13 +15,14 @@ class ClockIcons extends React.Component<DataType, any> {
       }
    }
 
-   printmeow(act: ActivityType) {
+   printIcons(act: ActivityType) {
       if (act.actClock.dailyEvent.icons) {
          let result = act.actClock.dailyEvent.icons.map((item: IconsType, id: number) => (
             <div key={id} className='icon' style={{
                transform: `rotateZ(${this.countRotate(item.hours, item.minutes)}deg)`
             }}>
-               <Icon key={id} color={act.color} svgId={item.svgId}
+               <Icon key={id} width={'20'} height={'20'}
+               color={act.color} svgId={item.svgId}
                   rotateZ={`rotateZ(-${this.countRotate(item.hours, item.minutes)}deg)`}></Icon>
             </div>
          ))
@@ -35,7 +36,7 @@ class ClockIcons extends React.Component<DataType, any> {
          this.props.activity.map((act: ActivityType, id: number) => (
             <div className="Clock__icons" key={id}>
                {
-                  <div>{this.printmeow(act)}</div>
+                  <div>{this.printIcons(act)}</div>
                }
             </div>
          ))

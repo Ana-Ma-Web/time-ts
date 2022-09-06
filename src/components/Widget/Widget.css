@@ -1,0 +1,22 @@
+.Widget {
+   display: flex;
+   grid-template-columns: repeat(6, 1fr);
+   justify-content: center;
+   padding-top: 0px;
+   
+}
+
+.Widget_Icon {
+   width: auto;
+   line-height: 30%;
+   text-align: center;
+}
+
+.Widget_Icon svg {
+   padding-left: 6px;
+   
+}
+
+.Widget_text {
+   font-size: 14px;
+}

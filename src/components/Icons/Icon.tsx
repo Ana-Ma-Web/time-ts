@@ -10,6 +10,8 @@ type Props = {
    color: string,
    rotateZ: string,
    svgId: number,
+   width: string,
+   height: string,
 }
 
 class Icon extends React.Component<Props, State> {
@@ -60,7 +62,7 @@ class Icon extends React.Component<Props, State> {
 
    render() {
       return (
-            <svg viewBox="0 0 15 15" width="20" height="20" xmlns="http://www.w3.org/2000/svg" style={{
+            <svg viewBox="0 0 15 15" width={this.props.width} height={this.props.height} xmlns="http://www.w3.org/2000/svg" style={{
                transform: `${this.printRotateZ()}`,
             }}>
                {this.printSvg()}

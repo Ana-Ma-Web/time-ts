@@ -2,6 +2,8 @@ import React from 'react';
 import './App.css';
 import CurDate from "./components/Cur_date/CurDate";
 import Clock from "./components/Clock/Clock";
+import Widget from './components/Widget/Widget';
+
 // import { ActivityType, DataType } from '.';
 
 // type Props = {
@@ -14,6 +16,7 @@ function App(props: any) {
   return (
     <div className="App">
       <CurDate/>
+      <Widget {...props}/>
       <Clock {...props}/>
     </div>
   );

@@ -16,13 +16,24 @@ export type IconsType = {
   minutes: IconTimeType,
 
 }
+export type TaskType = {
+  id: number,
+  name: string,
+  description: string,
+  reset: ResetType
+}
 export type TaskListType = {
   isInTaskList: boolean,
-  icons: Array<IconsType> | null,
+  tasks: Array<TaskType>
+}
+export type WidgetIconsType = {
+  svgId: number,
+  count: number,
+  reset: ResetType,
 }
 export type TaskWidgetType = {
   isInTaskWidget: boolean,
-  icons: Array<IconsType> | null,
+  widgetIcons: Array<WidgetIconsType> | null,
 }
 export type IntervalType = Date | null
 export type IntervalsType = {
@@ -42,6 +53,19 @@ export type ActClockType = {
   dailyEvent: DailyEventType,
 
 }
+export type ResetType = {
+  startingPoint: Date,
+  cycleTime: number,
+  ignationIndex: number,
+  isIgnition: Function,
+  getTimeBeforeDeadline: Function,
+}
+export type ScheduledActivitiesType = {
+  isInScheduledActivities: boolean,
+  name: string,
+  minutesLeft: number,
+  reset: ResetType,
+}
 export type ActivityType = {
   id: number;
   color: string;
@@ -49,12 +73,15 @@ export type ActivityType = {
   taskList: TaskListType,
   taskWidget: TaskWidgetType,
   actClock: ActClockType,
+  scheduledActivities: ScheduledActivitiesType[],
+
   // intervals: Array<IntervalsType> | null;
 }
-
 export type DataType = {
   activity: ActivityType[],
 }
+
+
 
 let data: DataType = {
   activity: [
@@ -63,12 +90,66 @@ let data: DataType = {
       color: '#5FA3CA',
       isAct: true,
       taskList: {
-        isInTaskList: false,
-        icons: null,
+        isInTaskList: true,
+        tasks: [{
+          id: 0,
+          name: 'meowmeow',
+          description: 'Meow!! Meowmeow meow!',
+          reset: {
+            startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+            cycleTime: 24 * 60 * 60 * 1000,
+            ignationIndex: 0.7,
+            isIgnition() {
+              if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                return true
+              } else return false
+            },
+            getTimeBeforeDeadline() {
+              return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+            },
+          }
+
+        },
+        ],
       },
       taskWidget: {
-        isInTaskWidget: false,
-        icons: null,
+        isInTaskWidget: true,
+        widgetIcons: [
+          {
+            svgId: 1,
+            count: 2,
+            reset: {
+              startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+              cycleTime: 24 * 60 * 60 * 1000,
+              ignationIndex: 0.7,
+              isIgnition() {
+                if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                  return true
+                } else return false
+              },
+              getTimeBeforeDeadline() {
+                return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+              },
+            }
+          },
+          {
+            svgId: 3,
+            count: 22,
+            reset: {
+              startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+              cycleTime: 24 * 60 * 60 * 1000,
+              ignationIndex: 0.7,
+              isIgnition() {
+                if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                  return true
+                } else return false
+              },
+              getTimeBeforeDeadline() {
+                return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+              },
+            }
+          },
+        ],
       },
       actClock: {
         dailySchedule: {
@@ -89,7 +170,7 @@ let data: DataType = {
           icons: [
             {
               svgId: 1,
-              hours: 7,
+              hours: 1,
               minutes: 0,
             },
             {
@@ -100,98 +181,117 @@ let data: DataType = {
           ],
         },
       },
-    },
-    {
-      id: 2,
-      color: '#D25C9C',
-      isAct: true,
-      taskList: {
-        isInTaskList: false,
-        icons: null,
-      },
-      taskWidget: {
-        isInTaskWidget: true,
-        icons: [
-          {
-            svgId: 4,
-            hours: null,
-            minutes: null,
+      scheduledActivities: [{
+        isInScheduledActivities: true,
+        name: 'Meow',
+        minutesLeft: 60,
+        reset: {
+          startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+          cycleTime: 24 * 60 * 60 * 1000,
+          ignationIndex: 0.7,
+          isIgnition() {
+            if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+              return true
+            } else return false
           },
-        ],
+          getTimeBeforeDeadline() {
+            return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+          },
+        }
       },
-      actClock: {
-        dailySchedule: {
-          isInDailySchedule: true,
-          intervals: [
-            {
-              timeStart: new Date(2022, 6, 19, 9, 0, 0, 0),
-              timeEnd: new Date(2022, 6, 19, 13, 0, 0, 0),
-            },
-            {
-              timeStart: new Date(2022, 6, 19, 14, 0, 0, 0),
-              timeEnd: new Date(2022, 6, 19, 18, 0, 0, 0),
-            },
-          ],
-        },
-        dailyEvent: {
-          isInDailyEvent: true,
-          icons: [
-            {
-              svgId: 4,
-              hours: 11,
-              minutes: 0,
-            },
-            {
-              svgId: 2,
-              hours: 16,
-              minutes: 30,
-            },
-          ],
-        },
-      },
+      ],
     },
-    {
-      id: 3,
-      color: '#7EE4F2',
-      isAct: true,
-      taskList: {
-        isInTaskList: false,
-        icons: null,
-      },
-      taskWidget: {
-        isInTaskWidget: false,
-        icons: null,
-      },
-      actClock: {
-        dailySchedule: {
-          isInDailySchedule: true,
-          intervals: [
-            {
-              timeStart: new Date(2022, 6, 19, 7, 0, 0, 0),
-              timeEnd: new Date(2022, 6, 19, 8, 0, 0, 0),
-            },
-            {
-              timeStart: new Date(2022, 6, 19, 18, 0, 0, 0),
-              timeEnd: new Date(2022, 6, 19, 20, 0, 0, 0),
-            },
-            {
-              timeStart: new Date(2022, 6, 19, 21, 0, 0, 0),
-              timeEnd: new Date(2022, 6, 19, 22, 0, 0, 0),
-            },
-          ],
-        },
-        dailyEvent: {
-          isInDailyEvent: true,
-          icons: [
-            {
-              svgId: 1,
-              hours: 7,
-              minutes: 0,
-            },
-          ],
-        },
-      },
-    },
+    // {
+    //   id: 2,
+    //   color: '#D25C9C',
+    //   isAct: true,
+    //   taskList: {
+    //     isInTaskList: false,
+    //     icons: null,
+    //   },
+    //   taskWidget: {
+    //     isInTaskWidget: true,
+    //     icons: [
+    //       {
+    //         svgId: 4,
+    //         hours: null,
+    //         minutes: null,
+    //       },
+    //     ],
+    //   },
+    //   actClock: {
+    //     dailySchedule: {
+    //       isInDailySchedule: true,
+    //       intervals: [
+    //         {
+    //           timeStart: new Date(2022, 6, 19, 9, 0, 0, 0),
+    //           timeEnd: new Date(2022, 6, 19, 13, 0, 0, 0),
+    //         },
+    //         {
+    //           timeStart: new Date(2022, 6, 19, 14, 0, 0, 0),
+    //           timeEnd: new Date(2022, 6, 19, 18, 0, 0, 0),
+    //         },
+    //       ],
+    //     },
+    //     dailyEvent: {
+    //       isInDailyEvent: true,
+    //       icons: [
+    //         {
+    //           svgId: 4,
+    //           hours: 11,
+    //           minutes: 0,
+    //         },
+    //         {
+    //           svgId: 2,
+    //           hours: 16,
+    //           minutes: 30,
+    //         },
+    //       ],
+    //     },
+    //   },
+    // },
+    // {
+    //   id: 3,
+    //   color: '#7EE4F2',
+    //   isAct: true,
+    //   taskList: {
+    //     isInTaskList: false,
+    //     icons: null,
+    //   },
+    //   taskWidget: {
+    //     isInTaskWidget: false,
+    //     icons: null,
+    //   },
+    //   actClock: {
+    //     dailySchedule: {
+    //       isInDailySchedule: true,
+    //       intervals: [
+    //         {
+    //           timeStart: new Date(2022, 6, 19, 7, 0, 0, 0),
+    //           timeEnd: new Date(2022, 6, 19, 8, 0, 0, 0),
+    //         },
+    //         {
+    //           timeStart: new Date(2022, 6, 19, 18, 0, 0, 0),
+    //           timeEnd: new Date(2022, 6, 19, 20, 0, 0, 0),
+    //         },
+    //         {
+    //           timeStart: new Date(2022, 6, 19, 21, 0, 0, 0),
+    //           timeEnd: new Date(2022, 6, 19, 22, 0, 0, 0),
+    //         },
+    //       ],
+    //     },
+    //     dailyEvent: {
+    //       isInDailyEvent: true,
+    //       icons: [
+    //         {
+    //           svgId: 1,
+    //           hours: 8,
+    //           minutes: 0,
+    //         },
+    //       ],
+    //     },
+    //   },
+    // },
     // {
     //   id: 3,
     //   color: '#7EE4F2',
@@ -303,6 +403,48 @@ let data: DataType = {
     // },
   ],
 }
+
+
+// class Activity {
+//   // constructor(id: number, ) {
+//   //   this.id = id
+//   // }
+
+//   id = 0
+//   color = '#'
+//   isAct = false
+//   taskList = {
+//     isInTaskList: false,
+//     icons: null,
+//   }
+//   taskWidget = {
+//     isInTaskWidget: false,
+//     icons: null,
+//   }
+//   actClock = {
+//     dailySchedule: {
+//       isInDailySchedule: false,
+//       intervals: null,
+//     },
+//     dailyEvent: {
+//       isInDailyEvent: false,
+//       icons: null,
+//     },
+//   }
+// }
+
+// let data2: DataType = {
+//   activity: []
+// }
+
+// const addActivity = () => {
+//   data2.activity.push(new Activity())
+//   console.log(data2);
+
+// }
+// addActivity()
+
+// const b: ActivityType = new Activity()
 
 root.render(
   <React.StrictMode>
