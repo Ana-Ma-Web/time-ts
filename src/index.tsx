@@ -18,9 +18,11 @@ export type IconsType = {
 }
 export type TaskType = {
   id: number,
+  color: string,
   name: string,
   description: string,
-  reset: ResetType
+  reset: ResetType,
+  childrens: TaskType[] | null
 }
 export type TaskListType = {
   isInTaskList: boolean,
@@ -81,8 +83,6 @@ export type DataType = {
   activity: ActivityType[],
 }
 
-
-
 let data: DataType = {
   activity: [
     {
@@ -93,7 +93,8 @@ let data: DataType = {
         isInTaskList: true,
         tasks: [{
           id: 0,
-          name: 'meowmeow',
+          color: '#5FA3CA',
+          name: 'meowmeow 1 lvl Meow!! Meowmeow meow!',
           description: 'Meow!! Meowmeow meow!',
           reset: {
             startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
@@ -107,10 +108,67 @@ let data: DataType = {
             getTimeBeforeDeadline() {
               return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
             },
-          }
-
+          },
+          childrens: [{
+            id: 1,
+            color: '#5FA3CA',
+            name: 'meowmeow 2 lvl',
+            description: 'Meow!! Meowmeow meow!',
+            reset: {
+              startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+              cycleTime: 365 * 24 * 60 * 60 * 1000,
+              ignationIndex: 0.7,
+              isIgnition() {
+                if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                  return true
+                } else return false
+              },
+              getTimeBeforeDeadline() {
+                return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+              },
+            },
+            childrens: [{
+              id: 4,
+              color: '#5FA3CA',
+              name: 'meowmeow 3 lvl',
+              description: 'Meow!! Meowmeow meow!',
+              reset: {
+                startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+                cycleTime: 365 * 24 * 60 * 60 * 1000,
+                ignationIndex: 0.7,
+                isIgnition() {
+                  if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                    return true
+                  } else return false
+                },
+                getTimeBeforeDeadline() {
+                  return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+                },
+              },
+              childrens: null,
+            },],
+          },],
         },
-        ],
+        {
+          id: 3,
+          color: '#5FA3CA',
+          name: 'meowmeow 1 lvl',
+          description: 'Meow!! Meowmeow meow!',
+          reset: {
+            startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+            cycleTime: 365 * 24 * 60 * 60 * 1000,
+            ignationIndex: 0.7,
+            isIgnition() {
+              if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                return true
+              } else return false
+            },
+            getTimeBeforeDeadline() {
+              return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+            },
+          },
+          childrens: null,
+        },],
       },
       taskWidget: {
         isInTaskWidget: true,

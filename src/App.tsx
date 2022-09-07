@@ -3,6 +3,7 @@ import './App.css';
 import CurDate from "./components/Cur_date/CurDate";
 import Clock from "./components/Clock/Clock";
 import Widget from './components/Widget/Widget';
+import Tasks from './components/Tasks/Tasks';
 
 // import { ActivityType, DataType } from '.';
 
@@ -18,6 +19,7 @@ function App(props: any) {
       <CurDate/>
       <Widget {...props}/>
       <Clock {...props}/>
+      <Tasks {...props}/>
     </div>
   );
 }
