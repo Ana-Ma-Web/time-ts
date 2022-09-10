@@ -29,6 +29,7 @@ export type TaskListType = {
   tasks: Array<TaskType>
 }
 export type WidgetIconsType = {
+  id: number,
   svgId: number,
   count: number,
   reset: ResetType,
@@ -62,11 +63,19 @@ export type ResetType = {
   isIgnition: Function,
   getTimeBeforeDeadline: Function,
 }
+export type BubbleType = {
+  id: number,
+  name: string,
+  svgId: number,
+  totalTime: number,
+  recordedTime: number,
+  reset: ResetType,
+  color: string,
+
+}
 export type ScheduledActivitiesType = {
   isInScheduledActivities: boolean,
-  name: string,
-  minutesLeft: number,
-  reset: ResetType,
+  bubbles: BubbleType[],
 }
 export type ActivityType = {
   id: number;
@@ -75,7 +84,7 @@ export type ActivityType = {
   taskList: TaskListType,
   taskWidget: TaskWidgetType,
   actClock: ActClockType,
-  scheduledActivities: ScheduledActivitiesType[],
+  scheduledActivities: ScheduledActivitiesType,
 
   // intervals: Array<IntervalsType> | null;
 }
@@ -86,7 +95,7 @@ export type DataType = {
 let data: DataType = {
   activity: [
     {
-      id: 1,
+      id: 0,
       color: '#5FA3CA',
       isAct: true,
       taskList: {
@@ -128,7 +137,7 @@ let data: DataType = {
               },
             },
             childrens: [{
-              id: 4,
+              id: 3,
               color: '#5FA3CA',
               name: 'meowmeow 3 lvl',
               description: 'Meow!! Meowmeow meow!',
@@ -150,7 +159,7 @@ let data: DataType = {
           },],
         },
         {
-          id: 3,
+          id: 2,
           color: '#5FA3CA',
           name: 'meowmeow 1 lvl',
           description: 'Meow!! Meowmeow meow!',
@@ -174,6 +183,7 @@ let data: DataType = {
         isInTaskWidget: true,
         widgetIcons: [
           {
+            id: 0,
             svgId: 1,
             count: 2,
             reset: {
@@ -191,6 +201,7 @@ let data: DataType = {
             }
           },
           {
+            id: 1,
             svgId: 3,
             count: 22,
             reset: {
@@ -239,25 +250,31 @@ let data: DataType = {
           ],
         },
       },
-      scheduledActivities: [{
+      scheduledActivities: {
         isInScheduledActivities: true,
-        name: 'Meow',
-        minutesLeft: 60,
-        reset: {
-          startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
-          cycleTime: 24 * 60 * 60 * 1000,
-          ignationIndex: 0.7,
-          isIgnition() {
-            if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
-              return true
-            } else return false
+        bubbles: [{
+          id: 0,
+          name: 'Meow',
+          color: '#5FA3CA',
+          svgId: 2,
+          totalTime: 60,
+          recordedTime: 10,
+          reset: {
+            startingPoint: new Date(2022, 8, 1, 23, 0, 0, 0),
+            cycleTime: 24 * 60 * 60 * 1000,
+            ignationIndex: 0.7,
+            isIgnition() {
+              if ((this.cycleTime * this.ignationIndex) < this.getTimeBeforeDeadline()) {
+                return true
+              } else return false
+            },
+            getTimeBeforeDeadline() {
+              return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
+            },
           },
-          getTimeBeforeDeadline() {
-            return (new Date().getTime() - this.startingPoint.getTime()) % this.cycleTime
-          },
-        }
+        },
+        ],
       },
-      ],
     },
     // {
     //   id: 2,

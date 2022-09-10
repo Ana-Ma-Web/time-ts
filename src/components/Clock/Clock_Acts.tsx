@@ -41,7 +41,7 @@ class Acts extends React.Component<DataType, any>{
    }
 
    printDasharray(intervals: Array<IntervalsType>, actId: number) {
-      let actRad = this.countActsRad()[actId]
+      let actRad = this.countActsRad()[(actId)]
       let intervalLength = ''
       let lastEnd: IntervalType | undefined
 
@@ -63,7 +63,10 @@ class Acts extends React.Component<DataType, any>{
       if (act.actClock.dailySchedule.intervals) {
          return <svg viewBox='0 0 290 268' className='Clock__circle'
             style={{
-               transform: `rotateZ(${this.countActsStart(act.actClock.dailySchedule.intervals[0].timeStart, act.actClock.dailySchedule.intervals[0].timeEnd)}deg)`
+               transform: `rotateZ(${this.countActsStart(
+                  act.actClock.dailySchedule.intervals[0].timeStart, 
+                  act.actClock.dailySchedule.intervals[0].timeEnd
+                  )}deg)`
             }}
          >
             {this.printCircle(act, id)}
@@ -76,7 +79,9 @@ class Acts extends React.Component<DataType, any>{
          return <circle r={this.countActsRad()[id]} cx="50%" cy="50%" fill="none"
             stroke={act.color}
             strokeWidth='8'
-            strokeDasharray={this.printDasharray(act.actClock.dailySchedule.intervals, id) + ' 1000'}
+            strokeDasharray={
+               this.printDasharray(act.actClock.dailySchedule.intervals, id) + ' 1000'
+            }
             strokeLinecap="round"
          ></circle>
       }
@@ -86,9 +91,9 @@ class Acts extends React.Component<DataType, any>{
       return (
          <div className="Clock__acts">
             {
-               this.props.activity.map((act: ActivityType, id: number) => (
-                  <div key={id}>
-                     {this.printSvg(act, id)}
+               this.props.activity.map((act: ActivityType) => (
+                  <div key={act.id}>
+                     {this.printSvg(act, act.id)}
                   </div>
                ))
             }

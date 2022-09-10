@@ -2,7 +2,12 @@ import React from 'react';
 import './CurDate.css';
 
 
-class CurDate extends React.Component <any, any> {
+type State = {
+   curDate: Date,
+   daysOfWeek: Array<string>,
+}
+
+class CurDate extends React.Component <any, State> {
    timerID: any;
    constructor(props: string) {
       super(props);
@@ -66,7 +71,6 @@ class CurDate extends React.Component <any, any> {
             })
             break;
          default:
-            console.log("day is xz");
             break;
       }
 	}
@@ -85,8 +89,8 @@ class CurDate extends React.Component <any, any> {
             </div>
             <div className="CurDate__week">
                {
-                  this.state.daysOfWeek.map((i: number) => (
-                  <span key={i}>{i}</span>
+                  this.state.daysOfWeek.map((item: string, i: number) => (
+                  <span key={i}>{item}</span>
                   ))
                }
             </div>

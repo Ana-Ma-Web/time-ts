@@ -1,0 +1,38 @@
+.Bubbles {
+   display: grid;
+   grid-template-columns: 1fr 1fr 1fr;
+   position: relative;
+}
+
+.Bubble {
+   width: 72px;
+   height: 72px;
+}
+
+.Bubble_background {
+   position: absolute;
+   top: 0;
+   left: 0;
+   width: 72px;
+   height: 72px;
+   border-radius: 50%;
+}
+
+.Bubble_svg {
+   position: absolute;
+   top: 0;
+   left: 0;
+}
+
+.Bubble_content svg {
+   position: relative;
+   left: 3px;
+   top: 13px;
+}
+
+.Bubble_text {
+   font-size: 14px;
+   font-weight: 600;
+   line-height: 16px;
+   text-align: center;
+}

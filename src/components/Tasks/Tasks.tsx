@@ -1,29 +1,20 @@
 import React from 'react';
-import { ActivityType, TaskListType, TaskType } from '../..';
+import { ActivityType, DataType, TaskType } from '../..';
 import './Tasks.css'
 
-class Tasks extends React.Component<any, any> {
-   constructor(props: any) {
+class Tasks extends React.Component<DataType, any> {
+   constructor(props: DataType) {
       super(props)
       this.state = {}
    }
 
-   itemsCount() {
-      this.props.map((act: ActivityType, id: number) => (
-         act.taskList.tasks.map((item: TaskType, id: number) => (
-            this.printListItem(item)
-         ))
-      ))
-
-   }
-
-   printListItem(item: any, id?: number) {
+   printListItem(item: TaskType, id: number) {
       let children = null
       if (item.childrens !== null) {
          children = (
             <ul className='Tasklist_step'>
-               {item.childrens.map((i: any, id: number) => (
-                  this.printListItem(i, id)
+               {item.childrens.map((item: TaskType) => (
+                  this.printListItem(item, item.id)
                ))}
             </ul>
          )
@@ -38,22 +29,14 @@ class Tasks extends React.Component<any, any> {
       )
    }
 
-   printList(act: ActivityType) {
-      act.taskList.tasks.map((i: TaskType, id: number) => (
-         this.printListItem(i)
-      ))
-   }
-
-
    render() {
       return (
          <div className='Tasklist block'>
-
             <ul className='Tasklist_list'>
                {
-                  this.props.activity.map((act: ActivityType, id: number) => (
-                     act.taskList.tasks.map((i: TaskType, id: number) => (
-                        this.printListItem(i)
+                  this.props.activity.map((act: ActivityType) => (
+                     act.taskList.tasks.map((item: TaskType) => (
+                        this.printListItem(item, item.id)
                      ))
                   ))
                }

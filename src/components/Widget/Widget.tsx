@@ -19,8 +19,8 @@ class Widget extends React.Component<DataType, any> {
          <div className='Widget block'>
             {
                this.state.acts.map((act: ActivityType, id: number) => (
-                  act.taskWidget.widgetIcons?.map((icon: WidgetIconsType, id: number) => (
-                     <div className='Widget_Icon' key={id}>
+                  act.taskWidget.widgetIcons?.map((icon: WidgetIconsType) => (
+                     <div className='Widget_Icon' key={icon.id}>
                         <Icon width={'40'} height={'40'} color={act.color} rotateZ={'0'} svgId={icon.svgId} />
                         <div className='Widget_text' >{icon.count}</div>
                      </div>
