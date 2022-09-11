@@ -7,6 +7,7 @@
 .Bubble {
    width: 72px;
    height: 72px;
+   position: relative;
 }
 
 .Bubble_background {
@@ -26,11 +27,11 @@
 
 .Bubble_content svg {
    position: relative;
-   left: 3px;
-   top: 13px;
+   top: 16px;
 }
 
 .Bubble_text {
+   margin-top: 13px;
    font-size: 14px;
    font-weight: 600;
    line-height: 16px;

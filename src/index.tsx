@@ -239,12 +239,12 @@ let data: DataType = {
           icons: [
             {
               svgId: 1,
-              hours: 1,
+              hours: 6,
               minutes: 0,
             },
             {
-              svgId: 3,
-              hours: 19,
+              svgId: 0,
+              hours: 18,
               minutes: 0,
             },
           ],
@@ -256,7 +256,7 @@ let data: DataType = {
           id: 0,
           name: 'Meow',
           color: '#5FA3CA',
-          svgId: 2,
+          svgId: 0,
           totalTime: 60,
           recordedTime: 10,
           reset: {

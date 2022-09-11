@@ -2,23 +2,23 @@
 font-weight: 700;
 }
 
-.CurDate__time {
+.CurDate_time {
    font-size: 36px;
 }
 
-.CurDate__date {
+.CurDate_date {
    font-size: 13px;
 
 }
 
-.CurDate__week {
+.CurDate_week {
    font-size: 13px;
 }
 
-.CurDate__week span:not(:last-child) {
+.CurDate_week span:not(:last-child) {
    padding-right: 3px;
 }
-.CurDate__week span:first-child {
+.CurDate_week span:first-child {
    /* font-weight: 700; */
    text-decoration: underline;
 }

@@ -78,16 +78,16 @@ class CurDate extends React.Component <any, State> {
    render() {
       return (
          <div className="CurDate block">
-            <div className='CurDate__time'>
+            <div className='CurDate_time'>
                {('0' + this.state.curDate.getHours()).slice(-2)}:
                {('0' + this.state.curDate.getMinutes()).slice(-2)}
             </div>
-            <div className="CurDate__date">
+            <div className="CurDate_date">
                {('0' + this.state.curDate.getDate()).slice(-2)}.
                {('0' + (this.state.curDate.getMonth() + 1)).slice(-2)}.
                {this.state.curDate.getFullYear()}
             </div>
-            <div className="CurDate__week">
+            <div className="CurDate_week">
                {
                   this.state.daysOfWeek.map((item: string, i: number) => (
                   <span key={i}>{item}</span>

@@ -15,7 +15,7 @@ class Bubbles extends React.Component<DataType, any> {
 
    render(){
       return (
-         <div className='Bubbles'>
+         <div className='Bubbles block'>
             {this.state.acts.map((act: ActivityType) => (
                act.scheduledActivities.bubbles.map((bubble: BubbleType) => (
                   <Bubble 

@@ -61,7 +61,7 @@ class Acts extends React.Component<DataType, any>{
 
    printSvg(act: ActivityType, id: number) {
       if (act.actClock.dailySchedule.intervals) {
-         return <svg viewBox='0 0 290 268' className='Clock__circle'
+         return <svg viewBox='0 0 290 268' className='Clock_circle'
             style={{
                transform: `rotateZ(${this.countActsStart(
                   act.actClock.dailySchedule.intervals[0].timeStart, 
@@ -89,7 +89,7 @@ class Acts extends React.Component<DataType, any>{
 
    render() {
       return (
-         <div className="Clock__acts">
+         <div className="Clock_acts">
             {
                this.props.activity.map((act: ActivityType) => (
                   <div key={act.id}>

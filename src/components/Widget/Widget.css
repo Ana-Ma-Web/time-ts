@@ -1,20 +1,15 @@
 .Widget {
    display: flex;
    grid-template-columns: repeat(6, 1fr);
+   gap: 5px;
    justify-content: center;
    padding-top: 0px;
-   
 }
 
 .Widget_Icon {
    width: auto;
-   line-height: 30%;
+   line-height: 100%;
    text-align: center;
-}
-
-.Widget_Icon svg {
-   padding-left: 6px;
-   
 }
 
 .Widget_text {

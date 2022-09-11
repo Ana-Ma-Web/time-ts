@@ -3,7 +3,7 @@
   padding: 12px;
   color: white;
   display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
   gap: 15px;
 }
 
@@ -11,5 +11,4 @@
   width: 260px;
   border-radius: 14px;
   padding: 0 15px;
-  /* border: solid 1px wheat; */
 }

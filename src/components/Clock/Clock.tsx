@@ -31,9 +31,9 @@ class Clock extends React.Component<DataType, State> {
    render() {
       return (
          <div className="Clock block">
-            <img src={clockImg} className='Clock__img' alt="clock" />
+            <img src={clockImg} className='Clock_img' alt="clock" />
             <Acts activity={this.props.activity.filter((el: ActivityType) => { return el.actClock.dailySchedule.isInDailySchedule === true })} />
-            <div className="Clock__arrow" style={{
+            <div className="Clock_arrow" style={{
                transform: `rotateZ(${(
                   (this.state.date.getHours() * 15) +
                   (this.state.date.getMinutes() * 0.25) +

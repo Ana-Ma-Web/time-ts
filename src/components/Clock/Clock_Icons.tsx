@@ -21,7 +21,7 @@ class ClockIcons extends React.Component<DataType, any> {
             <div key={id} className='icon' style={{
                transform: `rotateZ(${this.countRotate(item.hours, item.minutes)}deg)`
             }}>
-               <Icon key={id} width={'20'} height={'20'}
+               <Icon key={id} width={'30'} height={'15'}
                color={act.color} svgId={item.svgId}
                   rotateZ={`rotateZ(-${this.countRotate(item.hours, item.minutes)}deg)`}></Icon>
             </div>
@@ -34,7 +34,7 @@ class ClockIcons extends React.Component<DataType, any> {
    render() {
       return (
          this.props.activity.map((act: ActivityType, id: number) => (
-            <div className="Clock__icons" key={id}>
+            <div className="Clock_icons" key={id}>
                {
                   <div>{this.printIcons(act)}</div>
                }
