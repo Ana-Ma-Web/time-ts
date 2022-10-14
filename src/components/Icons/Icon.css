@@ -1,7 +1,15 @@
-.icon {
-   position: absolute;
-   top: 0;
-   left: 0;
-   width: 100%;
-   height: 100%;
-   }
+/* .Icon {
+   
+}
+
+.Icon path {
+   color: initial;
+   transition: 0.3s;
+}
+
+
+.Icon path:hover {
+   fill: white !important;
+   transition: 0.3s;
+
+} */

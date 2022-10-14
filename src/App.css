@@ -3,12 +3,23 @@
   padding: 12px;
   color: white;
   display: grid;
-  /* grid-template-columns: 1fr 1fr 1fr 1fr 1fr; */
+  grid-template-columns: 290px 290px;
+  grid-template-rows: auto;
+  justify-content: center;
+  
   gap: 15px;
 }
 
 .block {
-  width: 260px;
+  width: 290px;
   border-radius: 14px;
   padding: 0 15px;
+  overflow: hidden;
+  box-sizing: border-box;
+
+}
+
+.block {
+  background-color: #34395038;
+  
 }

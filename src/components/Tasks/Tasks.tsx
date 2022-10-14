@@ -1,9 +1,16 @@
 import React from 'react';
-import { ActivityType, DataType, TaskType } from '../..';
+import { ActivityType, TaskType } from '../..';
+import Widget from '../Widget/Widget';
 import './Tasks.css'
 
-class Tasks extends React.Component<DataType, any> {
-   constructor(props: DataType) {
+type Props = {
+   tasks: TaskType[],
+   iconsActs: ActivityType[],
+   // dispatch: DispatchType
+}
+
+class Tasks extends React.Component<Props, any> {
+   constructor(props: Props) {
       super(props)
       this.state = {}
    }
@@ -24,7 +31,7 @@ class Tasks extends React.Component<DataType, any> {
             <button className='Tasklist_button' style={{ color: item.color }}>
                {item.name}
             </button>
-               {children}
+            {children}
          </li>
       )
    }
@@ -32,12 +39,11 @@ class Tasks extends React.Component<DataType, any> {
    render() {
       return (
          <div className='Tasklist block'>
+            <Widget iconsActs={this.props.iconsActs}/>
             <ul className='Tasklist_list'>
                {
-                  this.props.activity.map((act: ActivityType) => (
-                     act.taskList.tasks.map((item: TaskType) => (
-                        this.printListItem(item, item.id)
-                     ))
+                  this.props.tasks.map((item: TaskType) => (
+                     this.printListItem(item, item.id)
                   ))
                }
             </ul>

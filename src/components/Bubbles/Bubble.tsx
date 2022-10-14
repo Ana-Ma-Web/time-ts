@@ -108,7 +108,7 @@ class Bubble extends React.Component<Props, State> {
 
       let bubbleContent = <div className='Bubble_content'
          style={{ opacity: opacity }}>
-         <Icon color='white' rotateZ='0' svgId={this.props.svgId} height='20' width='20' />
+         <Icon color='white' svgId={this.props.svgId} height='20' width='20' />
          <div className='Bubble_text'>{this.countRemainingMinutes()}</div>
       </div>
 

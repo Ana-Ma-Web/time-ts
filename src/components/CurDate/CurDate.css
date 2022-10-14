@@ -1,5 +1,6 @@
 .CurDate {
 font-weight: 700;
+padding: 15px;
 }
 
 .CurDate_time {
@@ -19,6 +20,5 @@ font-weight: 700;
    padding-right: 3px;
 }
 .CurDate_week span:first-child {
-   /* font-weight: 700; */
    text-decoration: underline;
 }

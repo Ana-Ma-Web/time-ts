@@ -31,6 +31,40 @@
    left: 0;
 }
 
+.Clock_icons svg {
+   display: block;
+   transform: scale(1.2);
+}
+
+.Clock_iconWrapper {
+   position: absolute;
+   top: 50%;
+   left: 50%;
+   width: 135px;
+   height: 0;
+   transform-origin: top left;
+   }
+
+.Clock_iconButton {
+   position: absolute;
+   bottom: 0;
+   right: 0;
+   background-color: transparent;
+   border: none;
+   padding: 0;
+   cursor: pointer;
+}
+
+.Clock_iconButton path {
+   color: initial;
+   transition: 0.3s;
+}
+
+.Clock_iconButton:hover path {
+   fill: white !important;
+   transition: 0.3s;
+}
+
 .Clock_arrow {
    position: absolute;
    top: 0;

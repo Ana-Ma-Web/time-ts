@@ -1,9 +1,11 @@
 import React from 'react';
-import { ActivityType, DataType, IntervalsType, IntervalType } from '../..';
+import { ActivityType, IntervalsType, IntervalType } from '../..';
 
-
-class Acts extends React.Component<DataType, any>{
-   constructor(props: DataType) {
+type Props = {
+   activity: ActivityType[]
+}
+class Acts extends React.Component<Props, any>{
+   constructor(props: Props) {
       super(props);
       this.state = {}
    }
@@ -21,18 +23,28 @@ class Acts extends React.Component<DataType, any>{
 
    countActsStart(timeStart: IntervalType, timeEnd: IntervalType) {
       if (timeStart && timeEnd) {
-         let radStart = timeStart.getHours() * 15 + timeStart.getMinutes() * 0.25 + 270
+
+         let timeStartDate = new Date(timeStart)
+         let timeEndDate = new Date(timeEnd)
+
+         let radStart = timeStartDate.getHours() * 15 + timeEndDate.getMinutes() * 0.25 + 270
          return radStart
       }
    }
 
+
    countActsLength(timeStart: IntervalType, timeEnd: IntervalType, actRad: number) {
       if (timeStart && timeEnd) {
-         let duration = timeEnd.getTime() - timeStart.getTime()
+
+         let timeStartDate = new Date(timeStart)
+         let timeEndDate = new Date(timeEnd)
+
+
+         let duration = timeEndDate.getTime() - timeStartDate.getTime()
          let curLengthPart = (2 * 3.14 * actRad / 100)
          let curLengthAct = curLengthPart * (duration / 1000 / 60 * 695 / 10000)
 
-         if (timeStart.getHours() > timeEnd.getHours()) {
+         if (timeStartDate.getHours() > timeEndDate.getHours()) {
             curLengthAct = curLengthPart * (duration / 1000 / 60 * 695 / 10000) + curLengthPart * 100
          }
 

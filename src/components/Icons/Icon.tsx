@@ -9,7 +9,6 @@ type svgIconType = {
 type State = { icons: Array<svgIconType> }
 type Props = {
    color: string,
-   rotateZ: string,
    svgId: number,
    width: string,
    height: string,
@@ -21,11 +20,6 @@ class Icon extends React.Component<Props, State> {
       super(props);
       this.state = {
          icons: [
-            {
-               id: 0,
-               name: 'walk',
-               core: <svg width={this.props.width} height={this.props.height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8.62 10.1 4.9-3.26a3.24 3.24 0 0 1 1.89-.54c.83.02 1.63.27 2.3.73.66.46 1.15 1.1 1.4 1.82.29.81.55 1.37.78 1.65a7.5 7.5 0 0 0 2.7 2.06 8.2 8.2 0 0 0 3.41.74v2.8c-1.58 0-3.14-.32-4.56-.94a10.6 10.6 0 0 1-3.69-2.63l-1.06 5.54 3.14 2.42 3.4 8.55-2.87.96-3.12-7.85-5.18-3.98a2.82 2.82 0 0 1-.94-1.2c-.19-.46-.24-.97-.14-1.46l.77-4.04-1.03.69-3.25 4.1L5 14.6l3.59-4.53.03.02Zm8.98-4.5a3.2 3.2 0 0 1-2.16-.82 2.69 2.69 0 0 1-.9-1.98c0-.74.33-1.45.9-1.98A3.2 3.2 0 0 1 17.6 0c.81 0 1.59.3 2.16.82.57.53.9 1.24.9 1.98s-.33 1.45-.9 1.98a3.2 3.2 0 0 1-2.16.82Zm-4.54 18.45-4.9 5.36-2.35-1.8 4.55-4.96 1.14-3.05 2.73 2.1-1.17 2.35Z" fill={this.props.color} /></svg>
-            },
             {
                id: 1,
                name: 'handsup',
@@ -59,7 +53,7 @@ class Icon extends React.Component<Props, State> {
             {
                id: 7,
                name: 'roadsign',
-               core: <svg width={this.props.width} height={this.props.height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><g clip-path="url(#a)" fill={this.props.color}><path d="M27.02 14.14a1 1 0 0 1 0 1.72l-2.57 1.5a1 1 0 0 1-.5.14H16.5v-5h7.44a1 1 0 0 1 .5.14l2.58 1.5ZM28.84 4.18a1 1 0 0 1 0 1.64l-2.13 1.5a1 1 0 0 1-.58.18H16.5v-5h9.63c.2 0 .4.06.58.18l2.13 1.5ZM13.5 7.5v5H3.87a1 1 0 0 1-.58-.18l-2.13-1.5a1 1 0 0 1 0-1.64l2.13-1.5a1 1 0 0 1 .58-.18h9.63Z" /><rect x="4.5" y="27.5" width="21" height="2.5" rx="1" /><rect x="16.5" width="30" height="3" rx="1" transform="rotate(90 16.5 0)" /></g><defs><clipPath id="a"><path fill={this.props.color} d="M0 0h30v30H0z" /></clipPath></defs></svg>
+               core: <svg width={this.props.width} height={this.props.height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><g clipPath="url(#a)" fill={this.props.color}><path d="M27.02 14.14a1 1 0 0 1 0 1.72l-2.57 1.5a1 1 0 0 1-.5.14H16.5v-5h7.44a1 1 0 0 1 .5.14l2.58 1.5ZM28.84 4.18a1 1 0 0 1 0 1.64l-2.13 1.5a1 1 0 0 1-.58.18H16.5v-5h9.63c.2 0 .4.06.58.18l2.13 1.5ZM13.5 7.5v5H3.87a1 1 0 0 1-.58-.18l-2.13-1.5a1 1 0 0 1 0-1.64l2.13-1.5a1 1 0 0 1 .58-.18h9.63Z" /><rect x="4.5" y="27.5" width="21" height="2.5" rx="1" /><rect x="16.5" width="30" height="3" rx="1" transform="rotate(90 16.5 0)" /></g><defs><clipPath id="a"><path fill={this.props.color} d="M0 0h30v30H0z" /></clipPath></defs></svg>
             },
             {
                id: 8,
@@ -116,39 +110,23 @@ class Icon extends React.Component<Props, State> {
                name: 'palm',
                core: <svg width={this.props.width} height={this.props.height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M21.87 0c-1.5.02-2.9.3-4.1.7-2.32.78-4 1.97-4.8 2.59-1.02.07-3.13.34-5.4 1.37A12.98 12.98 0 0 0 .2 13.69a.95.95 0 0 0 .8 1.15l1.39.23c.54.09 1.05-.28 1.18-.82A9.14 9.14 0 0 1 9 7.7l.28-.1a21.09 21.09 0 0 0-2.47 9.7c-.02.56.43 1 .98 1h1.41c.56 0 1-.44 1.02-1 .16-4.16 1.26-6.88 2.3-8.58a11 11 0 0 1 .92-1.29c.55.81 1.26 2.02 2.02 3.8 1.56 3.61 3.15 9.34 3.27 17.78 0 .55.45 1 1 1h1.42a1 1 0 0 0 1-1c-.13-8.86-1.81-15.05-3.54-19.08a25.74 25.74 0 0 0-1.75-3.36c.4.05.82.1 1.28.2 2.24.5 4.9 1.72 7.13 4.89.3.44.91.6 1.38.32l1.2-.7a.96.96 0 0 0 .32-1.37 15.33 15.33 0 0 0-8.63-6.23 9.11 9.11 0 0 1 7.6 1.13c.47.29 1.08.2 1.4-.24l.84-1.09a.95.95 0 0 0-.23-1.38A13.27 13.27 0 0 0 21.87 0Z" fill={this.props.color} /></svg>
             },
+            {
+               id: 19,
+               name: 'walk',
+               core: <svg width={this.props.width} height={this.props.height} viewBox="0 0 30 30" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="m8.62 10.1 4.9-3.26a3.24 3.24 0 0 1 1.89-.54c.83.02 1.63.27 2.3.73.66.46 1.15 1.1 1.4 1.82.29.81.55 1.37.78 1.65a7.5 7.5 0 0 0 2.7 2.06 8.2 8.2 0 0 0 3.41.74v2.8c-1.58 0-3.14-.32-4.56-.94a10.6 10.6 0 0 1-3.69-2.63l-1.06 5.54 3.14 2.42 3.4 8.55-2.87.96-3.12-7.85-5.18-3.98a2.82 2.82 0 0 1-.94-1.2c-.19-.46-.24-.97-.14-1.46l.77-4.04-1.03.69-3.25 4.1L5 14.6l3.59-4.53.03.02Zm8.98-4.5a3.2 3.2 0 0 1-2.16-.82 2.69 2.69 0 0 1-.9-1.98c0-.74.33-1.45.9-1.98A3.2 3.2 0 0 1 17.6 0c.81 0 1.59.3 2.16.82.57.53.9 1.24.9 1.98s-.33 1.45-.9 1.98a3.2 3.2 0 0 1-2.16.82Zm-4.54 18.45-4.9 5.36-2.35-1.8 4.55-4.96 1.14-3.05 2.73 2.1-1.17 2.35Z" fill={this.props.color} /></svg>
+            },
          ],
       };
    }
 
    printSvg() {
-      let curIcon = this.state.icons.filter((el: svgIconType) => { return el.id === this.props.svgId })
+      let curIcon = this.state.icons.filter((el: svgIconType) => { return el.id === this.props.svgId})
       return curIcon[0].core
-   }
-
-   printRotateZ() {
-      if (this.props.rotateZ !== undefined) {
-         return this.props.rotateZ
-      }
-      return ''
    }
 
    render() {
       return (
-         // <svg 
-         // viewBox="0 0 15 15" 
-         // width={this.props.width} 
-         // height={this.props.height} 
-         // xmlns="http://www.w3.org/2000/svg" 
-         // style={{
-         //    transform: `${this.printRotateZ()}`,
-         // }}>
-         //    {this.printSvg()}
-         // </svg>
-         <div className='icon_wrapper'
-            style={{
-               transform: `${this.printRotateZ()}`,
-            }}>
-
+         <div className='Icon'>
             {this.printSvg()}
          </div>
       )

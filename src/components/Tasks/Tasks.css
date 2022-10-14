@@ -1,8 +1,14 @@
+.Tasklist {
+   padding: 15px;
+   min-height: 290px;
+}
+
 .Tasklist_list {
    text-align: left;
    list-style: none;
    padding: 0;
    margin: 0;
+   margin-top: 15px;
 }
 
 .Tasklist_step{

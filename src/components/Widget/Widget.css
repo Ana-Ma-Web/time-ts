@@ -1,9 +1,16 @@
 .Widget {
    display: flex;
-   grid-template-columns: repeat(6, 1fr);
    gap: 5px;
    justify-content: center;
    padding-top: 0px;
+}
+
+.Widget_button {
+   background-color: transparent;
+   border: none;
+   padding: 0;
+   cursor: pointer;
+   color: inherit;
 }
 
 .Widget_Icon {
@@ -12,6 +19,17 @@
    text-align: center;
 }
 
+.Widget_Icon path{
+   color: initial;
+   transition: 0.3s;
+}
+
+.Widget_Icon:hover path{
+   fill: white !important;
+   transition: 0.3s;
+}
+
 .Widget_text {
    font-size: 14px;
+   margin-bottom: 3px;
 }

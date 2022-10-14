@@ -1,12 +1,14 @@
 import React from 'react';
-import { ActivityType, BubbleType, DataType } from '../..';
+import { ActivityType, BubbleType } from '../..';
 import Bubble from './Bubble';
 import './Bubbles.css'
 
+type Props = {
+   activity: ActivityType[],
+}
 
-
-class Bubbles extends React.Component<DataType, any> {
-   constructor(props: DataType){
+class Bubbles extends React.Component<Props, any> {
+   constructor(props: Props){
       super(props);
       this.state = {
          acts: this.props.activity.filter((el: ActivityType) => {return el.scheduledActivities.isInScheduledActivities === true})

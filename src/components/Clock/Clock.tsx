@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityType, DataType } from '../..';
+import { ActivityType } from '../..';
 import './Clock.css';
 import Acts from './Clock_Acts';
 import ClockIcons from './Clock_Icons';
@@ -9,9 +9,14 @@ type State = {
    date: Date,
 }
 
-class Clock extends React.Component<DataType, State> {
+type Props = {
+   scheduleActs: ActivityType[]
+   iconsActs: ActivityType[]
+}
+
+class Clock extends React.Component<Props, State> {
    timerID: any;
-   constructor(props: DataType) {
+   constructor(props: Props) {
       super(props);
       this.state = {
          date: new Date(),
@@ -32,7 +37,7 @@ class Clock extends React.Component<DataType, State> {
       return (
          <div className="Clock block">
             <img src={clockImg} className='Clock_img' alt="clock" />
-            <Acts activity={this.props.activity.filter((el: ActivityType) => { return el.actClock.dailySchedule.isInDailySchedule === true })} />
+            <Acts activity={this.props.scheduleActs} />
             <div className="Clock_arrow" style={{
                transform: `rotateZ(${(
                   (this.state.date.getHours() * 15) +
@@ -40,7 +45,7 @@ class Clock extends React.Component<DataType, State> {
                   180)}deg)`
             }}>
             </div>
-            <ClockIcons activity={this.props.activity.filter((el: ActivityType) => { return el.actClock.dailyEvent.isInDailyEvent === true })} />
+            <ClockIcons activity={this.props.iconsActs} />
          </div>
       )
    }
