@@ -4,28 +4,47 @@ import CurDate from "./components/CurDate/CurDate";
 import Clock from "./components/Clock/Clock";
 import Tasks from './components/Tasks/Tasks';
 import Bubbles from './components/Bubbles/Bubbles';
-import { ActivityType } from '.';
+import { ActivityType, importStoreFromLS, TaskType, addTask, completeTask } from '.';
 
+
+interface TaskContextProps {
+  tasks: TaskType[]
+  iconsInWidget: ActivityType[]
+  completeTask: (date: number) => void
+  addTask: (task: TaskType) => void
+}
+
+export const TasksContext = React.createContext({} as TaskContextProps);
 
 
 function App(props: any) {
 
-  let iconsInWidget = props.activity.filter((el: ActivityType) => {
+  let state = props.getState()
+
+  let tasks = state.tasks
+  // let completeTask = props.completeTask
+
+  let iconsInWidget = state.activity.filter((el: ActivityType) => {
     return el.widget.isInWidget === true
   })
-  let scheduleInClock = props.activity.filter((el: ActivityType) => {
+  let scheduleInClock = state.activity.filter((el: ActivityType) => {
     return el.actClock.dailySchedule.isInDailySchedule === true
   })
-  let iconsInClock = props.activity.filter((el: ActivityType) => {
+  let iconsInClock = state.activity.filter((el: ActivityType) => {
     return el.actClock.dailyEvent.isInDailyEvent === true
   })
+
+
+  importStoreFromLS() 
 
   return (
     <div className="App">
       <CurDate />
       <Clock scheduleActs={scheduleInClock} iconsActs={iconsInClock} />
-      <Tasks tasks={props.tasks} iconsActs={iconsInWidget}/>
-      <Bubbles activity={props.activity} />
+      <TasksContext.Provider value={{tasks, iconsInWidget, completeTask, addTask}}>
+        <Tasks />
+      </TasksContext.Provider>
+      <Bubbles activity={state.activity} />
     </div>
   );
 }

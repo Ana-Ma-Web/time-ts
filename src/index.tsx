@@ -15,16 +15,13 @@ export type IconsType = {
   minutes: IconTimeType,
 }
 export type TaskType = {
-  id: number,
+  date: number,
+  isDone: boolean,
   color: string,
   name: string,
   description: string,
-  reset: ResetType,
+  reset: ResetType | null,
   childrens: TaskType[] | null
-}
-export type TaskListType = {
-  isInTaskList: boolean,
-  tasks: Array<TaskType>
 }
 export type WidgetIconsType = {
   id: number,
@@ -90,23 +87,29 @@ export type StateType = {
   tasks: TaskType[],
   activity: ActivityType[],
 }
-export type WidgetActChangeType = (actId: Number, widgetIconId: Number) => void
+export type WidgetActChangeType = (actId: number, widgetIconId: number) => void
 export type ObserverType = (state: StateType) => void
 export type ActionType = {
-  type: String
-  actId?: Number
-  widgetIconId?: Number
+  type: string
+  actId?: number
+  widgetIconId?: number
 }
-export type DispatchType = (action: ActionType) => void
 export type StoreType = {
   _state: StateType
   getState: () => StateType
+  addTask: (task: TaskType) => void
+  completeTask: (date: number) => void
+  setActivity: (activities: ActivityType[]) => void
+  setTasks: (tasks: TaskType[]) => void
+  importStoreFromLS: () => void
+  exportStoreToLS: () => void
 }
 
 let store: StoreType = {
   _state: {
     tasks: [{
-      id: 1,
+      date: (new Date(2022, 8, 1, 23, 0, 0, 0)).getTime(),
+      isDone: false,
       color: '#5FA3CA',
       name: 'meowmeow 1 lvl Meow!! Meowmeow meow!',
       description: 'Meow!! Meowmeow meow!',
@@ -124,7 +127,8 @@ let store: StoreType = {
         },
       },
       childrens: [{
-        id: 2,
+        date: (new Date(2022, 8, 1, 23, 0, 0, 1)).getTime(),
+        isDone: false,
         color: '#5FA3CA',
         name: 'meowmeow 2 lvl',
         description: 'Meow!! Meowmeow meow!',
@@ -142,7 +146,8 @@ let store: StoreType = {
           },
         },
         childrens: [{
-          id: 3,
+          date: (new Date(2022, 8, 1, 23, 0, 0, 2)).getTime(),
+          isDone: false,
           color: '#5FA3CA',
           name: 'meowmeow 3 lvl',
           description: 'Meow!! Meowmeow meow!',
@@ -164,7 +169,8 @@ let store: StoreType = {
       },],
     },
     {
-      id: 4,
+      date: (new Date(2022, 8, 1, 23, 0, 0, 3)).getTime(),
+      isDone: false,
       color: '#5FA3CA',
       name: 'meowmeow 1 lvl',
       description: 'Meow!! Meowmeow meow!',
@@ -305,12 +311,54 @@ let store: StoreType = {
   getState() {
     return this._state
   },
+
+  addTask(task) {
+    this._state.tasks.push(task)
+    this.exportStoreToLS()
+  },
+
+  completeTask(date) {
+    this._state.tasks.forEach(task => {
+      if (task.date === date) {
+        task.isDone = true
+      }
+    })
+    this.exportStoreToLS()
+  },
+
+  setActivity(activities) {
+    this._state.activity = activities
+  },
+
+  setTasks(tasks) {
+    this._state.tasks = tasks
+  },
+
+  importStoreFromLS() {
+    let activity = localStorage.getItem('activity')
+    let tasks = localStorage.getItem('tasks')
+    if (activity) {
+      this.setActivity(JSON.parse(activity))
+    }
+    if (tasks) {
+      this.setTasks(JSON.parse(tasks))
+    }
+  },
+
+  exportStoreToLS() {
+    localStorage.setItem('tasks', JSON.stringify(this._state.tasks))
+    localStorage.setItem('activity', JSON.stringify(this._state.activity))
+  },
 }
 
 
+export const addTask = store.addTask.bind(store)
+export const completeTask = store.completeTask.bind(store)
+export const importStoreFromLS = store.importStoreFromLS.bind(store)
+
 root.render(
   <React.StrictMode>
-    <App {...store.getState()} />
+    <App {...store} />
   </React.StrictMode>
 );
 

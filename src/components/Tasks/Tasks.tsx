@@ -1,33 +1,28 @@
 import React from 'react';
-import { ActivityType, TaskType } from '../..';
+import { TaskType } from '../..';
+import { TasksContext } from '../../App';
 import Widget from '../Widget/Widget';
 import './Tasks.css'
 
-type Props = {
-   tasks: TaskType[],
-   iconsActs: ActivityType[],
-   // dispatch: DispatchType
-}
 
-class Tasks extends React.Component<Props, any> {
-   constructor(props: Props) {
-      super(props)
-      this.state = {}
-   }
+function Tasks() {
 
-   printListItem(item: TaskType, id: number) {
+   const {tasks, iconsInWidget, completeTask, addTask} = React.useContext(TasksContext)
+
+   const printListItem = (item: TaskType, date: number) => {
       let children = null
       if (item.childrens !== null) {
          children = (
             <ul className='Tasklist_step'>
                {item.childrens.map((item: TaskType) => (
-                  this.printListItem(item, item.id)
+                  printListItem(item, item.date)
                ))}
             </ul>
          )
       }
       return (
-         <li className='Tasklist_item' key={id} style={{ color: item.color }}>
+         <li className='Tasklist_item' key={date} style={{ color: item.color }}
+         onClick={() => completeTask(date)}>
             <button className='Tasklist_button' style={{ color: item.color }}>
                {item.name}
             </button>
@@ -36,20 +31,35 @@ class Tasks extends React.Component<Props, any> {
       )
    }
 
-   render() {
-      return (
-         <div className='Tasklist block'>
-            <Widget iconsActs={this.props.iconsActs}/>
-            <ul className='Tasklist_list'>
-               {
-                  this.props.tasks.map((item: TaskType) => (
-                     this.printListItem(item, item.id)
-                  ))
-               }
-            </ul>
-         </div>
-      )
+   let createNewTask = () => {
+      return {
+         date: (new Date()).getTime(),
+         isDone: false,
+         color: 'pink',
+         name: 'newMeow',
+         description: '',
+         reset: null,
+         childrens: null,
+      }
    }
+
+   return (
+      <div className='Tasklist block'>
+         <Widget iconsActs={iconsInWidget} />
+         <ul className='Tasklist_list'>
+            {
+               tasks.map((item: TaskType) => (
+                  printListItem(item, item.date)
+               ))
+            }
+         </ul>
+         <label>
+            <input onChange={(event) => console.log(event.target.value)}
+            type="text" placeholder="add task" />
+            <button onClick={() => addTask(createNewTask())}>Add task</button>
+         </label>
+      </div>
+   )
 }
 
 export default Tasks
