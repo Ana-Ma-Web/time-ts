@@ -1,62 +1,53 @@
-import React from 'react';
+import React, { useState } from 'react';
+import type { RootState } from '../../redux/store'
+import { useSelector, useDispatch } from 'react-redux'
+
+import {taskAdd} from './../../redux/slices/tasksSlice'
+
 import { TaskType } from '../..';
-import { TasksContext } from '../../App';
 import Widget from '../Widget/Widget';
 import './Tasks.css'
+import Task from './Task';
+
 
 
 function Tasks() {
 
-   const {tasks, iconsInWidget, completeTask, addTask} = React.useContext(TasksContext)
+   const [text, setText] = useState('')
+   const dispatch = useDispatch()
 
-   const printListItem = (item: TaskType, date: number) => {
-      let children = null
-      if (item.childrens !== null) {
-         children = (
-            <ul className='Tasklist_step'>
-               {item.childrens.map((item: TaskType) => (
-                  printListItem(item, item.date)
-               ))}
-            </ul>
-         )
-      }
-      return (
-         <li className='Tasklist_item' key={date} style={{ color: item.color }}
-         onClick={() => completeTask(date)}>
-            <button className='Tasklist_button' style={{ color: item.color }}>
-               {item.name}
-            </button>
-            {children}
-         </li>
-      )
+   // const { iconsInWidget } = React.useContext(TasksContext)
+
+   const tasks = useSelector((state: RootState) => state.tasks.tasks).filter(
+      task => task.isDone === false
+   )
+
+   const inputClear = () => {
+      setText('')
    }
 
-   let createNewTask = () => {
-      return {
-         date: (new Date()).getTime(),
-         isDone: false,
-         color: 'pink',
-         name: 'newMeow',
-         description: '',
-         reset: null,
-         childrens: null,
-      }
+   const createNewTask = (name: string, color: string) => {
+      if (name !== '') {
+      dispatch(taskAdd({name, color}))
+      inputClear()}
    }
 
-   return (
+return (
       <div className='Tasklist block'>
-         <Widget iconsActs={iconsInWidget} />
+         {/* <Widget iconsActs={iconsInWidget} /> */}
          <ul className='Tasklist_list'>
             {
                tasks.map((item: TaskType) => (
-                  printListItem(item, item.date)
+                  <div key={item.date}>
+                     <Task task={item} inputText={text} inputClear={inputClear}/>
+                  </div>
                ))
             }
          </ul>
          <label>
-            <input onChange={(event) => console.log(event.target.value)}
+            <input value={text} onChange={(e) => setText(e.target.value)}
             type="text" placeholder="add task" />
-            <button onClick={() => addTask(createNewTask())}>Add task</button>
+            <button onClick={() => createNewTask(text, 'white')}>Add task</button>
          </label>
       </div>
    )

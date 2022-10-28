@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityType, StateType, WidgetIconsType } from '../..';
+import { ActivityType, WidgetIconsType } from '../..';
 import Icon from '../Icons/Icon';
 import './Widget.css'
 

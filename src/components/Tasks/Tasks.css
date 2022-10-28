@@ -19,11 +19,11 @@
    list-style: none;
    padding: 0;
    margin: 0;
-   /* display: block; */
-   
+   gap: 10px;
 }
 
-.Tasklist_button {
+
+.Tasklist_text {
    text-align: left;
    padding: 0;
    border: none;
@@ -34,7 +34,36 @@
    transition: 0.3s;
 }
 
-.Tasklist_button:hover{
+.task-done {
+   text-decoration: line-through;
+}
+
+
+.Tasklist_delete {
+   overflow: hidden;
+   height: 22px;
+   padding: 0;
+   border: none;
+   font: inherit;
+   color: inherit;
+   background-color: transparent;
+   cursor: pointer;
+   opacity: 0;
+   transition: 0.3s;
+}
+
+.Tasklist_delete svg {
+   transform: rotate(45deg);
+   padding-top: 5px;
+}
+
+.Tasklist_item:hover .Tasklist_text{
    color: white !important;
    transition: 0.3s;
 }
+
+.Tasklist_item:hover .Tasklist_delete{
+   opacity: 1;
+   transition: 0.3s;
+}
+
