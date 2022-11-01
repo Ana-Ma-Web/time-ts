@@ -1,7 +1,7 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import { TaskType } from '../..';
-import { addSubTask, lineThroughTask, taskRemove } from '../../redux/slices/tasksSlice';
+import { addSubTask, lineThroughTask, taskDone, taskRemove } from '../../redux/slices/tasksSlice';
 
 type Props = {
    task: TaskType
@@ -17,6 +17,11 @@ function Task(props: Props) {
 
    const taskComplete = (date: number) => {
       dispatch(lineThroughTask({ date }))
+
+      setTimeout(() => {
+         console.log(props.task.isLineThrough);
+         dispatch(taskDone({ date }))
+      }, 2000);
    }
 
    const taskDelete = (date: number) => {
@@ -24,47 +29,50 @@ function Task(props: Props) {
    }
 
    const subTaskAdd = (item: TaskType) => {
-      if ( props.inputText !== ''){
-      dispatch(addSubTask({
-         date: item.date,
-         color: item.color,
-         name: props.inputText
-      }))
-      props.inputClear()}
+      if (props.inputText !== '') {
+         dispatch(addSubTask({
+            date: item.date,
+            color: item.color,
+            name: props.inputText
+         }))
+         props.inputClear()
+      }
    }
 
 
    const printListItem = (item: TaskType) => {
-      let children = null
-      let taskDoneClassName = item.isLineThrough ? 'task-done' : 'nocross'
+      if (item.isDone === false) {
+         let children = null
+         let taskDoneClassName = item.isLineThrough ? 'task-done' : 'nocross'
 
-      if (item.childrens !== null) {
-         children = (
-            <ul className='Tasklist_step'>
-               {item.childrens.map((item: TaskType) => (
-                  printListItem(item)
-               ))}
-            </ul>
+         if (item.childrens !== null) {
+            children = (
+               <ul className='Tasklist_step'>
+                  {
+                     item.childrens.map((item: TaskType) => (
+                        printListItem(item)
+                     ))}
+               </ul>
+            )
+         }
+         return (
+            <li className={`Tasklist_item ` + taskDoneClassName} style={{ color: item.color }} key={item.date}>
+               <span className='Tasklist_text' style={{ color: item.color }}
+                  onClick={() => taskComplete(item.date)}>
+                  {item.name}
+               </span>
+               <button className='Tasklist_delete' style={{ color: item.color }}
+                  onClick={() => taskDelete(item.date)}>
+                  {deleteIcon}
+               </button>
+               <button className='Tasklist_subtask-add' style={{ color: item.color }}
+                  onClick={() => subTaskAdd(item)}>
+                  {deleteIcon}
+               </button>
+               {children}
+            </li>
          )
       }
-
-      return (
-         <li className={`Tasklist_item ` + taskDoneClassName} style={{ color: item.color }} key={item.date}>
-            <span className='Tasklist_text' style={{ color: item.color }}
-               onClick={() => taskComplete(item.date)}>
-               {item.name}
-            </span>
-            <button className='Tasklist_delete' style={{ color: item.color }}
-               onClick={() => taskDelete(item.date)}>
-               {deleteIcon}
-            </button>
-            <button className='Tasklist_subtask-add' style={{ color: item.color }}
-               onClick={() => subTaskAdd(item)}>
-               {deleteIcon}
-            </button>
-            {children}
-         </li>
-      )
    }
 
    const deleteIcon = (<svg width="15" height="15" viewBox="0 0 25 25" fill="none"

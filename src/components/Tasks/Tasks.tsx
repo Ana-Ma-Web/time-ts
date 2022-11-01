@@ -16,7 +16,7 @@ function Tasks() {
    const [text, setText] = useState('')
    const dispatch = useDispatch()
 
-   // const { iconsInWidget } = React.useContext(TasksContext)
+   // const { iconsInWidget } = React.useContext()
 
    const tasks = useSelector((state: RootState) => state.tasks.tasks).filter(
       task => task.isDone === false
@@ -44,7 +44,6 @@ function Tasks() {
          default:
             break;
       }
-
    }
 
    return (

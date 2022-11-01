@@ -94,23 +94,33 @@ export const tasksSlice = createSlice({
                }
             })
          }
-
          find(action.payload.date, state.tasks)
       },
       lineThroughTask: (state, action) => {
-         const curTask = state.tasks.find(
-            task => task.date === action.payload.date);
-         if (curTask) {
-            curTask.isLineThrough = !curTask.isLineThrough
+         const find = (date: number, items: any) => {
+            items.forEach((item: TaskType) => {
+               if (item.date === date) {
+                  item.isLineThrough = !item.isLineThrough
+               } else if (item.childrens !== null){
+                  find(date, item.childrens)
+               }
+            })
          }
+         find(action.payload.date, state.tasks)
       },
       taskDone: (state, action) => {
-         const curTask = state.tasks.find(
-            task => task.date === action.payload.date
-         )
-         if (curTask?.isLineThrough) {
-            curTask.isDone = true
-         }
+            const find = (date: number, items: any) => {
+               items.forEach((item: TaskType) => {
+                  if (item.date === date) {
+                     if (item.isLineThrough) {
+                        item.isDone = true
+                     }
+                  } else if (item.childrens !== null){
+                     find(date, item.childrens)
+                  }
+               })
+            }
+            find(action.payload.date, state.tasks)
       },
       taskRemove: (state, action: PayloadAction<{ date: number }>) => {
          state.tasks = state.tasks.filter(
