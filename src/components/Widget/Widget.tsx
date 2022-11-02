@@ -1,5 +1,7 @@
 import React from 'react';
+import { useDispatch } from 'react-redux';
 import { ActivityType, WidgetIconsType } from '../..';
+import { decWidgetCounter } from '../../redux/slices/activitySlice';
 import Icon from '../Icons/Icon';
 import './Widget.css'
 
@@ -10,10 +12,17 @@ type Props = {
 }
 
 function Widget(props: Props) {
+   const dispatch = useDispatch()
+
+   const decrement = (actId: number, iconId: number) => {
+      dispatch(decWidgetCounter({actId, iconId}))
+   }
+
    let printIcon = (act: ActivityType, icon: WidgetIconsType) => {
       if (icon.currentAmount > 0) {
          return <div className='Widget_Icon' key={icon.id}>
-            <button className='Widget_button'>
+            <button className='Widget_button'
+            onClick={() => decrement(act.id, icon.id)}>
                <div className='Widget_text' >{icon.currentAmount}</div>
                <Icon width={'20'} height={'20'} color={act.color} svgId={icon.svgId} />
             </button>
@@ -31,35 +40,6 @@ function Widget(props: Props) {
             ))}
       </div>
    )
-
-
 }
-
-
-// class Widget extends React.Component<StateType, any> {
-//    timerID: any;
-//    constructor(props: StateType) {
-//       super(props);
-//       this.state = {
-//          acts: this.props.activity.filter((el: ActivityType) => { return el.widget.isInWidget === true })
-//       };
-//    }
-
-//    render() {
-//       return (
-//          <div className='Widget block'>
-//             {
-//                this.state.acts.map((act: ActivityType, id: number) => (
-//                   act.widget.widgetIcons?.map((icon: WidgetIconsType) => (
-//                      <div className='Widget_Icon' key={icon.id}>
-//                         <Icon width={'20'} height={'20'} color={act.color} rotateZ={'0'} svgId={icon.svgId} />
-//                         <div className='Widget_text' >{icon.currentAmount}</div>
-//                      </div>
-//                   ))
-//                ))}
-//          </div>
-//       )
-//    }
-// }
 
 export default Widget

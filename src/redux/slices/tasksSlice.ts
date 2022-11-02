@@ -4,11 +4,11 @@ import type { PayloadAction } from '@reduxjs/toolkit'
 import { TaskType } from '../..';
 
 
-export interface CounterState {
+export interface TaskState {
    tasks: TaskType[]
 }
 
-const initialState: CounterState = {
+const initialState: TaskState = {
    tasks: [
       {
          date: (new Date()).getTime(),

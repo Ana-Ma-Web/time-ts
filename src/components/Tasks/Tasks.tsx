@@ -16,7 +16,9 @@ function Tasks() {
    const [text, setText] = useState('')
    const dispatch = useDispatch()
 
-   // const { iconsInWidget } = React.useContext()
+   const iconsInWidget = useSelector((state: RootState) => state.activity.activity).filter(
+      activity => activity.widget.widgetIcons !== null
+   )
 
    const tasks = useSelector((state: RootState) => state.tasks.tasks).filter(
       task => task.isDone === false
@@ -48,7 +50,7 @@ function Tasks() {
 
    return (
       <div className='Tasklist block'>
-         {/* <Widget iconsActs={iconsInWidget} /> */}
+         <Widget iconsActs={iconsInWidget} />
          <ul className='Tasklist_list'>
             {
                tasks.map((item: TaskType) => (

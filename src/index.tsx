@@ -33,15 +33,13 @@ export type WidgetIconsType = {
   totalIntervalAmount: number,
   currentAmount: number,
 
-  decrementCounter: Function,
-  incrementCounter: Function,
   reset: ResetType,
 }
 export type WidgetType = {
   isInWidget: boolean,
   widgetIcons: Array<WidgetIconsType> | null,
 }
-export type IntervalType = Date | null | string
+export type IntervalType = null | number
 export type IntervalsType = {
   timeStart: IntervalType,
   timeEnd: IntervalType,
@@ -59,11 +57,9 @@ export type ActClockType = {
   dailyEvent: DailyEventType,
 }
 export type ResetType = {
-  startingPoint: Date,
+  startingPoint: number,
   cycleTime: number,
   ignationIndex: number,
-  isIgnition: Function,
-  getTimeBeforeDeadline: Function,
 }
 export type BubbleType = {
   id: number,
