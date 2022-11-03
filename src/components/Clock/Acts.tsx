@@ -1,17 +1,16 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import { ActivityType, IntervalsType, IntervalType } from '../..';
+import { RootState } from '../../redux/store';
 
-type Props = {
-   activity: ActivityType[]
-}
-class Acts extends React.Component<Props, any>{
-   constructor(props: Props) {
-      super(props);
-      this.state = {}
-   }
+function Acts () {
 
-   countActsRad() {
-      const actsAmount = this.props.activity.length;
+   let scheduleActs = useSelector((state: RootState) => state.activity.activity).filter(
+      activity => activity.actClock.dailySchedule.intervals !== null
+   )
+
+   const countActsRad = () => {
+      const actsAmount = scheduleActs.length;
       let radMax = 85;
       let radGap = (radMax / actsAmount)
       let radArr = [];
@@ -21,7 +20,7 @@ class Acts extends React.Component<Props, any>{
       return radArr
    }
 
-   countActsStart(timeStart: IntervalType, timeEnd: IntervalType) {
+   const countActsStart = (timeStart: IntervalType, timeEnd: IntervalType) => {
       if (timeStart && timeEnd) {
 
          let timeStartDate = new Date(timeStart)
@@ -32,8 +31,7 @@ class Acts extends React.Component<Props, any>{
       }
    }
 
-
-   countActsLength(timeStart: IntervalType, timeEnd: IntervalType, actRad: number) {
+   const countActsLength = (timeStart: IntervalType, timeEnd: IntervalType, actRad: number) => {
       if (timeStart && timeEnd) {
 
          let timeStartDate = new Date(timeStart)
@@ -52,8 +50,8 @@ class Acts extends React.Component<Props, any>{
       }
    }
 
-   printDasharray(intervals: Array<IntervalsType>, actId: number) {
-      let actRad = this.countActsRad()[(actId)]
+   const printDasharray = (intervals: Array<IntervalsType>, actId: number) => {
+      let actRad = countActsRad()[(actId)]
       let intervalLength = ''
       let lastEnd: IntervalType | undefined
 
@@ -61,57 +59,55 @@ class Acts extends React.Component<Props, any>{
          let start = intervals[key].timeStart
          let end = intervals[key].timeEnd
          if (lastEnd) {
-            let previousDowntimeLength = this.countActsLength(lastEnd, start, actRad)
+            let previousDowntimeLength = countActsLength(lastEnd, start, actRad)
             intervalLength += ' ' + previousDowntimeLength
          }
-         intervalLength += ' ' + this.countActsLength(start, end, actRad)
+         intervalLength += ' ' + countActsLength(start, end, actRad)
          lastEnd = end
       }
 
       return intervalLength
    }
 
-   printSvg(act: ActivityType, id: number) {
+   const printSvg = (act: ActivityType, id: number) => {
       if (act.actClock.dailySchedule.intervals) {
          return <svg viewBox='0 0 290 268' className='Clock_circle'
             style={{
-               transform: `rotateZ(${this.countActsStart(
+               transform: `rotateZ(${countActsStart(
                   act.actClock.dailySchedule.intervals[0].timeStart, 
                   act.actClock.dailySchedule.intervals[0].timeEnd
                   )}deg)`
             }}
          >
-            {this.printCircle(act, id)}
+            {printCircle(act, id)}
          </svg>
       }
    }
 
-   printCircle(act: ActivityType, id: number) {
+   const printCircle = (act: ActivityType, id: number) => {
       if (act.actClock.dailySchedule.intervals) {
-         return <circle r={this.countActsRad()[id]} cx="50%" cy="50%" fill="none"
+         return <circle r={countActsRad()[id]} cx="50%" cy="50%" fill="none"
             stroke={act.color}
             strokeWidth='8'
             strokeDasharray={
-               this.printDasharray(act.actClock.dailySchedule.intervals, id) + ' 1000'
+               printDasharray(act.actClock.dailySchedule.intervals, id) + ' 1000'
             }
             strokeLinecap="round"
          ></circle>
       }
    }
 
-   render() {
-      return (
-         <div className="Clock_acts">
-            {
-               this.props.activity.map((act: ActivityType) => (
-                  <div key={act.id}>
-                     {this.printSvg(act, act.id)}
-                  </div>
-               ))
-            }
-         </div>
-      )
-   }
+   return (
+      <div className="Clock_acts">
+         {
+            scheduleActs.map((act: ActivityType) => (
+               <div key={act.id}>
+                  {printSvg(act, act.id)}
+               </div>
+            ))
+         }
+      </div>
+   )
 }
 
 export default Acts;

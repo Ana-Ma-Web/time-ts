@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { ResetType } from '../..';
 import Icon from '../Icons/Icon';
 
@@ -11,28 +11,20 @@ type Props = {
    reset: ResetType
 }
 
-type State = {
-   isActive: boolean
-}
+function Bubble(props: Props) {
 
-class Bubble extends React.Component<Props, State> {
-   constructor(props: Props) {
-      super(props);
-      this.state = {
-         isActive: false
-      }
-   }
+   const [isActive, setIsActive] = useState(false)
 
-   countDashoffset() {
-      if (this.props.recordedTime >= this.props.totalTime) {
+   const countDashoffset = () => {
+      if (props.recordedTime >= props.totalTime) {
          return '0'
       }
-      return String((this.props.recordedTime * 188.4) / this.props.totalTime)
+      return String((props.recordedTime * 188.4) / props.totalTime)
    }
 
-   countRemainingMinutes() {
-      let recordedTime = this.props.recordedTime
-      let totalTime = this.props.totalTime
+   const countRemainingMinutes = () => {
+      let recordedTime = props.recordedTime
+      let totalTime = props.totalTime
 
       if (recordedTime >= totalTime) {
          let result: (number | string) = recordedTime - totalTime;
@@ -42,28 +34,25 @@ class Bubble extends React.Component<Props, State> {
       return String(totalTime - recordedTime)
    }
 
-   printBubbleBG() {
+   const printBubbleBG = () => {
       let scale = 0.89
       let opacity = 0
 
-      switch (this.state.isActive) {
-         case true:
-            scale = 0.89
-            opacity = 0.3
-            break;
-         case false:
-            if (this.props.totalTime > this.props.recordedTime) {
-               scale = 0.7
-               opacity = 0.15
-            } else {
-               opacity = 0
-            }
-            break;
+      if (isActive) {
+         scale = 0.89
+         opacity = 0.4
+      } else {
+         if (props.totalTime > props.recordedTime) {
+            scale = 0.7
+            opacity = 0.15
+         } else {
+            opacity = 0
+         }
       }
 
       let bubbleBG = <div className='Bubble_background'
          style={{
-            backgroundColor: this.props.color,
+            backgroundColor: props.color,
             transform: `scale(${String(scale)})`,
             opacity: opacity,
          }}></div>
@@ -71,19 +60,19 @@ class Bubble extends React.Component<Props, State> {
       return bubbleBG
    }
 
-   printBubbleSvg() {
+   const printBubbleSvg = () => {
       let opacity = 1
-      if (this.props.totalTime <= this.props.recordedTime
-         && this.state.isActive === false) {
+      if (props.totalTime <= props.recordedTime
+         && isActive === false) {
          opacity = 0.2
       }
 
       let bubbleCircle = <circle r='30' cx="36px" cy="36px" fill="none"
-         stroke={this.props.color}
+         stroke={props.color}
          strokeWidth='4'
          strokeDasharray={'188.4'
          }
-         strokeDashoffset={'-' + this.countDashoffset()}
+         strokeDashoffset={'-' + countDashoffset()}
       ></circle>
 
       let bubbleSvg = <svg className='Bubble_svg' width='72' height='72'
@@ -93,14 +82,13 @@ class Bubble extends React.Component<Props, State> {
          }}
       >{bubbleCircle}</svg>
 
-
       return bubbleSvg
    }
 
-   printBubbleContent() {
+   const printBubbleContent = () => {
       let opacity = 1
 
-      if (this.props.totalTime > this.props.recordedTime) {
+      if (props.totalTime > props.recordedTime) {
          opacity = 0.8
       } else {
          opacity = 0.2
@@ -108,23 +96,24 @@ class Bubble extends React.Component<Props, State> {
 
       let bubbleContent = <div className='Bubble_content'
          style={{ opacity: opacity }}>
-         <Icon color='white' svgId={this.props.svgId} height='20' width='20' />
-         <div className='Bubble_text'>{this.countRemainingMinutes()}</div>
+         <Icon color='white' svgId={props.svgId} height='20' width='20' />
+         <div className='Bubble_text'>{countRemainingMinutes()}</div>
       </div>
-
       return bubbleContent
    }
 
-   render() {
-      return (
-         <div className='Bubble'>
-            {this.printBubbleBG()}
-            {this.printBubbleSvg()}
-            {this.printBubbleContent()}
-         </div>
-      )
+   const changeActive = () => {
+      isActive ? setIsActive(false) : setIsActive(true)
    }
-}
 
+   return (
+
+      <div className='Bubble' onClick={() => changeActive()}>
+         {printBubbleBG()}
+         {printBubbleSvg()}
+         {printBubbleContent()}
+      </div>
+   )
+}
 
 export default Bubble

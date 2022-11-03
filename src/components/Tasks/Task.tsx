@@ -9,7 +9,6 @@ type Props = {
    inputClear: () => void
 }
 
-
 function Task(props: Props) {
 
    const dispatch = useDispatch()
@@ -19,7 +18,6 @@ function Task(props: Props) {
       dispatch(lineThroughTask({ date }))
 
       setTimeout(() => {
-         console.log(props.task.isLineThrough);
          dispatch(taskDone({ date }))
       }, 2000);
    }

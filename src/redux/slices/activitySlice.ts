@@ -11,16 +11,23 @@ const initialState: ActivityState = {
    activity: [
       {
          id: 0,
-         color: '#5FA3CA',
+         color: '#52D9C2',
          isAct: true,
          widget: {
-            isInWidget: true,
             widgetIcons: [
                {
                   id: 0,
                   svgId: 1,
                   totalIntervalAmount: 2,
                   currentAmount: 2,
+                  dailyEventIcons: [
+                     {
+                        id: 1,
+                        svgId: 1,
+                        hours: 16,
+                        minutes: 0,
+                     },
+                  ],
                   reset: {
                      startingPoint: 123,
                      cycleTime: 24 * 60 * 60 * 1000,
@@ -40,6 +47,7 @@ const initialState: ActivityState = {
                   svgId: 3,
                   totalIntervalAmount: 22,
                   currentAmount: 22,
+                  dailyEventIcons: null,
                   reset: {
                      startingPoint: 123,
                      cycleTime: 24 * 60 * 60 * 1000,
@@ -58,28 +66,28 @@ const initialState: ActivityState = {
          },
          actClock: {
             dailySchedule: {
-               isInDailySchedule: true,
                intervals: [
                   {
-                     timeStart: 123,
-                     timeEnd: 321,
+                     timeStart: 1604995200000,
+                     timeEnd: 1605006000000,
                   },
                   {
-                     timeStart: 123,
-                     timeEnd: 321,
+                     timeStart: 1605016800000,
+                     timeEnd: 1605034800000,
                   },
                ],
             },
             dailyEvent: {
-               isInDailyEvent: true,
                icons: [
                   {
-                     svgId: 1,
+                     id: 1,
+                     svgId: 4,
                      hours: 6,
                      minutes: 0,
                   },
                   {
-                     svgId: 3,
+                     id: 2,
+                     svgId: 6,
                      hours: 18,
                      minutes: 0,
                   },
@@ -87,9 +95,8 @@ const initialState: ActivityState = {
             },
          },
          scheduledActivities: {
-            isInScheduledActivities: true,
             bubbles: [{
-               id: 0,
+               id: 1,
                name: 'Meow',
                color: '#5FA3CA',
                svgId: 10,
@@ -134,7 +141,10 @@ export const activitySlice = createSlice({
             icon => icon.id === action.payload.iconId)
          icon && icon.currentAmount--
       },
-      actAdd: (state, action) => {
+      addAct: (state, action) => {
+      },
+      getScheduleInClock: (state, action) => {
+
       },
    },
 })

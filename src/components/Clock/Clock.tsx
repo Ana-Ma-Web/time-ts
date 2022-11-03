@@ -1,54 +1,34 @@
-import React from 'react';
-import { ActivityType } from '../..';
+import React, { useState } from 'react';
 import './Clock.css';
-import Acts from './Clock_Acts';
-import ClockIcons from './Clock_Icons';
+import Acts from './Acts';
+import ClockIcons from './Icons';
 import clockImg from './img/clock.svg'
 
-type State = {
-   date: Date,
-}
 
-type Props = {
-   scheduleActs: ActivityType[]
-   iconsActs: ActivityType[]
-}
+function Clock () {
 
-class Clock extends React.Component<Props, State> {
-   timerID: any;
-   constructor(props: Props) {
-      super(props);
-      this.state = {
-         date: new Date(),
-      };
+   const [date, setDate] = useState(new Date())
+
+   setInterval(() => arrowUpdate(), 60000);
+
+   const arrowUpdate = () => {
+      setDate(new Date());
    }
 
-   componentDidMount() {
-      this.timerID = setInterval(() => this.arrowUpdate(), 60000);
-   }
-
-   arrowUpdate() {
-      this.setState({
-         date: new Date()
-      });
-   }
-
-   render() {
-      return (
-         <div className="Clock block">
-            <img src={clockImg} className='Clock_img' alt="clock" />
-            <Acts activity={this.props.scheduleActs} />
-            <div className="Clock_arrow" style={{
-               transform: `rotateZ(${(
-                  (this.state.date.getHours() * 15) +
-                  (this.state.date.getMinutes() * 0.25) +
-                  180)}deg)`
-            }}>
-            </div>
-            <ClockIcons activity={this.props.iconsActs} />
+   return (
+      <div className="Clock block">
+         <img src={clockImg} className='Clock_img' alt="clock" />
+         <Acts />
+         <div className="Clock_arrow" style={{
+            transform: `rotateZ(${(
+               (date.getHours() * 15) +
+               (date.getMinutes() * 0.25) +
+               180)}deg)`
+         }}>
          </div>
-      )
-   }
+         <ClockIcons />
+      </div>
+   )
 }
 
 export default Clock
