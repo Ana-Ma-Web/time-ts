@@ -1,8 +1,9 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ActivityType, IconTimeType } from '../..';
-import { RootState } from '../../redux/store';
-import Icon from '../Icons/Icon'
+import styles from './Icons.module.css'
+import { ActivityType, IconTimeType } from '../../..';
+import { RootState } from '../../../redux/store';
+import Icon from '../../Icons/Icon'
 
 function ClockIcons() {
 
@@ -20,10 +21,10 @@ function ClockIcons() {
       if (act.actClock.dailyEvent.icons) {
          let result = act.actClock.dailyEvent.icons.map(
             (item) => (
-               <div key={item.id} className='Clock_iconWrapper' style={{
+               <div key={item.id} className={styles.wrapper} style={{
                   transform: `rotateZ(${countRotate(item.hours, item.minutes)}deg)`
                }}>
-                  <button className='Clock_iconButton' style={{
+                  <button className={styles.button} style={{
                      transform: `rotateZ(-${countRotate(item.hours, item.minutes)}deg)`
                   }}>
                      <Icon key={item.id} width={'20'} height={'15'}
@@ -38,7 +39,7 @@ function ClockIcons() {
    return (
       <>
          {iconsActs.map((act: ActivityType, id: number) => (
-            <div className="Clock_icons" key={act.id}>
+            <div className={styles.Icons} key={act.id}>
                {
                   printIcons(act)
                }

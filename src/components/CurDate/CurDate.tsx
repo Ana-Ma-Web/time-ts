@@ -1,102 +1,72 @@
-import React from 'react';
-import './CurDate.css';
+import React, { useEffect, useState } from 'react';
+import styles from './CurDate.module.css';
 
+function CurDate() {
+   const [curDate, setCurDate] = useState(new Date())
+   const [daysOfWeek, setDaysOfWeek] = useState(['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'])
 
-type State = {
-   curDate: Date,
-   daysOfWeek: Array<string>,
-}
+   let timerID = setInterval(() => tick(), 2000);
 
-class CurDate extends React.Component <any, State> {
-   timerID: any;
-   constructor(props: string) {
-      super(props);
-      this.state = {
-         curDate: new Date(),
-         daysOfWeek: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'],
+   useEffect(() => {
+      return () => {
+         clearInterval(timerID)
       };
+   });
+
+   const tick = () => {
+      setCurDate(new Date());
+      updateWeek()
    }
 
-   componentDidMount() {
-      this.updateWeek()
-      this.timerID = setInterval( () => this.tick(), 2000);
-   }
-
-   componentWillUnmount() {
-      clearInterval(this.timerID);
-   }
-
-   tick() {
-      this.setState({
-         curDate: new Date()
-      });
-      this.updateWeek()
-   }
-
-   updateWeek() {
-      switch (this.state.curDate.getDay()) {
+   const updateWeek = () => {
+      switch (curDate.getDay()) {
          case 0:
-            this.setState({
-               daysOfWeek: ['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ']
-            })
+            setDaysOfWeek(['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'])
             break;
          case 1:
-            this.setState({
-               daysOfWeek: ['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС']
-            })
+            setDaysOfWeek(['ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС'])
             break;
          case 2:
-            this.setState({
-               daysOfWeek: ['ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС', 'ПН']
-            })
+            setDaysOfWeek(['ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ', 'ВС', 'ПН'])
             break;
          case 3:
-            this.setState({
-               daysOfWeek: ['СР', 'ЧТ', 'ПТ', 'СБ', 'ВС', 'ПН','ВТ']
-            })
+            setDaysOfWeek(['СР', 'ЧТ', 'ПТ', 'СБ', 'ВС', 'ПН', 'ВТ'])
             break;
          case 4:
-            this.setState({
-               daysOfWeek: ['ЧТ', 'ПТ', 'СБ', 'ВС', 'ПН','ВТ', 'СР']
-            })
+            setDaysOfWeek(['ЧТ', 'ПТ', 'СБ', 'ВС', 'ПН', 'ВТ', 'СР'])
             break;
          case 5:
-            this.setState({
-               daysOfWeek: ['ПТ', 'СБ', 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ']
-            })
+            setDaysOfWeek(['ПТ', 'СБ', 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ'])
             break;
          case 6:
-            this.setState({
-               daysOfWeek: ['СБ', 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ']
-            })
+            setDaysOfWeek(['СБ', 'ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ'])
             break;
          default:
             break;
       }
-	}
-
-   render() {
-      return (
-         <div className="CurDate block">
-            <div className='CurDate_time'>
-               {('0' + this.state.curDate.getHours()).slice(-2)}:
-               {('0' + this.state.curDate.getMinutes()).slice(-2)}
-            </div>
-            <div className="CurDate_date">
-               {('0' + this.state.curDate.getDate()).slice(-2)}.
-               {('0' + (this.state.curDate.getMonth() + 1)).slice(-2)}.
-               {this.state.curDate.getFullYear()}
-            </div>
-            <div className="CurDate_week">
-               {
-                  this.state.daysOfWeek.map((item: string, i: number) => (
-                  <span key={i}>{item}</span>
-                  ))
-               }
-            </div>
-         </div>
-      );
    }
+
+   return (
+      <div className={styles.CurDate + ' block'}>
+         <div className={styles.time}>
+            {('0' + curDate.getHours()).slice(-2)}:
+            {('0' + curDate.getMinutes()).slice(-2)}
+         </div>
+         <div className={styles.date}>
+            {('0' + curDate.getDate()).slice(-2)}.
+            {('0' + (curDate.getMonth() + 1)).slice(-2)}.
+            {curDate.getFullYear()}
+         </div>
+         <div className={styles.week}>
+            {
+               daysOfWeek.map((item: string, i: number) => (
+                  <span key={i}>{item}</span>
+               ))
+            }
+         </div>
+      </div>
+   );
+
 }
 
 export default CurDate;

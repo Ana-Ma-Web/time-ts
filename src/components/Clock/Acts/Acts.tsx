@@ -1,7 +1,8 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
-import { ActivityType, IntervalsType, IntervalType } from '../..';
-import { RootState } from '../../redux/store';
+import styles from './Acts.module.css';
+import { ActivityType, IntervalsType, IntervalType } from '../../..';
+import { RootState } from '../../../redux/store';
 
 function Acts () {
 
@@ -50,7 +51,7 @@ function Acts () {
       }
    }
 
-   const printDasharray = (intervals: Array<IntervalsType>, actId: number) => {
+   const countDasharray = (intervals: Array<IntervalsType>, actId: number) => {
       let actRad = countActsRad()[(actId)]
       let intervalLength = ''
       let lastEnd: IntervalType | undefined
@@ -71,7 +72,7 @@ function Acts () {
 
    const printSvg = (act: ActivityType, id: number) => {
       if (act.actClock.dailySchedule.intervals) {
-         return <svg viewBox='0 0 290 268' className='Clock_circle'
+         return <svg viewBox='0 0 290 268' className={styles.circle}
             style={{
                transform: `rotateZ(${countActsStart(
                   act.actClock.dailySchedule.intervals[0].timeStart, 
@@ -90,7 +91,7 @@ function Acts () {
             stroke={act.color}
             strokeWidth='8'
             strokeDasharray={
-               printDasharray(act.actClock.dailySchedule.intervals, id) + ' 1000'
+               countDasharray(act.actClock.dailySchedule.intervals, id) + ' 1000'
             }
             strokeLinecap="round"
          ></circle>
@@ -98,7 +99,7 @@ function Acts () {
    }
 
    return (
-      <div className="Clock_acts">
+      <div className={styles.Acts}>
          {
             scheduleActs.map((act: ActivityType) => (
                <div key={act.id}>

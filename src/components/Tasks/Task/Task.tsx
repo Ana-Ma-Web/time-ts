@@ -1,7 +1,9 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
-import { TaskType } from '../..';
-import { addSubTask, lineThroughTask, taskDone, taskRemove } from '../../redux/slices/tasksSlice';
+import { TaskType } from '../../..';
+import { addSubTask, lineThroughTask, taskDone, taskRemove } from '../../../redux/slices/tasksSlice';
+import styles from './Task.module.css'
+
 
 type Props = {
    task: TaskType
@@ -41,11 +43,11 @@ function Task(props: Props) {
    const printListItem = (item: TaskType) => {
       if (item.isDone === false) {
          let children = null
-         let taskDoneClassName = item.isLineThrough ? 'task-done' : 'nocross'
+         let taskDoneClassName = item.isLineThrough ? styles.done : ''
 
          if (item.childrens !== null) {
             children = (
-               <ul className='Tasklist_step'>
+               <ul className={styles.step}>
                   {
                      item.childrens.map((item: TaskType) => (
                         printListItem(item)
@@ -54,16 +56,16 @@ function Task(props: Props) {
             )
          }
          return (
-            <li className={`Tasklist_item ` + taskDoneClassName} style={{ color: item.color }} key={item.date}>
-               <span className='Tasklist_text' style={{ color: item.color }}
+            <li className={styles.item + ' ' + taskDoneClassName} style={{ color: item.color }} key={item.date}>
+               <span className={styles.text} style={{ color: item.color }}
                   onClick={() => taskComplete(item.date)}>
                   {item.name}
                </span>
-               <button className='Tasklist_delete' style={{ color: item.color }}
+               <button className={styles.delete} style={{ color: item.color }}
                   onClick={() => taskDelete(item.date)}>
                   {deleteIcon}
                </button>
-               <button className='Tasklist_subtask-add' style={{ color: item.color }}
+               <button 
                   onClick={() => subTaskAdd(item)}>
                   {deleteIcon}
                </button>
@@ -82,7 +84,7 @@ function Task(props: Props) {
 
    return (
       <>
-         <ul className='Tasklist_list'>
+         <ul className={styles.list}>
             {
                printListItem(props.task)
             }

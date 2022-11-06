@@ -1,5 +1,4 @@
-import React, { ReactElement, useState } from 'react';
-import './Icon.css'
+import React, { useState } from 'react';
 
 type Props = {
    color: string,

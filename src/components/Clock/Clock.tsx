@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import './Clock.css';
-import Acts from './Acts';
-import ClockIcons from './Icons';
+import styles from './Clock.module.css';
+import Acts from './Acts/Acts';
+import ClockIcons from './Icons/Icons';
 import clockImg from './img/clock.svg'
-
 
 function Clock () {
 
@@ -16,10 +15,10 @@ function Clock () {
    }
 
    return (
-      <div className="Clock block">
-         <img src={clockImg} className='Clock_img' alt="clock" />
+      <div className={styles.Clock + ' block'}>
+         <img src={clockImg} className={styles.img} alt="clock" />
          <Acts />
-         <div className="Clock_arrow" style={{
+         <div className={styles.arrow} style={{
             transform: `rotateZ(${(
                (date.getHours() * 15) +
                (date.getMinutes() * 0.25) +

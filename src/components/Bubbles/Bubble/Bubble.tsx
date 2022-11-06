@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
-import { ResetType } from '../..';
-import Icon from '../Icons/Icon';
+import { ResetType } from '../../..';
+import styles from './Bubble.module.css'
+import Icon from '../../Icons/Icon';
 
 
 type Props = {
@@ -50,7 +51,7 @@ function Bubble(props: Props) {
          }
       }
 
-      let bubbleBG = <div className='Bubble_background'
+      let bubbleBG = <div className={styles.background}
          style={{
             backgroundColor: props.color,
             transform: `scale(${String(scale)})`,
@@ -75,7 +76,7 @@ function Bubble(props: Props) {
          strokeDashoffset={'-' + countDashoffset()}
       ></circle>
 
-      let bubbleSvg = <svg className='Bubble_svg' width='72' height='72'
+      let bubbleSvg = <svg className={styles.svg} width='72' height='72'
          style={{
             transform: `rotateZ(-90deg)`,
             opacity: opacity
@@ -94,10 +95,10 @@ function Bubble(props: Props) {
          opacity = 0.2
       }
 
-      let bubbleContent = <div className='Bubble_content'
+      let bubbleContent = <div className={styles.content}
          style={{ opacity: opacity }}>
          <Icon color='white' svgId={props.svgId} height='20' width='20' />
-         <div className='Bubble_text'>{countRemainingMinutes()}</div>
+         <div className={styles.text}>{countRemainingMinutes()}</div>
       </div>
       return bubbleContent
    }
@@ -108,7 +109,7 @@ function Bubble(props: Props) {
 
    return (
 
-      <div className='Bubble' onClick={() => changeActive()}>
+      <div className={styles.Bubble} onClick={() => changeActive()}>
          {printBubbleBG()}
          {printBubbleSvg()}
          {printBubbleContent()}

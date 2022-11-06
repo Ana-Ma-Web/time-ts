@@ -3,7 +3,7 @@ import { useDispatch } from 'react-redux';
 import { ActivityType, WidgetIconsType } from '../..';
 import { decWidgetCounter } from '../../redux/slices/activitySlice';
 import Icon from '../Icons/Icon';
-import './Widget.css'
+import styles from'./Widget.module.css'
 
 
 
@@ -20,10 +20,10 @@ function Widget(props: Props) {
 
    let printIcon = (act: ActivityType, icon: WidgetIconsType) => {
       if (icon.currentAmount > 0) {
-         return <div className='Widget_Icon' key={icon.id}>
-            <button className='Widget_button'
+         return <div className={styles.Icon} key={icon.id}>
+            <button className={styles.button}
             onClick={() => decrement(act.id, icon.id)}>
-               <div className='Widget_text' >{icon.currentAmount}</div>
+               <div className={styles.text} >{icon.currentAmount}</div>
                <Icon width={'20'} height={'20'} color={act.color} svgId={icon.svgId} />
             </button>
          </div>
@@ -31,7 +31,7 @@ function Widget(props: Props) {
    }
 
    return (
-      <div className='Widget'>
+      <div className={styles.Widget}>
          {
             props.iconsActs.map((act: ActivityType, id: number) => (
                act.widget.widgetIcons?.map((icon: WidgetIconsType) => (

@@ -1,11 +1,3 @@
-.Bubbles {
-   display: grid;
-   grid-template-columns: auto auto auto;
-   justify-items: center;
-   width: 100%;
-   height: 100%;
-   padding: 15px;}
-
 .Bubble {
    width: 72px;
    height: 72px;
@@ -20,7 +12,8 @@
    border-color: rgba(255, 255, 255, 0.1);
    transition: 0.3s;
 }
-.Bubble_background {
+
+.background {
    position: absolute;
    top: 0;
    left: 0;
@@ -29,17 +22,17 @@
    border-radius: 50%;
 }
 
-.Bubble_svg {
+.svg {
    position: absolute;
    top: 0;
    left: 0;
 }
 
-.Bubble_content {
+.content {
    padding-top: 16px;
 }
 
-.Bubble_text {
+.text {
    font-size: 14px;
    font-weight: 600;
    line-height: 11px;

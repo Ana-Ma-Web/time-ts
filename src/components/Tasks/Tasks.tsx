@@ -6,8 +6,8 @@ import { taskAdd } from './../../redux/slices/tasksSlice'
 
 import { TaskType } from '../..';
 import Widget from '../Widget/Widget';
-import './Tasks.css'
-import Task from './Task';
+import styles from './Tasks.module.css'
+import Task from './Task/Task';
 
 
 
@@ -49,9 +49,9 @@ function Tasks() {
    }
 
    return (
-      <div className='Tasklist block'>
+      <div className={styles.Tasks + ' block'}>
          <Widget iconsActs={iconsInWidget} />
-         <ul className='Tasklist_list'>
+         <ul className={styles.list}>
             {
                tasks.map((item: TaskType) => (
                   <div key={item.date}>

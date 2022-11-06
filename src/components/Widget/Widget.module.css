@@ -5,7 +5,7 @@
    padding-top: 0px;
 }
 
-.Widget_button {
+.button {
    background-color: transparent;
    border: none;
    padding: 0;
@@ -13,23 +13,23 @@
    color: inherit;
 }
 
-.Widget_Icon {
+.Icon {
    width: auto;
    line-height: 100%;
    text-align: center;
 }
 
-.Widget_Icon path{
+.Icon path{
    color: initial;
    transition: 0.3s;
 }
 
-.Widget_Icon:hover path{
+.Icon:hover path{
    fill: white !important;
    transition: 0.3s;
 }
 
-.Widget_text {
+.text {
    font-size: 14px;
    margin-bottom: 3px;
 }

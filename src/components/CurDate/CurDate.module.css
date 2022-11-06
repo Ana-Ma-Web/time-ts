@@ -3,22 +3,22 @@ font-weight: 700;
 padding: 15px;
 }
 
-.CurDate_time {
+.time {
    font-size: 36px;
 }
 
-.CurDate_date {
-   font-size: 13px;
-
-}
-
-.CurDate_week {
+.date {
    font-size: 13px;
 }
 
-.CurDate_week span:not(:last-child) {
+.week {
+   font-size: 13px;
+}
+
+.week span:not(:last-child) {
    padding-right: 3px;
 }
-.CurDate_week span:first-child {
+
+.week span:first-child {
    text-decoration: underline;
 }

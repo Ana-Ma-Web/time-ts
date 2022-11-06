@@ -1,9 +1,4 @@
-.Tasklist {
-   padding: 15px;
-   min-height: 290px;
-}
-
-.Tasklist_list {
+.list {
    text-align: left;
    list-style: none;
    padding: 0;
@@ -11,18 +6,18 @@
    margin-top: 15px;
 }
 
-.Tasklist_step{
+.step{
    padding-left: 18px;
 }
 
-.Tasklist_item {
+.item {
    list-style: none;
    padding: 0;
    margin: 0;
    gap: 10px;
 }
 
-.Tasklist_text {
+.text {
    text-align: left;
    padding: 0;
    border: none;
@@ -33,16 +28,16 @@
    transition: 0.3s;
 }
 
-.Tasklist_text:hover{
+.text:hover{
    color: white !important;
    transition: 0.3s;
 }
 
-.task-done {
+.done {
    text-decoration: line-through;
 }
 
-.Tasklist_delete {
+.delete {
    overflow: hidden;
    height: 22px;
    padding: 0;
@@ -55,12 +50,12 @@
    transition: 0.3s;
 }
 
-.Tasklist_delete svg {
+.delete svg {
    transform: rotate(45deg);
    padding-top: 5px;
 }
 
-.Tasklist_item:hover .Tasklist_delete{
+.item:hover .delete{
    opacity: 1;
    transition: 0.3s;
 }

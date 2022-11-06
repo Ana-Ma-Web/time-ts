@@ -2,8 +2,8 @@ import React from 'react';
 import { useSelector } from 'react-redux';
 import { ActivityType, BubbleType } from '../..';
 import { RootState } from '../../redux/store';
-import Bubble from './Bubble';
-import './Bubbles.css'
+import Bubble from './Bubble/Bubble';
+import styles from './Bubbles.module.css'
 
 
 function Bubbles () {
@@ -12,7 +12,7 @@ function Bubbles () {
       act => act.scheduledActivities.bubbles !== null))
 
    return (
-      <div className='Bubbles block'>
+      <div className={styles.Bubbles + ' block'}>
          {activities.map((act: ActivityType) => (
             act.scheduledActivities.bubbles?.map((bubble: BubbleType) => (
                <Bubble 
