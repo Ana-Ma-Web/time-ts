@@ -1,3 +1,4 @@
+import { Typography } from '@material-ui/core';
 import React, { useEffect, useState } from 'react';
 import styles from './CurDate.module.css';
 
@@ -8,10 +9,11 @@ function CurDate() {
    let timerID = setInterval(() => tick(), 2000);
 
    useEffect(() => {
+      tick()
       return () => {
          clearInterval(timerID)
       };
-   });
+   }, []);
 
    const tick = () => {
       setCurDate(new Date());
@@ -47,7 +49,7 @@ function CurDate() {
    }
 
    return (
-      <div className={styles.CurDate + ' block'}>
+      <div className={styles.CurDate}>
          <div className={styles.time}>
             {('0' + curDate.getHours()).slice(-2)}:
             {('0' + curDate.getMinutes()).slice(-2)}

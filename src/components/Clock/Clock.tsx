@@ -15,7 +15,7 @@ function Clock () {
    }
 
    return (
-      <div className={styles.Clock + ' block'}>
+      <div className={styles.Clock}>
          <img src={clockImg} className={styles.img} alt="clock" />
          <Acts />
          <div className={styles.arrow} style={{

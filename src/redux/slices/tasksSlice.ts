@@ -11,7 +11,7 @@ export interface TaskState {
 const initialState: TaskState = {
    tasks: [
       {
-         date: (new Date()).getTime(),
+         date: 345678,
          isDone: false,
          isLineThrough: false,
          color: 'pink',
@@ -22,7 +22,7 @@ const initialState: TaskState = {
             date: 1234,
             isDone: false,
             isLineThrough: false,
-            color: 'pink',
+            color: 'wheat',
             name: 'meow 2 lvl',
             description: '',
             reset: null,
@@ -85,7 +85,7 @@ export const tasksSlice = createSlice({
                ]
             }
          }
-         const find = (date: number, items: any) => {
+         const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {
                   pushTask(item)
@@ -97,7 +97,7 @@ export const tasksSlice = createSlice({
          find(action.payload.date, state.tasks)
       },
       lineThroughTask: (state, action) => {
-         const find = (date: number, items: any) => {
+         const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {
                   item.isLineThrough = !item.isLineThrough
@@ -109,7 +109,8 @@ export const tasksSlice = createSlice({
          find(action.payload.date, state.tasks)
       },
       taskDone: (state, action) => {
-            const find = (date: number, items: any) => {
+            const find = (date: number, items: TaskType[]) => {
+               
                items.forEach((item: TaskType) => {
                   if (item.date === date) {
                      if (item.isLineThrough) {

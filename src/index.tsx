@@ -25,7 +25,7 @@ export type TaskType = {
   name: string,
   description: string,
   reset: ResetType | null,
-  childrens: TaskType[] | null
+  childrens: TaskType[] | null,
 }
 export type WidgetIconsType = {
   id: number,

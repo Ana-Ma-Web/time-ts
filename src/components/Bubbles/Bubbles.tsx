@@ -12,7 +12,7 @@ function Bubbles () {
       act => act.scheduledActivities.bubbles !== null))
 
    return (
-      <div className={styles.Bubbles + ' block'}>
+      <div className={styles.Bubbles}>
          {activities.map((act: ActivityType) => (
             act.scheduledActivities.bubbles?.map((bubble: BubbleType) => (
                <Bubble 
