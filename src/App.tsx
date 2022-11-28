@@ -1,14 +1,18 @@
 import React from 'react';
 
-import { makeStyles, ThemeProvider, unstable_createMuiStrictModeTheme as createMuiTheme } from '@material-ui/core/styles'
+import { styled } from '@mui/material/styles';
+// import Box from '@mui/material/Box';
+import Paper from '@mui/material/Paper';
+import Grid from '@mui/material/Grid';
+import Container from '@mui/material/Container';
 
 // import './App.css';
 import CurDate from "./components/CurDate/CurDate";
 import Clock from "./components/Clock/Clock";
 import Tasks from './components/Tasks/Tasks';
 import Bubbles from './components/Bubbles/Bubbles';
+// import { makeStyles } from '@mui/material';
 // import { ActivityType } from '.';
-import { Container, Grid, Paper } from '@material-ui/core';
 
 // interface TaskContextProps {
 //   iconsInWidget: ActivityType[]
@@ -16,73 +20,65 @@ import { Container, Grid, Paper } from '@material-ui/core';
 
 // export const TasksContext = React.createContext({} as TaskContextProps);
 
-const useStyles = makeStyles({
-  root: {
-    textAlign: 'center',
-    padding: 12,
-    // color: 'white',
-  },
-  paper: {
-    padding: '15px',
-    position: 'relative',
-  },
-});
+const Item = styled(Paper)(({ theme }) => ({
+  // backgroundColor: theme.palette.mode === 'dark' ? '#34395038' : '#fff',
+  // ...theme.typography.body2,
+  padding: theme.spacing(1),
+  textAlign: 'center',
+  // color: theme.palette.text.secondary,
+}));
+
+
+
+// const useStyles = makeStyles({
+//   root: {
+//     textAlign: 'center',
+//     padding: 12,
+//     // color: 'white',
+//   },
+//   paper: {
+//     padding: '15px',
+//     position: 'relative',
+//   },
+// });
 
 function App(props: any) {
 
-  const theme = createMuiTheme({
-    palette: {
-      common: {
-        black: '#222531',
-        white: '#222531',
-      },
-      type: 'dark',
-      background: {
-        paper: '#34395038',
-      },
-    },
-    typography: {
-      fontFamily: [
-        'Nunito'
-      ].join(',')
-    },
-  })
 
-  const classes = useStyles();
+  // const classes = useStyles();
 
 
   return (
-    <ThemeProvider theme={theme}>
       <Container>
-        <Grid container className={classes.root}
-          justifyContent="center" spacing={2}>
+
+        <Grid container
+          justifyContent="center" spacing={4}>
           <Grid item>
-            <Paper className={classes.paper}
+            <Item
               elevation={0}>
               <CurDate />
-            </Paper>
+            </Item>
           </Grid>
           <Grid item>
-            <Paper className={classes.paper}
+            <Item
               elevation={0}>
               <Clock />
-            </Paper>
+            </Item>
           </Grid>
           <Grid item>
-            <Paper className={classes.paper}
+            <Item
               elevation={0}>
               <Tasks />
-            </Paper>
+            </Item>
           </Grid>
           <Grid item>
-            <Paper className={classes.paper}
+            <Item
               elevation={0}>
               <Bubbles />
-            </Paper>
+            </Item>
           </Grid>
         </Grid>
       </Container>
-    </ThemeProvider>
   );
 }
 

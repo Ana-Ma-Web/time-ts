@@ -1,37 +1,38 @@
-import { List, ListItem, ListSubheader, makeStyles, Typography } from '@material-ui/core'
+// import { List, ListItem, ListSubheader, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { menuToggle } from '../../redux/slices/interfaceSlice'
+import { setIsOpenMenu } from '../../redux/slices/interfaceSlice'
 import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
+import { List, ListItem, ListSubheader, Typography } from '@mui/material'
 
-const useStyles = makeStyles({
-   root: {
-      width: '100%',
-      maxWidth: 360,
-      overflow: 'auto',
-   },
-   item: {
-      paddingTop: 0,
-      paddingBottom: 0,
-   }
-},);
+// const useStyles = makeStyles({
+//    root: {
+//       width: '100%',
+//       maxWidth: 360,
+//       overflow: 'auto',
+//    },
+//    item: {
+//       paddingTop: 0,
+//       paddingBottom: 0,
+//    }
+// },);
 
 function ContextMenu() {
 
    const name = useSelector((state: RootState) =>
-      state.interface.taskBlock.task.name
+      state.interface.taskBlock.menu.task.name
    )
    const id = useSelector((state: RootState) =>
-      state.interface.taskBlock.task.id
+      state.interface.taskBlock.menu.task.id
    )
 
    const dispatch = useDispatch()
 
-   const classes = useStyles();
+   // const classes = useStyles();
 
    const handleClose = () => {
-      dispatch(menuToggle({ isOpenMenu: false }))
+      dispatch(setIsOpenMenu({ isOpenMenu: false }))
    }
 
    const handleComplete = (id: number) => {
@@ -43,7 +44,7 @@ function ContextMenu() {
    }
 
    return (
-      <List subheader={<ListSubheader>{`${name}`}</ListSubheader>} className={classes.root}>
+      <List subheader={<ListSubheader>{`${name}`}</ListSubheader>} >
          <ListItem
             onClick={() => handleComplete(id)}
          >

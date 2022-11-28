@@ -1,10 +1,27 @@
-import { Typography } from '@material-ui/core';
+import { Grid, Typography } from '@mui/material';
 import React, { useEffect, useState } from 'react';
-import styles from './CurDate.module.css';
+
+// const useStyles = makeStyles({
+//    date: {
+//       "fontWeight": 700,
+//       marginBottom: 5,
+//    },
+//    day: {
+//       '&:first-child': {
+//          textDecoration: 'underline',
+//       },
+//    },
+//    dayText: {
+//       "fontWeight": 600,
+//    },
+// });
 
 function CurDate() {
    const [curDate, setCurDate] = useState(new Date())
    const [daysOfWeek, setDaysOfWeek] = useState(['ВС', 'ПН', 'ВТ', 'СР', 'ЧТ', 'ПТ', 'СБ'])
+
+   // const classes = useStyles();
+
 
    let timerID = setInterval(() => tick(), 2000);
 
@@ -49,24 +66,35 @@ function CurDate() {
    }
 
    return (
-      <div className={styles.CurDate}>
-         <div className={styles.time}>
+      <>
+         <Typography variant='h4' component='div'>
             {('0' + curDate.getHours()).slice(-2)}:
             {('0' + curDate.getMinutes()).slice(-2)}
-         </div>
-         <div className={styles.date}>
-            {('0' + curDate.getDate()).slice(-2)}.
-            {('0' + (curDate.getMonth() + 1)).slice(-2)}.
-            {curDate.getFullYear()}
-         </div>
-         <div className={styles.week}>
+         </Typography>
+            <Typography variant='caption' component='div'
+               // className={classes.date}
+               >
+               {('0' + curDate.getDate()).slice(-2)}.
+               {('0' + (curDate.getMonth() + 1)).slice(-2)}.
+               {curDate.getFullYear()}
+            </Typography>
+         <Grid container spacing={1} >
             {
                daysOfWeek.map((item: string, i: number) => (
-                  <span key={i}>{item}</span>
+                  <Grid item key={i} 
+                  // className={classes.day}
+                  >
+                     <Typography variant='body2' component='div'
+                        // className={classes.dayText}
+                     >
+                        {item}
+                     </Typography>
+                  </Grid>
                ))
             }
-         </div>
-      </div>
+
+         </Grid>
+      </>
    );
 
 }

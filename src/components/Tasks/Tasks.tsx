@@ -3,52 +3,56 @@ import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 
 import { lineThroughTask, taskDone } from './../../redux/slices/tasksSlice'
-import { menuToggle, setMenuData } from '../../redux/slices/interfaceSlice'
+import { setIsOpenMenu, setMenuData } from '../../redux/slices/interfaceSlice'
 
 
-import { makeStyles, withStyles } from '@material-ui/core/styles'
-import TreeView from '@material-ui/lab/TreeView'
-import MuiTreeItem from '@material-ui/lab/TreeItem'
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore'
-import ChevronRightIcon from '@material-ui/icons/ChevronRight'
+// import { makeStyles, withStyles } from '@material-ui/core/styles'
+import TreeView from '@mui/lab/TreeView'
+// import MuiTreeItem from '@material-ui/lab/TreeItem'
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
 
 
 import { TaskType } from '../..'
 import Widget from '../Widget/Widget'
 import ContextMenu from '../ContextMenu/ContextMenu'
+// import { IconButton } from '@material-ui/core'
+import TaskInput from './TaskInput/TaskInput'
+// import { makeStyles, withStyles } from '@mui/material'
 
 
-const useStyles = makeStyles({
-   root: {
-      minHeight: 268,
-      minWidth: 150,
-   },
-   list: {
-      flexGrow: 1,
-      maxWidth: 400,
-      color: 'wheet',
-      textAlign: 'left',
-   },
-   done: {
-      textDecoration: 'line-through'
-   },
-});
+// const useStyles = makeStyles({
+//    root: {
+//       minHeight: 268,
+//       minWidth: 230,
+//    },
+//    list: {
+//       flexGrow: 1,
+//       maxWidth: 400,
+//       color: 'wheet',
+//       textAlign: 'left',
+//    },
+//    done: {
+//       textDecoration: 'line-through'
+//    },
+// });
 
-const TreeItem = withStyles({
-   root: {
-      "&.MuiTreeItem-root > .MuiTreeItem-content .MuiTreeItem-label:hover": {
-         color: "white",
-         backgroundColor: "transparent",
-         transition: '0.3s'
-      },
-      "&.Mui-selected > .MuiTreeItem-content .MuiTreeItem-label": {
-         backgroundColor: "transparent",
-      },
-      "&.Mui-selected:focus > .MuiTreeItem-content .MuiTreeItem-label": {
-         backgroundColor: "transparent",
-      }
-   },
-})(MuiTreeItem);
+// const CustomTreeItem = withStyles({
+//    root: {
+//       "&.MuiTreeItem-root > .MuiTreeItem-content .MuiTreeItem-label:hover": {
+//          color: "white",
+//          backgroundColor: "transparent",
+//          transition: '0.3s'
+//       },
+//       "&.Mui-selected > .MuiTreeItem-content .MuiTreeItem-label": {
+//          backgroundColor: "transparent",
+//       },
+//       "&.Mui-selected:focus > .MuiTreeItem-content .MuiTreeItem-label": {
+//          backgroundColor: "transparent",
+//       }
+//    },
+// })(TreeItem);
 
 
 function Tasks() {
@@ -57,7 +61,7 @@ function Tasks() {
 
    const dispatch = useDispatch()
 
-   const classes = useStyles();
+   // const classes = useStyles;
 
    let menuControl = false
 
@@ -71,7 +75,7 @@ function Tasks() {
    )
 
    const isMenuOpen = useSelector((state: RootState) =>
-      state.interface.taskBlock.isOpenMenu
+      state.interface.taskBlock.menu.isOpenMenu
    )
 
    // const inputClear = () => {
@@ -79,7 +83,7 @@ function Tasks() {
    // }
 
    const openMenu = (taskId?: number) => {
-      dispatch(menuToggle({ isOpenMenu: true }))
+      dispatch(setIsOpenMenu({ isOpenMenu: true }))
    }
 
    const openContextMenu = (e: React.MouseEvent<HTMLLIElement>,
@@ -120,30 +124,7 @@ function Tasks() {
    //          break;
    //    }
    // }
-
-   const linethr = (isLinethr: boolean) => {
-      if (isLinethr) return classes.done
-   }
-
-   const renderTree = (task: TaskType) => {
-      if (task.isDone === false) {
-         return (
-            <div key={task.date}>
-               <TreeItem
-                  className={linethr(task.isLineThrough)}
-                  key={task.date}
-                  label={task.name}
-                  nodeId={String(task.date)}
-                  style={{ 'color': task.color }}
-                  onContextMenu={(e) => { openContextMenu(e, task.name, task.date) }}
-                  onLabelClick={(e) => { handleLabelClick(e, task.date) }}>
-                  {Array.isArray(task.childrens) ? task.childrens.map((node) => renderTree(node)) : null}
-               </TreeItem>
-            </div>
-         )
-      }
-   };
-
+      
    const tasksIds = (tasks: TaskType[]) => {
       let arr: string[] = []
       const pushId = (tasks: TaskType[]) => {
@@ -157,15 +138,40 @@ function Tasks() {
       return arr
    }
 
+   const renderTree = (task: TaskType) => {
+      if (task.isDone === false) {
+         return (
+            <div key={task.date}>
+               <TreeItem
+                  // className={task.isLineThrough ? classes.done : ''}
+                  key={task.date}
+                  label={task.name}
+                  nodeId={String(task.date)}
+                  style={{ 'color': task.color }}
+                  onContextMenu={(e) => { openContextMenu(e, task.name, task.date) }}
+                  // onLabelClick={(e) => { handleLabelClick(e, task.date) }}
+                  // style={{ textDecoration : task.isLineThrough ? 'line-through' : 'none' }} 
+                  sx={task.isLineThrough ? {
+                     textDecoration: "line-through"
+                  } : {}}
+                  >
+                  {Array.isArray(task.childrens) ? task.childrens.map((node) => renderTree(node)) : null}
+               </TreeItem>
+            </div>
+         )
+      }
+   };
+
+
    return (
-      <div className={classes.root}>
+      <div>
          {isMenuOpen ? (
             <ContextMenu></ContextMenu>
          ) : (
             <>
                <Widget iconsActs={iconsInWidget} />
                <TreeView
-                  className={classes.list}
+                  // className={classes.list}
                   defaultCollapseIcon={<ExpandMoreIcon />}
                   defaultExpanded={tasksIds(tasks)}
                   defaultExpandIcon={<ChevronRightIcon />}
@@ -174,6 +180,7 @@ function Tasks() {
                      renderTree(task)
                   ))
                   }
+                  <TaskInput/>
                </TreeView>
             </>
          )}

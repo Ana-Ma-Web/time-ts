@@ -39,7 +39,6 @@ function Task(props: Props) {
       }
    }
 
-
    const printListItem = (item: TaskType) => {
       if (item.isDone === false) {
          let children = null

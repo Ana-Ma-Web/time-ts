@@ -89,7 +89,7 @@ export const tasksSlice = createSlice({
             items.forEach((item: TaskType) => {
                if (item.date === date) {
                   pushTask(item)
-               } else if (item.childrens !== null){
+               } else if (item.childrens !== null) {
                   find(date, item.childrens)
                }
             })
@@ -101,7 +101,7 @@ export const tasksSlice = createSlice({
             items.forEach((item: TaskType) => {
                if (item.date === date) {
                   item.isLineThrough = !item.isLineThrough
-               } else if (item.childrens !== null){
+               } else if (item.childrens !== null) {
                   find(date, item.childrens)
                }
             })
@@ -109,19 +109,19 @@ export const tasksSlice = createSlice({
          find(action.payload.date, state.tasks)
       },
       taskDone: (state, action) => {
-            const find = (date: number, items: TaskType[]) => {
-               
-               items.forEach((item: TaskType) => {
-                  if (item.date === date) {
-                     if (item.isLineThrough) {
-                        item.isDone = true
-                     }
-                  } else if (item.childrens !== null){
-                     find(date, item.childrens)
+         const find = (date: number, items: TaskType[]) => {
+
+            items.forEach((item: TaskType) => {
+               if (item.date === date) {
+                  if (item.isLineThrough) {
+                     item.isDone = true
                   }
-               })
-            }
-            find(action.payload.date, state.tasks)
+               } else if (item.childrens !== null) {
+                  find(date, item.childrens)
+               }
+            })
+         }
+         find(action.payload.date, state.tasks)
       },
       taskRemove: (state, action: PayloadAction<{ date: number }>) => {
          state.tasks = state.tasks.filter(
@@ -130,6 +130,12 @@ export const tasksSlice = createSlice({
    },
 })
 
-export const { taskAdd, addSubTask, taskDone, lineThroughTask, taskRemove } = tasksSlice.actions
+export const {
+   taskAdd,
+   addSubTask,
+   taskDone,
+   lineThroughTask,
+   taskRemove
+} = tasksSlice.actions
 
 export default tasksSlice.reducer

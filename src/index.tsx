@@ -1,6 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import './index.css';
+// import './index.css';
+import { ThemeProvider } from '@mui/material/styles'
+import theme from './theme';
+import { CssBaseline } from '@mui/material';
+
 import App from './App';
 import { store } from './redux/store'
 import { Provider } from 'react-redux'
@@ -95,7 +99,10 @@ type StateType = {
 root.render(
   <React.StrictMode>
     <Provider store={store}>
+    <ThemeProvider theme={theme}>
+      <CssBaseline />
       <App />
+    </ThemeProvider>
     </Provider>
   </React.StrictMode>
 );
