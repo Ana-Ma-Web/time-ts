@@ -9,10 +9,17 @@ export interface InterfaceState {
             name: string
          }
       }
-      addTask: {
+      addRootTask: {
          isOpenTaskInput: boolean
          inputText: string
       }
+      addSubTask: [
+         {
+            subTaskId: number
+            isOpenSubTaskInput: boolean
+            inputText: string
+         },
+      ]
    }
 }
 
@@ -25,12 +32,18 @@ const initialState: InterfaceState = {
             name: '',
          },
       },
-      addTask: {
+      addRootTask: {
          isOpenTaskInput: false,
          inputText: '',
       },
+      addSubTask: [
+         {
+            subTaskId: 0,
+            isOpenSubTaskInput: false,
+            inputText: '',
+         },
+      ]
    },
-
 }
 
 export const interfaceSlice = createSlice({
@@ -46,25 +59,58 @@ export const interfaceSlice = createSlice({
             state.taskBlock.menu.task.id = action.payload.id
          }
       },
-      setIsOpenTaskInput(state, action) {
-         state.taskBlock.addTask.isOpenTaskInput = action.payload.isOpenTaskInput
+
+      setIsOpenRootTaskInput(state, action) {
+         state.taskBlock.addRootTask.isOpenTaskInput = action.payload.isOpenTaskInput
       },
-      setTaskInputText(state, action) {
-         state.taskBlock.addTask.inputText = action.payload.inputText
+      setRootTaskInputText(state, action) {
+         state.taskBlock.addRootTask.inputText = action.payload.inputText
       },
-      clearTaskInput(state, action) {
-         state.taskBlock.addTask.inputText = ''
+      clearRootTaskInput(state, action) {
+         state.taskBlock.addRootTask.inputText = ''
+      },
+
+      setIsOpenSubTaskInput(state, action) {
+         const i = state.taskBlock.addSubTask.findIndex(e => (
+            e.subTaskId === action.payload.subTaskId
+            ))
+            if (i >= 0) {
+               const subTask = state.taskBlock.addSubTask[i]
+               subTask.isOpenSubTaskInput = action.payload.isOpenSubTaskInput
+         } else {
+            state.taskBlock.addSubTask.push({
+               subTaskId: action.payload.subTaskId,
+               isOpenSubTaskInput: action.payload.isOpenSubTaskInput,
+               inputText: '',
+               })
+         }
+      },
+      setSubTaskInputText(state, action) {
+         const i = state.taskBlock.addSubTask.findIndex(e => (
+            e.subTaskId === action.payload.subTaskId
+         ))
+         const subTask = state.taskBlock.addSubTask[i]
+         subTask.inputText = action.payload.inputText
+      },
+      clearSubTaskInput(state, action) {
+         const i = state.taskBlock.addSubTask.findIndex(e => (
+            e.subTaskId === action.payload.subTaskId
+         ))
+         const subTask = state.taskBlock.addSubTask[i]
+         subTask.inputText = ''
       },
    },
 })
 
-
 export const {
    setIsOpenMenu,
    setMenuData,
-   setIsOpenTaskInput,
-   setTaskInputText,
-   clearTaskInput
+   setIsOpenRootTaskInput,
+   // setRootTaskInputText,
+   // clearRootTaskInput,
+   setIsOpenSubTaskInput,
+   setSubTaskInputText,
+   clearSubTaskInput,
 } = interfaceSlice.actions
 
 export default interfaceSlice.reducer

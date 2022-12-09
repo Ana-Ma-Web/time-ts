@@ -2,25 +2,31 @@ import React, { useState } from 'react'
 
 import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
-import { setIsOpenRootTaskInput } from '../../../redux/slices/interfaceSlice';
+import { setIsOpenSubTaskInput } from '../../../redux/slices/interfaceSlice';
 
-import { taskAdd } from '../../../redux/slices/tasksSlice';
+import { addSubTask, taskAdd } from '../../../redux/slices/tasksSlice';
 
 import { ClickAwayListener, IconButton, TextField } from '@mui/material';
-import AddRoundedIcon from '@mui/icons-material/AddRounded';
 
-function TaskInput() {
+type Props = {
+   id: number
+}
+
+function TaskInput(props: Props) {
 
    const dispatch = useDispatch()
-   const isOpenTaskInput = useSelector((state: RootState) =>
-      state.interface.taskBlock.addRootTask.isOpenTaskInput
+
+   const isOpenSubTaskInput = useSelector((state: RootState) =>
+      state.interface.taskBlock.addSubTask.find(e => (
+         e.subTaskId === props.id
+      ))?.isOpenSubTaskInput
    )
 
-   const openTaskInput = () => {
-      dispatch(setIsOpenRootTaskInput({ isOpenTaskInput: true }))
-   }
-   const closeTaskInput = () => {
-      dispatch(setIsOpenRootTaskInput({ isOpenTaskInput: false }))
+   const closeSubTaskInput = () => {
+      dispatch(setIsOpenSubTaskInput({
+         isOpenSubTaskInput: false,
+         subTaskId: props.id
+      }))
    }
 
    const [text, setText] = useState('')
@@ -33,9 +39,9 @@ function TaskInput() {
       setText('')
    }
 
-   const createNewTask = (name: string, color: string) => {
+   const createNewSubTask = (name: string, color: string, date: number) => {
       if (name !== '') {
-         dispatch(taskAdd({ name, color }))
+         dispatch(addSubTask({ name, color, date }))
          inputClear()
       }
    }
@@ -44,10 +50,10 @@ function TaskInput() {
       switch (event.code) {
          case 'Enter':
             event.preventDefault();
-            createNewTask(text, 'white')
+            createNewSubTask(text, 'white', props.id)
             break;
          case 'Escape':
-            text === '' ? closeTaskInput() : inputClear()
+            text === '' ? closeSubTaskInput() : inputClear()
             break;
          default:
             break;
@@ -56,13 +62,11 @@ function TaskInput() {
 
    return (
       <>
-         {isOpenTaskInput ? (
-            <ClickAwayListener onClickAway={closeTaskInput}>
+         {isOpenSubTaskInput && (
+            <ClickAwayListener onClickAway={closeSubTaskInput}>
                <TextField
                   id="standard-textarea"
                   variant='standard'
-                  size="medium"
-                  // label="Add task123123"
                   focused
                   color='primary'
                   placeholder="Task name"
@@ -72,10 +76,6 @@ function TaskInput() {
                   onKeyDown={keyDownHandler}
                />
             </ClickAwayListener>
-         ) : (
-            <IconButton onClick={() => openTaskInput()}>
-               <AddRoundedIcon />
-            </IconButton>
          )}
       </>
    )

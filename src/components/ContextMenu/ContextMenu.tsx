@@ -1,22 +1,12 @@
 // import { List, ListItem, ListSubheader, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
+
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { setIsOpenMenu } from '../../redux/slices/interfaceSlice'
 import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
-import { List, ListItem, ListSubheader, Typography } from '@mui/material'
 
-// const useStyles = makeStyles({
-//    root: {
-//       width: '100%',
-//       maxWidth: 360,
-//       overflow: 'auto',
-//    },
-//    item: {
-//       paddingTop: 0,
-//       paddingBottom: 0,
-//    }
-// },);
+import { List, ListItem, ListSubheader, Typography } from '@mui/material'
 
 function ContextMenu() {
 
@@ -28,8 +18,6 @@ function ContextMenu() {
    )
 
    const dispatch = useDispatch()
-
-   // const classes = useStyles();
 
    const handleClose = () => {
       dispatch(setIsOpenMenu({ isOpenMenu: false }))

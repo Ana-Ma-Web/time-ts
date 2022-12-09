@@ -9,8 +9,9 @@ import Container from '@mui/material/Container';
 // import './App.css';
 import CurDate from "./components/CurDate/CurDate";
 import Clock from "./components/Clock/Clock";
-import Tasks from './components/Tasks/Tasks';
 import Bubbles from './components/Bubbles/Bubbles';
+import Tasks from './components/Tasks/Tasks';
+import { Box } from '@mui/material';
 // import { makeStyles } from '@mui/material';
 // import { ActivityType } from '.';
 
@@ -21,64 +22,51 @@ import Bubbles from './components/Bubbles/Bubbles';
 // export const TasksContext = React.createContext({} as TaskContextProps);
 
 const Item = styled(Paper)(({ theme }) => ({
-  // backgroundColor: theme.palette.mode === 'dark' ? '#34395038' : '#fff',
-  // ...theme.typography.body2,
-  padding: theme.spacing(1),
+  padding: theme.spacing(3),
   textAlign: 'center',
-  // color: theme.palette.text.secondary,
 }));
 
-
-
-// const useStyles = makeStyles({
-//   root: {
-//     textAlign: 'center',
-//     padding: 12,
-//     // color: 'white',
-//   },
-//   paper: {
-//     padding: '15px',
-//     position: 'relative',
-//   },
-// });
 
 function App(props: any) {
 
 
-  // const classes = useStyles();
-
-
   return (
-      <Container>
-
-        <Grid container
-          justifyContent="center" spacing={4}>
-          <Grid item>
-            <Item
-              elevation={0}>
-              <CurDate />
-            </Item>
-          </Grid>
-          <Grid item>
-            <Item
-              elevation={0}>
-              <Clock />
-            </Item>
-          </Grid>
-          <Grid item>
-            <Item
-              elevation={0}>
-              <Tasks />
-            </Item>
-          </Grid>
-          <Grid item>
-            <Item
-              elevation={0}>
-              <Bubbles />
-            </Item>
-          </Grid>
+    <Container>
+      <Grid container
+        justifyContent="center" spacing={4}
+        sx={{
+          padding: 4,
+        }}
+        >
+        <Grid item>
+          <Item
+            elevation={0}>
+            <CurDate />
+          </Item>
         </Grid>
-      </Container>
+        <Grid item>
+          <Item
+            elevation={0}>
+            <Clock />
+          </Item>
+        </Grid>
+        <Grid item>
+          <Item
+            elevation={0}>
+            <Box
+            sx={{textAlign: 'left',}}>
+              <Tasks />
+            </Box>
+          </Item>
+        </Grid>
+        <Grid item>
+          <Item
+            elevation={0}>
+            <Bubbles />
+          </Item>
+        </Grid>
+      </Grid>
+    </Container>
   );
 }
 

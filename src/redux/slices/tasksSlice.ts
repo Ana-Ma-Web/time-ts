@@ -46,7 +46,7 @@ const initialState: TaskState = {
          name: 'meow 1 lvl',
          description: '',
          reset: null,
-         childrens: []
+         childrens: null,
       },
    ],
 }
@@ -74,12 +74,13 @@ export const tasksSlice = createSlice({
          )
       },
       addSubTask: (state, action) => {
+         
          const pushTask = (item: TaskType) => {
             if (item.childrens !== null) {
                item.childrens.push(
                   createNewTask(action.payload.color, action.payload.name)
-               )
-            } else {
+                  )
+               } else {
                item.childrens = [
                   createNewTask(action.payload.color, action.payload.name)
                ]
