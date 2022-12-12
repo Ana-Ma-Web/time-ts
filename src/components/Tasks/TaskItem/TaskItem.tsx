@@ -1,7 +1,11 @@
 import React from 'react'
 
 import { useDispatch } from 'react-redux'
-import { lineThroughTask, taskDone } from '../../../redux/slices/tasksSlice'
+import {
+   lineThroughTask,
+   taskDone,
+   toggleExpandTask
+} from '../../../redux/slices/tasksSlice'
 
 import TreeItem, {
    TreeItemProps,
@@ -13,8 +17,6 @@ import Typography from '@mui/material/Typography';
 import { IconButton } from '@mui/material';
 import AddRoundedIcon from '@mui/icons-material/AddRounded';
 import { setIsOpenSubTaskInput } from '../../../redux/slices/interfaceSlice';
-
-
 
 const CustomContent = React.forwardRef(function CustomContent(
    props: TreeItemContentProps,
@@ -43,13 +45,15 @@ const CustomContent = React.forwardRef(function CustomContent(
       event: React.MouseEvent<HTMLDivElement, MouseEvent>,
    ) => {
       handleExpansion(event);
+      const id = [nodeId]
+      dispatch(toggleExpandTask({taskIds: id}))
    };
 
    const handleSelectionClick = (
       event: React.MouseEvent<HTMLDivElement, MouseEvent>,
    ) => {
       preventSelection(event);
-      const id = Number(props.id)
+      const id = Number(nodeId)
 
       dispatch(lineThroughTask({ date: id }))
       setTimeout(() => {
@@ -58,9 +62,9 @@ const CustomContent = React.forwardRef(function CustomContent(
    };
 
    const openTaskInput = (id: number) => {
-      dispatch(setIsOpenSubTaskInput({ 
-         isOpenSubTaskInput: true, 
-         subTaskId: id 
+      dispatch(setIsOpenSubTaskInput({
+         isOpenSubTaskInput: true,
+         subTaskId: id
       }))
    }
 
@@ -70,7 +74,8 @@ const CustomContent = React.forwardRef(function CustomContent(
          })}
          ref={ref as React.Ref<HTMLDivElement>}
       >
-         <div onClick={handleExpansionClick}
+         <div
+            onClick={handleExpansionClick}
             className={classes.iconContainer}
          >
             {icon}
@@ -79,13 +84,18 @@ const CustomContent = React.forwardRef(function CustomContent(
             onClick={handleSelectionClick}
             component="div"
             className={classes.label}
+            sx={{'&:hover': {
+                     color: 'white',
+                  }
+            }}
          >
             {label}
          </Typography>
-         <IconButton onClick={() => openTaskInput(Number(nodeId))}>
+         <IconButton
+            disableRipple
+            onClick={() => openTaskInput(Number(nodeId))}>
             <AddRoundedIcon />
          </IconButton>
-
       </div>
    );
 });

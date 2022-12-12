@@ -14,6 +14,7 @@ const initialState: TaskState = {
          date: 345678,
          isDone: false,
          isLineThrough: false,
+         isExpanded: true,
          color: 'pink',
          name: 'meow 1 lvl',
          description: '',
@@ -22,6 +23,7 @@ const initialState: TaskState = {
             date: 1234,
             isDone: false,
             isLineThrough: false,
+            isExpanded: true,
             color: 'wheat',
             name: 'meow 2 lvl',
             description: '',
@@ -30,6 +32,7 @@ const initialState: TaskState = {
                date: 4321,
                isDone: false,
                isLineThrough: false,
+               isExpanded: true,
                color: 'pink',
                name: 'meow 3 lvl',
                description: '',
@@ -42,6 +45,7 @@ const initialState: TaskState = {
          date: 666,
          isDone: false,
          isLineThrough: false,
+         isExpanded: true,
          color: 'pink',
          name: 'meow 1 lvl',
          description: '',
@@ -56,6 +60,7 @@ const createNewTask = (color: string, name: string) => {
       date: (new Date()).getTime(),
       isDone: false,
       isLineThrough: false,
+      isExpanded: true,
       color: color,
       name: name,
       description: '',
@@ -74,13 +79,12 @@ export const tasksSlice = createSlice({
          )
       },
       addSubTask: (state, action) => {
-         
          const pushTask = (item: TaskType) => {
             if (item.childrens !== null) {
                item.childrens.push(
                   createNewTask(action.payload.color, action.payload.name)
-                  )
-               } else {
+               )
+            } else {
                item.childrens = [
                   createNewTask(action.payload.color, action.payload.name)
                ]
@@ -97,6 +101,7 @@ export const tasksSlice = createSlice({
          }
          find(action.payload.date, state.tasks)
       },
+
       lineThroughTask: (state, action) => {
          const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
@@ -109,6 +114,21 @@ export const tasksSlice = createSlice({
          }
          find(action.payload.date, state.tasks)
       },
+      toggleExpandTask: (state, action) => {
+         const find = (date: number, items: TaskType[]) => {
+            items.forEach((item: TaskType) => {
+               if (item.date === date) {
+                  item.isExpanded = !item.isExpanded
+               } else if (item.childrens !== null) {
+                  find(date, item.childrens)
+               }
+            })
+         }
+         action.payload.taskIds.forEach((task: string) => {
+            find(Number(task), state.tasks)
+         });
+      },
+
       taskDone: (state, action) => {
          const find = (date: number, items: TaskType[]) => {
 
@@ -124,6 +144,7 @@ export const tasksSlice = createSlice({
          }
          find(action.payload.date, state.tasks)
       },
+
       taskRemove: (state, action: PayloadAction<{ date: number }>) => {
          state.tasks = state.tasks.filter(
             task => task.date !== action.payload.date)
@@ -136,7 +157,8 @@ export const {
    addSubTask,
    taskDone,
    lineThroughTask,
-   taskRemove
+   toggleExpandTask,
+   taskRemove,
 } = tasksSlice.actions
 
 export default tasksSlice.reducer

@@ -73,9 +73,14 @@ function TaskInput() {
                />
             </ClickAwayListener>
          ) : (
-            <IconButton onClick={() => openTaskInput()}>
+            <IconButton 
+            disableRipple
+            onClick={() => openTaskInput()}>
                <AddRoundedIcon />
             </IconButton>
+            // <CustomButton>
+
+            // </CustomButton>
          )}
       </>
    )

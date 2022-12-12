@@ -106,8 +106,6 @@ export const {
    setIsOpenMenu,
    setMenuData,
    setIsOpenRootTaskInput,
-   // setRootTaskInputText,
-   // clearRootTaskInput,
    setIsOpenSubTaskInput,
    setSubTaskInputText,
    clearSubTaskInput,

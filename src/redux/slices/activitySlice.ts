@@ -11,7 +11,7 @@ const initialState: ActivityState = {
    activity: [
       {
          id: 0,
-         color: '#52D9C2',
+         color: '#EB8AE2',
          isAct: true,
          widget: {
             widgetIcons: [
@@ -68,12 +68,12 @@ const initialState: ActivityState = {
             dailySchedule: {
                intervals: [
                   {
-                     timeStart: 1604995200000,
-                     timeEnd: 1605006000000,
+                     timeStart: 1670565600000,
+                     timeEnd: 1670572800000,
                   },
                   {
-                     timeStart: 1605016800000,
-                     timeEnd: 1605034800000,
+                     timeStart: 1670576400000,
+                     timeEnd: 1670583600000,
                   },
                ],
             },
@@ -82,7 +82,7 @@ const initialState: ActivityState = {
                   {
                      id: 1,
                      svgId: 4,
-                     hours: 6,
+                     hours: 23,
                      minutes: 0,
                   },
                   {

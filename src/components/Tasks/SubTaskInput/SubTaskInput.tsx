@@ -4,12 +4,13 @@ import { useDispatch, useSelector } from 'react-redux';
 import { RootState } from '../../../redux/store';
 import { setIsOpenSubTaskInput } from '../../../redux/slices/interfaceSlice';
 
-import { addSubTask, taskAdd } from '../../../redux/slices/tasksSlice';
+import { addSubTask, } from '../../../redux/slices/tasksSlice';
 
-import { ClickAwayListener, IconButton, TextField } from '@mui/material';
+import { ClickAwayListener, TextField } from '@mui/material';
 
 type Props = {
    id: number
+   color: string
 }
 
 function TaskInput(props: Props) {
@@ -50,7 +51,7 @@ function TaskInput(props: Props) {
       switch (event.code) {
          case 'Enter':
             event.preventDefault();
-            createNewSubTask(text, 'white', props.id)
+            createNewSubTask(text, props.color, props.id)
             break;
          case 'Escape':
             text === '' ? closeSubTaskInput() : inputClear()

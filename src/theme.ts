@@ -23,6 +23,9 @@ const theme = createTheme({
          contrastText: '#fff',
       },
       mode: 'dark',
+      action: {
+         hover: 'transparent',
+      },
       background: {
          paper: '#34395038',
          default: '#222531',

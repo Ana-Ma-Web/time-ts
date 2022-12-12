@@ -25,6 +25,7 @@ export type TaskType = {
   date: number,
   isDone: boolean,
   isLineThrough: boolean,
+  isExpanded: boolean,
   color: string,
   name: string,
   description: string,
