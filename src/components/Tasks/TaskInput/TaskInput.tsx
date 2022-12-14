@@ -25,7 +25,7 @@ function TaskInput() {
 
    const [text, setText] = useState('')
 
-   const handleChande = (e: React.KeyboardEvent<HTMLInputElement>) => {
+   const handleChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
       setText(e.target.value)
    }
 
@@ -62,13 +62,12 @@ function TaskInput() {
                   id="standard-textarea"
                   variant='standard'
                   size="medium"
-                  // label="Add task123123"
                   focused
                   color='primary'
                   placeholder="Task name"
                   value={text}
                   inputRef={input => input && input.focus()}
-                  onChange={handleChande}
+                  onChange={handleChange}
                   onKeyDown={keyDownHandler}
                />
             </ClickAwayListener>
@@ -78,9 +77,6 @@ function TaskInput() {
             onClick={() => openTaskInput()}>
                <AddRoundedIcon />
             </IconButton>
-            // <CustomButton>
-
-            // </CustomButton>
          )}
       </>
    )

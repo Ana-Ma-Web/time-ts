@@ -3,10 +3,16 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface InterfaceState {
    taskBlock: {
       menu: {
-         isOpenMenu: boolean
-         task: {
+         openMenu: false | 'contextMenu' | 'editMenu'
+         taskMenuData: {
             id: number
             name: string
+            color: string
+         }
+         editMenuData: {
+            newName: string
+            newDescription: string
+            newColor: string
          }
       }
       addRootTask: {
@@ -26,10 +32,16 @@ export interface InterfaceState {
 const initialState: InterfaceState = {
    taskBlock: {
       menu: {
-         isOpenMenu: false,
-         task: {
+         openMenu: false,
+         taskMenuData: {
             id: 0,
             name: '',
+            color: '',
+         },
+         editMenuData: {
+            newName: '',
+            newDescription: '',
+            newColor: '',
          },
       },
       addRootTask: {
@@ -50,14 +62,19 @@ export const interfaceSlice = createSlice({
    name: 'interface',
    initialState,
    reducers: {
-      setIsOpenMenu(state, action) {
-         state.taskBlock.menu.isOpenMenu = action.payload.isOpenMenu
+      setOpenMenu(state, action) {
+         state.taskBlock.menu.openMenu = action.payload.openMenu
       },
-      setMenuData(state, action) {
-         if (state.taskBlock.menu.task) {
-            state.taskBlock.menu.task.name = action.payload.name
-            state.taskBlock.menu.task.id = action.payload.id
-         }
+      setTaskMenuData(state, action) {
+            state.taskBlock.menu.taskMenuData.name = action.payload.name
+            state.taskBlock.menu.taskMenuData.id = action.payload.id
+            state.taskBlock.menu.taskMenuData.color = action.payload.color
+      },
+      setEditTaskMenuData(state, action) {
+         state.taskBlock.menu.editMenuData.newName = action.payload.name
+         state.taskBlock.menu.editMenuData.newColor = action.payload.color
+         state.taskBlock.menu.editMenuData.newDescription =
+            action.payload.description
       },
 
       setIsOpenRootTaskInput(state, action) {
@@ -73,16 +90,16 @@ export const interfaceSlice = createSlice({
       setIsOpenSubTaskInput(state, action) {
          const i = state.taskBlock.addSubTask.findIndex(e => (
             e.subTaskId === action.payload.subTaskId
-            ))
-            if (i >= 0) {
-               const subTask = state.taskBlock.addSubTask[i]
-               subTask.isOpenSubTaskInput = action.payload.isOpenSubTaskInput
+         ))
+         if (i >= 0) {
+            const subTask = state.taskBlock.addSubTask[i]
+            subTask.isOpenSubTaskInput = action.payload.isOpenSubTaskInput
          } else {
             state.taskBlock.addSubTask.push({
                subTaskId: action.payload.subTaskId,
                isOpenSubTaskInput: action.payload.isOpenSubTaskInput,
                inputText: '',
-               })
+            })
          }
       },
       setSubTaskInputText(state, action) {
@@ -103,8 +120,9 @@ export const interfaceSlice = createSlice({
 })
 
 export const {
-   setIsOpenMenu,
-   setMenuData,
+   setOpenMenu,
+   setTaskMenuData,
+   setEditTaskMenuData,
    setIsOpenRootTaskInput,
    setIsOpenSubTaskInput,
    setSubTaskInputText,

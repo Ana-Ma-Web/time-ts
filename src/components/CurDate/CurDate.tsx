@@ -71,21 +71,19 @@ function CurDate() {
             {('0' + curDate.getHours()).slice(-2)}:
             {('0' + curDate.getMinutes()).slice(-2)}
          </Typography>
-            <Typography variant='caption' component='div'
-               // className={classes.date}
-               >
-               {('0' + curDate.getDate()).slice(-2)}.
-               {('0' + (curDate.getMonth() + 1)).slice(-2)}.
-               {curDate.getFullYear()}
-            </Typography>
+         <Typography variant='caption' component='div'>
+            {('0' + curDate.getDate()).slice(-2)}.
+            {('0' + (curDate.getMonth() + 1)).slice(-2)}.
+            {curDate.getFullYear()}
+         </Typography>
          <Grid container spacing={1} >
             {
                daysOfWeek.map((item: string, i: number) => (
-                  <Grid item key={i} 
+                  <Grid item key={i}
                   // className={classes.day}
                   >
                      <Typography variant='body2' component='div'
-                        // className={classes.dayText}
+                     // className={classes.dayText}
                      >
                         {item}
                      </Typography>

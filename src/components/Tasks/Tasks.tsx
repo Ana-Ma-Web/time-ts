@@ -3,7 +3,7 @@ import React from 'react'
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 
-import { setIsOpenMenu, setMenuData } from '../../redux/slices/interfaceSlice'
+import { setOpenMenu, setTaskMenuData } from '../../redux/slices/interfaceSlice'
 
 import { TaskType } from '../..'
 import Widget from '../Widget/Widget'
@@ -16,6 +16,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TaskInput from './TaskInput/TaskInput'
 import SubTaskInput from './SubTaskInput/SubTaskInput'
 import TaskItem from './TaskItem/TaskItem'
+import EditMenu from '../EditMenu/EditMenu'
 
 export default function MuiTasks() {
 
@@ -28,22 +29,19 @@ export default function MuiTasks() {
       state.activity.activity).filter(
          activity => activity.widget.widgetIcons !== null
       )
-   const isMenuOpen = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.isOpenMenu
+   const menuOpen = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.openMenu
    )
 
    let menuControl = false
 
-   const openMenu = (taskId?: number) => {
-      dispatch(setIsOpenMenu({ isOpenMenu: true }))
-   }
-
    const openContextMenu = (e: React.MouseEvent<HTMLLIElement>,
-      name: string, id: number) => {
-      e.preventDefault();
-      openMenu()
-      if (menuControl === false) {
-         dispatch(setMenuData({ name: name, id: id }))
+      name: string, id: number, color: string) => {
+         e.preventDefault();
+         if (menuControl === false) {
+         console.log('name', name);
+         dispatch(setOpenMenu({ openMenu: 'contextMenu' }))
+         dispatch(setTaskMenuData({ name: name, id: id, color: color }))
          menuControl = true
       }
    }
@@ -76,10 +74,10 @@ export default function MuiTasks() {
                label={task.name}
                nodeId={String(task.date)}
                style={{ 'color': task.color }}
-               onContextMenu={(e) => { openContextMenu(e, task.name, task.date) }}
+               onContextMenu={(e) => { openContextMenu(e, task.name, task.date, task.color) }}
                sx={task.isLineThrough ? {
                   textDecoration: "line-through"
-                  } : {}}
+               } : {}}
             >
                {Array.isArray(task.childrens) ? task.childrens.map((node) => renderTree(node)) : null}
                < SubTaskInput id={task.date} color={task.color} />
@@ -88,12 +86,14 @@ export default function MuiTasks() {
       }
    };
 
-   return (
-      <>
-         {isMenuOpen ? (
-            <ContextMenu></ContextMenu>
-         ) : (
-            <>
+   const printTaskBlock = () => {
+      switch (menuOpen) {
+         case 'contextMenu':
+            return <ContextMenu></ContextMenu>
+         case 'editMenu':
+            return <EditMenu type={'task'}></EditMenu>
+         case false:
+            return (<>
                <Widget iconsActs={iconsInWidget} />
                <Divider />
                <TreeView
@@ -108,9 +108,13 @@ export default function MuiTasks() {
                   ))}
                   <TaskInput />
                </TreeView>
+            </>)
+         default:
+            break;
+      }
+   }
 
-            </>
-         )}
-      </>
+   return (
+      <>{printTaskBlock()}</>
    );
 }

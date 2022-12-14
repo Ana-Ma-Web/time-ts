@@ -3,7 +3,7 @@ import React from 'react'
 
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setIsOpenMenu } from '../../redux/slices/interfaceSlice'
+import { setOpenMenu } from '../../redux/slices/interfaceSlice'
 import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
 import { List, ListItem, ListSubheader, Typography } from '@mui/material'
@@ -11,16 +11,16 @@ import { List, ListItem, ListSubheader, Typography } from '@mui/material'
 function ContextMenu() {
 
    const name = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.task.name
+      state.interface.taskBlock.menu.taskMenuData.name
    )
    const id = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.task.id
+      state.interface.taskBlock.menu.taskMenuData.id
    )
 
    const dispatch = useDispatch()
 
    const handleClose = () => {
-      dispatch(setIsOpenMenu({ isOpenMenu: false }))
+      dispatch(setOpenMenu({ openMenu: false }))
    }
 
    const handleComplete = (id: number) => {
@@ -31,8 +31,18 @@ function ContextMenu() {
       handleClose()
    }
 
+   const handleEdit = (id: number, name: string) => {
+      dispatch(setOpenMenu({ openMenu: 'editMenu' }))
+   }
+
    return (
-      <List subheader={<ListSubheader>{`${name}`}</ListSubheader>} >
+      <List 
+      subheader={<ListSubheader>{`${name}`}</ListSubheader>} 
+      sx={{
+         height: 225,
+         width: 340,
+      }}
+      >
          <ListItem
             onClick={() => handleComplete(id)}
          >
@@ -40,7 +50,9 @@ function ContextMenu() {
                Завершить
             </Typography>
          </ListItem>
-         <ListItem >
+         <ListItem
+            onClick={() => handleEdit(id, name)}
+         >
             <Typography>
                Изменить
             </Typography>

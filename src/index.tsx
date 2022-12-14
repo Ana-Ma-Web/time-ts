@@ -53,36 +53,39 @@ export type DailyScheduleType = {
   intervals: Array<IntervalsType> | null
 }
 export type DailyEventType = {
-  icons: Array<IconsType> | null,
+  icons: Array<IconsType> | null
 }
 export type ActClockType = {
   dailySchedule: DailyScheduleType,
   dailyEvent: DailyEventType,
 }
 export type ResetType = {
-  startingPoint: number,
-  cycleTime: number,
-  ignationIndex: number,
+  startingPoint: number
+  cycleTime: number
+  ignationIndex: number
 }
 export type BubbleType = {
-  id: number,
-  name: string,
-  svgId: number,
-  totalTime: number,
-  recordedTime: number,
-  reset: ResetType,
-  color: string,
+  id: number
+  name: string
+  svgId: number
+  totalTime: number
+  recordedTime: number
+  reset: ResetType
+  color: string
 }
 export type ScheduledActivitiesType = {
-  bubbles: BubbleType[] | null,
+  bubbles: BubbleType[] | null
 }
 export type ActivityType = {
-  id: number;
-  color: string;
-  isAct: boolean;
-  widget: WidgetType,
-  actClock: ActClockType,
-  scheduledActivities: ScheduledActivitiesType,
+  id: number
+  name: string
+  description: string
+  color: string
+  isAct: boolean
+  widget: WidgetType
+  actClock: ActClockType
+  scheduledActivities: ScheduledActivitiesType
+  taskIds: number[] | null
 }
 export type WidgetActChangeType = (actId: number, widgetIconId: number) => void
 export type ObserverType = (state: StateType) => void

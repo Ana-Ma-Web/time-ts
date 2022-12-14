@@ -14,9 +14,9 @@ type Props = {
 }
 
 function TaskInput(props: Props) {
-
    const dispatch = useDispatch()
 
+   const [text, setText] = useState('')
    const isOpenSubTaskInput = useSelector((state: RootState) =>
       state.interface.taskBlock.addSubTask.find(e => (
          e.subTaskId === props.id
@@ -30,9 +30,7 @@ function TaskInput(props: Props) {
       }))
    }
 
-   const [text, setText] = useState('')
-
-   const handleChande = (e: React.KeyboardEvent<HTMLInputElement>) => {
+   const handleChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
       setText(e.target.value)
    }
 
@@ -73,7 +71,7 @@ function TaskInput(props: Props) {
                   placeholder="Task name"
                   value={text}
                   inputRef={input => input && input.focus()}
-                  onChange={handleChande}
+                  onChange={handleChange}
                   onKeyDown={keyDownHandler}
                />
             </ClickAwayListener>

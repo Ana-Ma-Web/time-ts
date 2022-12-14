@@ -101,6 +101,20 @@ export const tasksSlice = createSlice({
          }
          find(action.payload.date, state.tasks)
       },
+      editTask: (state, action) => {
+         const find = (date: number, items: TaskType[]) => {
+            items.forEach((item: TaskType) => {
+               if (item.date === date) {
+                  item.name = action.payload.name
+                  item.description = action.payload.description
+                  item.color = action.payload.color
+               } else if (item.childrens !== null) {
+                  find(date, item.childrens)
+               }
+            })
+         }
+         find(action.payload.date, state.tasks)
+      },
 
       lineThroughTask: (state, action) => {
          const find = (date: number, items: TaskType[]) => {
@@ -155,6 +169,7 @@ export const tasksSlice = createSlice({
 export const {
    taskAdd,
    addSubTask,
+   editTask,
    taskDone,
    lineThroughTask,
    toggleExpandTask,

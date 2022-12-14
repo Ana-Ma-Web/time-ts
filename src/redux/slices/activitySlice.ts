@@ -11,6 +11,8 @@ const initialState: ActivityState = {
    activity: [
       {
          id: 0,
+         name: 'first act',
+         description: '',
          color: '#EB8AE2',
          isAct: true,
          widget: {
@@ -118,9 +120,9 @@ const initialState: ActivityState = {
             },
             ],
          },
+         taskIds: null,
       },
    ],
-
 }
 
 export const activitySlice = createSlice({
