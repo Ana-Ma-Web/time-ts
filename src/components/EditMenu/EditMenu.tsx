@@ -1,6 +1,7 @@
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
 import React, { useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
+import { TaskType } from '../..'
 import { setEditTaskMenuData, setOpenMenu, setTaskMenuData } from '../../redux/slices/interfaceSlice'
 import { editTask } from '../../redux/slices/tasksSlice'
 import { RootState } from '../../redux/store'
@@ -13,14 +14,32 @@ type Props = {
 export default function EditMenu(props: Props) {
 
    const dispatch = useDispatch()
+
+   const taskFind = (date: number, items: TaskType[]): TaskType => {
+      let foundItem = items[0]
+
+      const subtaskFind = (date: number, items: TaskType[]) => {
+         items.forEach((item: TaskType) => {
+            if (item.date === date) {
+               foundItem = item
+            } else if (item.childrens !== null) {
+               subtaskFind(date, item.childrens)
+            }
+         })
+      }
+      subtaskFind(date, items)
+      return foundItem
+   }
+
    const id = useSelector((state: RootState) =>
-   state.interface.taskBlock.menu.taskMenuData.id
+      state.interface.taskBlock.menu.taskMenuData.id
    )
    const task = useSelector((state: RootState) =>
-   state.tasks.tasks.find((task) => task.date === id)
+      taskFind(id, state.tasks.tasks)
    )
+
    const newTaskColor = useSelector((state: RootState) =>
-   state.interface.taskBlock.menu.editMenuData.newColor
+      state.interface.taskBlock.menu.editMenuData.newColor
    )
    const taskColor = task ? task.color : ''
    const textColor = newTaskColor === '' ? taskColor : newTaskColor
@@ -54,11 +73,11 @@ export default function EditMenu(props: Props) {
          color: textColor,
       }))
       clearMenuData()
-      dispatch(setOpenMenu({openMenu: false}))
+      dispatch(setOpenMenu({ openMenu: false }))
    }
    const handleCancel = () => {
       clearMenuData()
-      dispatch(setOpenMenu({openMenu: false}))
+      dispatch(setOpenMenu({ openMenu: false }))
    }
 
    return (
@@ -79,7 +98,7 @@ export default function EditMenu(props: Props) {
                sx={{ input: { color: textColor } }}
                value={nameText}
                onChange={handleNameChange}
-               // onKeyDown={keyDownHandler}
+            // onKeyDown={keyDownHandler}
             />
             <TextField
                id="input-description"
@@ -90,15 +109,15 @@ export default function EditMenu(props: Props) {
                sx={{ input: { color: textColor } }}
                value={descriptionText}
                onChange={handleDescriptionChange}
-               // onKeyDown={keyDownHandler}
+            // onKeyDown={keyDownHandler}
             />
-            <ColorInput type='task' startColor={taskColor}/>
+            <ColorInput type='task' startColor={taskColor} />
             <Stack direction='row' spacing={4}>
-               <Button fullWidth onClick={() => {handleSubmit()}}
-               variant="contained" color="success"
+               <Button fullWidth onClick={() => { handleSubmit() }}
+                  variant="contained" color="success"
                >OK</Button>
-               <Button fullWidth onClick={() => {handleCancel()}}
-               variant="contained"color="error"
+               <Button fullWidth onClick={() => { handleCancel() }}
+                  variant="contained" color="error"
                >CANCEL</Button>
             </Stack>
          </Stack>
