@@ -38,7 +38,14 @@ const theme = createTheme({
    },
    spacing: 4,
    components: {
+      // MuiMenu: {
+      //    styleOverrides: {
+      //       root: {
+      //          fontSize: '10rem',
 
+      //       }
+      //    }
+      // },
    },
 })
 

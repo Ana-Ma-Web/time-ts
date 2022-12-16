@@ -88,11 +88,11 @@ export default function EditMenu(props: Props) {
          color: textColor,
       }))
       clearMenuData()
-      dispatch(setOpenMenu({ openMenu: false }))
+      dispatch(setOpenMenu({ menuTypeOpen: false }))
    }
    const handleCancel = () => {
       clearMenuData()
-      dispatch(setOpenMenu({ openMenu: false }))
+      dispatch(setOpenMenu({ menuTypeOpen: false }))
    }
 
    return (

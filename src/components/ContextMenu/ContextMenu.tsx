@@ -3,12 +3,12 @@ import React from 'react'
 
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setOpenMenu, setTaskMenuData } from '../../redux/slices/interfaceSlice'
+import { setOpenMenu, toggleContextmenu } from '../../redux/slices/interfaceSlice'
 import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
-import { List, ListItem, ListSubheader, Typography } from '@mui/material'
+import { ClickAwayListener, Menu, MenuItem, MenuProps, Typography } from '@mui/material'
 
-function ContextMenu() {
+function ContextMenu(props: MenuProps) {
 
    const name = useSelector((state: RootState) =>
       state.interface.taskBlock.menu.taskMenuData.name
@@ -20,60 +20,33 @@ function ContextMenu() {
    const dispatch = useDispatch()
 
    const handleClose = () => {
-      dispatch(setOpenMenu({ openMenu: false }))
-      dispatch(setTaskMenuData({
-         id: 0,
-         name: '',
-         color: '',
-      }))
-
+      dispatch(toggleContextmenu({}))
    }
 
    const handleComplete = (id: number) => {
       dispatch(lineThroughTask({ date: id }))
       setTimeout(() => {
          dispatch(taskDone({ date: id }))
-      }, 2000);
+      }, 3000);
       handleClose()
    }
 
    const handleEdit = (id: number, name: string) => {
-      dispatch(setOpenMenu({ openMenu: 'editMenu' }))
+      dispatch(setOpenMenu({ menuTypeOpen: 'editMenu' }))
+      handleClose()
    }
 
    return (
-      <List 
-      subheader={<ListSubheader>{`${name}`}</ListSubheader>} 
-      sx={{
-         height: 225,
-         width: 340,
-      }}
-      >
-         <ListItem
-            onClick={() => handleComplete(id)}
-         >
-            <Typography>
-               Завершить
-            </Typography>
-         </ListItem>
-         <ListItem
-            onClick={() => handleEdit(id, name)}
-         >
-            <Typography>
-               Изменить
-            </Typography>
-         </ListItem>
-         <ListItem >
-            <Typography>
-               Дублировать
-            </Typography>
-         </ListItem>
-         <ListItem >
-            <Typography>
-               Удалить
-            </Typography>
-         </ListItem>
-      </List>
+      <>
+         <ClickAwayListener onClickAway={handleClose}>
+            <Menu open={props.open} anchorEl={props.anchorEl}>
+               <MenuItem onClick={() => handleComplete(id)}>Завершить</MenuItem>
+               <MenuItem onClick={() => handleEdit(id, name)}>Изменить</MenuItem>
+               <MenuItem onClick={() => { }}>Дублировать</MenuItem>
+               <MenuItem onClick={() => { }}>Удалить</MenuItem>
+            </Menu>
+         </ClickAwayListener>
+      </>
    );
 }
 

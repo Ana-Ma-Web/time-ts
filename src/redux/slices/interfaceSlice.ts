@@ -3,7 +3,11 @@ import { createSlice } from '@reduxjs/toolkit'
 export interface InterfaceState {
    taskBlock: {
       menu: {
-         openMenu: false | 'contextMenu' | 'editMenu'
+         menuTypeOpen: false | 'editMenu'
+         contextMenu: {
+            isOpen: boolean
+            contextMenuTaskId: number
+         }
          taskMenuData: {
             id: number
             name: string
@@ -32,7 +36,11 @@ export interface InterfaceState {
 const initialState: InterfaceState = {
    taskBlock: {
       menu: {
-         openMenu: false,
+         menuTypeOpen: false,
+         contextMenu: {
+            isOpen: false,
+            contextMenuTaskId: 0,
+         },
          taskMenuData: {
             id: 0,
             name: '',
@@ -63,7 +71,11 @@ export const interfaceSlice = createSlice({
    initialState,
    reducers: {
       setOpenMenu(state, action) {
-         state.taskBlock.menu.openMenu = action.payload.openMenu
+         state.taskBlock.menu.menuTypeOpen = action.payload.menuTypeOpen
+      },
+      toggleContextmenu(state, action) {
+         state.taskBlock.menu.contextMenu.isOpen = 
+         !state.taskBlock.menu.contextMenu.isOpen
       },
       setTaskMenuData(state, action) {
             state.taskBlock.menu.taskMenuData.name = action.payload.name
@@ -125,6 +137,7 @@ export const interfaceSlice = createSlice({
 
 export const {
    setOpenMenu,
+   toggleContextmenu,
    setTaskMenuData,
    setEditTaskMenuName,
    setEditTaskMenuColor,
