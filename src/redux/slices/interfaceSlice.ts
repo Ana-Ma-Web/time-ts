@@ -70,9 +70,13 @@ export const interfaceSlice = createSlice({
             state.taskBlock.menu.taskMenuData.id = action.payload.id
             state.taskBlock.menu.taskMenuData.color = action.payload.color
       },
-      setEditTaskMenuData(state, action) {
+      setEditTaskMenuName(state, action) {
          state.taskBlock.menu.editMenuData.newName = action.payload.name
+      },
+      setEditTaskMenuColor(state, action) {
          state.taskBlock.menu.editMenuData.newColor = action.payload.color
+      },
+      setEditTaskMenuDescription(state, action) {
          state.taskBlock.menu.editMenuData.newDescription =
             action.payload.description
       },
@@ -122,7 +126,9 @@ export const interfaceSlice = createSlice({
 export const {
    setOpenMenu,
    setTaskMenuData,
-   setEditTaskMenuData,
+   setEditTaskMenuName,
+   setEditTaskMenuColor,
+   setEditTaskMenuDescription,
    setIsOpenRootTaskInput,
    setIsOpenSubTaskInput,
    setSubTaskInputText,

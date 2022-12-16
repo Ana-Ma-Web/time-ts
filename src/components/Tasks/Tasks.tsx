@@ -33,17 +33,12 @@ export default function MuiTasks() {
       state.interface.taskBlock.menu.openMenu
    )
 
-   let menuControl = false
-
-   const openContextMenu = (e: React.MouseEvent<HTMLLIElement>,
+   const openContextMenu = (e: React.MouseEvent<HTMLElement>,
       name: string, id: number, color: string) => {
-         e.preventDefault();
-         if (menuControl === false) {
-         console.log('name', name);
-         dispatch(setOpenMenu({ openMenu: 'contextMenu' }))
-         dispatch(setTaskMenuData({ name: name, id: id, color: color }))
-         menuControl = true
-      }
+      e.stopPropagation();
+      e.preventDefault();
+      dispatch(setOpenMenu({ openMenu: 'contextMenu' }))
+      dispatch(setTaskMenuData({ name: name, id: id, color: color }))
    }
 
    const taskIdsCount = (tasks: TaskType[]) => {

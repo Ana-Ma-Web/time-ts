@@ -33,7 +33,8 @@ function CurDate() {
    }, []);
 
    const tick = () => {
-      setCurDate(new Date());
+      const today = new Date()
+      setCurDate(today);
       updateWeek()
    }
 

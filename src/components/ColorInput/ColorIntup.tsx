@@ -1,7 +1,7 @@
 import { MuiColorInput } from 'mui-color-input'
 import React from 'react'
 import { useDispatch, useSelector } from 'react-redux';
-import { setEditTaskMenuData } from '../../redux/slices/interfaceSlice';
+import { setEditTaskMenuColor } from '../../redux/slices/interfaceSlice';
 import { RootState } from '../../redux/store';
 
 type Props = {
@@ -18,7 +18,7 @@ export default function ColorIntup(props: Props) {
    )
 
    const handleChange = (color: string) => {
-      dispatch(setEditTaskMenuData({color}))
+      dispatch(setEditTaskMenuColor({color}))
    }
 
    return (

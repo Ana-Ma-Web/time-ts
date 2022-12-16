@@ -1,8 +1,13 @@
 import { Box, Button, Stack, TextField, Typography } from '@mui/material'
-import React, { useState } from 'react'
+import React from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { TaskType } from '../..'
-import { setEditTaskMenuData, setOpenMenu, setTaskMenuData } from '../../redux/slices/interfaceSlice'
+import {
+   setEditTaskMenuName,
+   setEditTaskMenuDescription,
+   setOpenMenu,
+   setTaskMenuData
+} from '../../redux/slices/interfaceSlice'
 import { editTask } from '../../redux/slices/tasksSlice'
 import { RootState } from '../../redux/store'
 import ColorInput from '../ColorInput/ColorIntup'
@@ -44,14 +49,23 @@ export default function EditMenu(props: Props) {
    const taskColor = task ? task.color : ''
    const textColor = newTaskColor === '' ? taskColor : newTaskColor
 
-   const [nameText, setNameText] = useState(task?.name)
-   const [descriptionText, setDescriptionText] = useState(task?.description)
+   const newNameText = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.editMenuData.newName
+   )
+   const nameText = newNameText === '' ? task.name : newNameText
+
+   const newDescriptionText = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.editMenuData.newDescription
+   )
+   const descriptionText = newDescriptionText === '' ?
+      task.description :
+      newDescriptionText
 
    const handleNameChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      setNameText(e.target.value)
+      dispatch(setEditTaskMenuName({ name: e.target.value }))
    }
    const handleDescriptionChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
-      setDescriptionText(e.target.value)
+      dispatch(setEditTaskMenuDescription({ description: e.target.value }))
    }
    const clearMenuData = () => {
       dispatch(setTaskMenuData({
@@ -59,10 +73,11 @@ export default function EditMenu(props: Props) {
          name: '',
          color: '',
       }))
-      dispatch(setEditTaskMenuData({
+      dispatch(setEditTaskMenuName({
          name: '',
+      }))
+      dispatch(setEditTaskMenuDescription({
          description: '',
-         color: '',
       }))
    }
    const handleSubmit = () => {

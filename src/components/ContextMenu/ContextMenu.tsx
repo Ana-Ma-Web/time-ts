@@ -3,7 +3,7 @@ import React from 'react'
 
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setOpenMenu } from '../../redux/slices/interfaceSlice'
+import { setOpenMenu, setTaskMenuData } from '../../redux/slices/interfaceSlice'
 import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
 import { List, ListItem, ListSubheader, Typography } from '@mui/material'
@@ -21,6 +21,12 @@ function ContextMenu() {
 
    const handleClose = () => {
       dispatch(setOpenMenu({ openMenu: false }))
+      dispatch(setTaskMenuData({
+         id: 0,
+         name: '',
+         color: '',
+      }))
+
    }
 
    const handleComplete = (id: number) => {
