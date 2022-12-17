@@ -17,6 +17,7 @@ import TaskInput from './TaskInput/TaskInput'
 import SubTaskInput from './SubTaskInput/SubTaskInput'
 import TaskItem from './TaskItem/TaskItem'
 import EditMenu from '../EditMenu/EditMenu'
+import { Menu, MenuItem, Stack } from '@mui/material'
 
 export default function MuiTasks() {
 
@@ -83,8 +84,9 @@ export default function MuiTasks() {
                   {Array.isArray(task.childrens) ? task.childrens.map((node) => renderTree(node)) : null}
                   < SubTaskInput id={task.date} color={task.color} />
                </TaskItem >
-               <ContextMenu open={isContextMenuOpen} 
-               anchorEl={anchorEl}/>
+               <ContextMenu open={isContextMenuOpen}
+                  anchorEl={anchorEl}
+               />
             </div>
          )
       }
@@ -96,21 +98,24 @@ export default function MuiTasks() {
             return <EditMenu type={'task'}></EditMenu>
          default:
             return (<>
-               <Widget iconsActs={iconsInWidget} />
-               <Divider />
-               <TreeView
-                  aria-label="icon expansion"
-                  defaultCollapseIcon={<ExpandMoreIcon />}
-                  defaultExpandIcon={<ChevronRightIcon />}
-                  expanded={expandedTaskIds}
-                  sx={{ height: 225, flexGrow: 1, width: 340, overflowY: 'auto' }}
-               >
-                  {tasks.map((task: TaskType) => (
-                     renderTree(task)
-                  ))}
-                  <TaskInput />
-               </TreeView>
-            </>)
+               <Stack spacing={2}>
+
+                  <Widget iconsActs={iconsInWidget} />
+                  <TreeView
+                     aria-label="icon expansion"
+                     defaultCollapseIcon={<ExpandMoreIcon />}
+                     defaultExpandIcon={<ChevronRightIcon />}
+                     expanded={expandedTaskIds}
+                     sx={{ height: 218, flexGrow: 1, width: 340, overflowY: 'auto' }}
+                  >
+                     {tasks.map((task: TaskType) => (
+                        renderTree(task)
+                     ))}
+                     <TaskInput />
+                  </TreeView>
+               </Stack>
+            </>
+            )
       }
    }
 

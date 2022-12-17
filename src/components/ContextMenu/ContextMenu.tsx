@@ -1,4 +1,3 @@
-// import { List, ListItem, ListSubheader, makeStyles, Typography } from '@material-ui/core'
 import React from 'react'
 
 import type { RootState } from '../../redux/store'
@@ -6,7 +5,7 @@ import { useSelector, useDispatch } from 'react-redux'
 import { setOpenMenu, toggleContextmenu } from '../../redux/slices/interfaceSlice'
 import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
-import { ClickAwayListener, Menu, MenuItem, MenuProps, Typography } from '@mui/material'
+import { ClickAwayListener, Menu, MenuItem, MenuProps } from '@mui/material'
 
 function ContextMenu(props: MenuProps) {
 
@@ -39,7 +38,9 @@ function ContextMenu(props: MenuProps) {
    return (
       <>
          <ClickAwayListener onClickAway={handleClose}>
-            <Menu open={props.open} anchorEl={props.anchorEl}>
+            <Menu open={props.open} anchorEl={props.anchorEl}
+            elevation={5}
+            >
                <MenuItem onClick={() => handleComplete(id)}>Завершить</MenuItem>
                <MenuItem onClick={() => handleEdit(id, name)}>Изменить</MenuItem>
                <MenuItem onClick={() => { }}>Дублировать</MenuItem>
