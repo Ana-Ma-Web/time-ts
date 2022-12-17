@@ -116,7 +116,7 @@ export const tasksSlice = createSlice({
          find(action.payload.date, state.tasks)
       },
 
-      lineThroughTask: (state, action) => {
+      toggleLineThroughTask: (state, action) => {
          const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {
@@ -145,7 +145,6 @@ export const tasksSlice = createSlice({
 
       taskDone: (state, action) => {
          const find = (date: number, items: TaskType[]) => {
-
             items.forEach((item: TaskType) => {
                if (item.date === date) {
                   if (item.isLineThrough) {
@@ -171,7 +170,7 @@ export const {
    addSubTask,
    editTask,
    taskDone,
-   lineThroughTask,
+   toggleLineThroughTask,
    toggleExpandTask,
    taskRemove,
 } = tasksSlice.actions

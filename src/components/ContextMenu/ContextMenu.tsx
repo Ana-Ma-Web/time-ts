@@ -3,7 +3,7 @@ import React from 'react'
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
 import { setOpenMenu, toggleContextmenu } from '../../redux/slices/interfaceSlice'
-import { lineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
+import { toggleLineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
 import { ClickAwayListener, Menu, MenuItem, MenuProps } from '@mui/material'
 
@@ -21,16 +21,18 @@ function ContextMenu(props: MenuProps) {
    const handleClose = () => {
       dispatch(toggleContextmenu({}))
    }
-
-   const handleComplete = (id: number) => {
-      dispatch(lineThroughTask({ date: id }))
+   
+   const handleComplete = (e: React.MouseEvent<HTMLElement>, id: number) => {
+      e.stopPropagation()
+      dispatch(toggleLineThroughTask({ date: id }))
       setTimeout(() => {
          dispatch(taskDone({ date: id }))
       }, 3000);
       handleClose()
    }
 
-   const handleEdit = (id: number, name: string) => {
+   const handleEdit = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
+      e.stopPropagation()
       dispatch(setOpenMenu({ menuTypeOpen: 'editMenu' }))
       handleClose()
    }
@@ -41,8 +43,8 @@ function ContextMenu(props: MenuProps) {
             <Menu open={props.open} anchorEl={props.anchorEl}
             elevation={5}
             >
-               <MenuItem onClick={() => handleComplete(id)}>Завершить</MenuItem>
-               <MenuItem onClick={() => handleEdit(id, name)}>Изменить</MenuItem>
+               <MenuItem onClick={(e) => handleComplete(e, id)}>Завершить</MenuItem>
+               <MenuItem onClick={(e) => handleEdit(e, id, name)}>Изменить</MenuItem>
                <MenuItem onClick={() => { }}>Дублировать</MenuItem>
                <MenuItem onClick={() => { }}>Удалить</MenuItem>
             </Menu>

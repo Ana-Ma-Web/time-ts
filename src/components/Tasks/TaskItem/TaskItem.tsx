@@ -2,7 +2,7 @@ import React from 'react'
 
 import { useDispatch } from 'react-redux'
 import {
-   lineThroughTask,
+   toggleLineThroughTask,
    taskDone,
    toggleExpandTask
 } from '../../../redux/slices/tasksSlice'
@@ -44,7 +44,7 @@ const CustomContent = React.forwardRef(function CustomContent(
    const handleExpansionClick = (
       event: React.MouseEvent<HTMLDivElement, MouseEvent>,
    ) => {
-      handleExpansion(event);
+      handleExpansion(event)
       const id = [nodeId]
       dispatch(toggleExpandTask({taskIds: id}))
    };
@@ -52,13 +52,13 @@ const CustomContent = React.forwardRef(function CustomContent(
    const handleSelectionClick = (
       event: React.MouseEvent<HTMLDivElement, MouseEvent>,
    ) => {
-      preventSelection(event);
+      preventSelection(event)
       const id = Number(nodeId)
 
-      dispatch(lineThroughTask({ date: id }))
+      dispatch(toggleLineThroughTask({ date: id }))
       setTimeout(() => {
          dispatch(taskDone({ date: id }))
-      }, 2000);
+      }, 2000)
    };
 
    const openTaskInput = (id: number) => {
