@@ -6,7 +6,8 @@ import {
    setEditTaskMenuName,
    setEditTaskMenuDescription,
    setOpenMenu,
-   setTaskMenuData
+   setTaskContextMenuData,
+   setEditTaskMenuColor
 } from '../../redux/slices/interfaceSlice'
 import { editTask } from '../../redux/slices/tasksSlice'
 import { RootState } from '../../redux/store'
@@ -37,7 +38,7 @@ export default function EditMenu(props: Props) {
    }
 
    const id = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.taskMenuData.id
+      state.interface.taskBlock.menu.contextMenu.contextMenuTaskId
    )
    const task = useSelector((state: RootState) =>
       taskFind(id, state.tasks.tasks)
@@ -67,11 +68,13 @@ export default function EditMenu(props: Props) {
    const handleDescriptionChange = (e: React.KeyboardEvent<HTMLInputElement>) => {
       dispatch(setEditTaskMenuDescription({ description: e.target.value }))
    }
+
    const clearMenuData = () => {
-      dispatch(setTaskMenuData({
+      dispatch(setTaskContextMenuData({
          id: 0,
          name: '',
          color: '',
+         position: null,
       }))
       dispatch(setEditTaskMenuName({
          name: '',
@@ -79,7 +82,11 @@ export default function EditMenu(props: Props) {
       dispatch(setEditTaskMenuDescription({
          description: '',
       }))
+      dispatch(setEditTaskMenuColor({
+         color: '',
+      }))
    }
+
    const handleSubmit = () => {
       dispatch(editTask({
          date: id,
@@ -113,7 +120,6 @@ export default function EditMenu(props: Props) {
                sx={{ input: { color: textColor } }}
                value={nameText}
                onChange={handleNameChange}
-            // onKeyDown={keyDownHandler}
             />
             <TextField
                id="input-description"
@@ -124,7 +130,6 @@ export default function EditMenu(props: Props) {
                sx={{ input: { color: textColor } }}
                value={descriptionText}
                onChange={handleDescriptionChange}
-            // onKeyDown={keyDownHandler}
             />
             <ColorInput type='task' startColor={taskColor} />
             <Stack direction='row' spacing={4}>

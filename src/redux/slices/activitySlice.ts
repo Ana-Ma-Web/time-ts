@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 import { ActivityType } from '../..';
 
@@ -129,25 +129,31 @@ export const activitySlice = createSlice({
    name: 'activity',
    initialState,
    reducers: {
-      incWidgetCounter(state, action) {
+      incWidgetCounter(state, action: PayloadAction<{
+         actId: number
+         iconId: number
+      }>) {
          const act = state.activity.find(
             act => act.id === action.payload.actId)
          const icon = act?.widget.widgetIcons?.find(
             icon => icon.id === action.payload.iconId)
          icon && icon.currentAmount++
       },
-      decWidgetCounter(state, action) {
+      decWidgetCounter(state, action: PayloadAction<{
+         actId: number
+         iconId: number
+      }>) {
          const act = state.activity.find(
             act => act.id === action.payload.actId)
          const icon = act?.widget.widgetIcons?.find(
             icon => icon.id === action.payload.iconId)
          icon && icon.currentAmount--
       },
-      addAct: (state, action) => {
-      },
-      getScheduleInClock: (state, action) => {
+      // addAct: (state, action) => {
+      // },
+      // getScheduleInClock: (state, action) => {
 
-      },
+      // },
    },
 })
 

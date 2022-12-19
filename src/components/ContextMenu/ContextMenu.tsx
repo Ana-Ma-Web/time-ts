@@ -2,26 +2,32 @@ import React from 'react'
 
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setOpenMenu, toggleContextmenu } from '../../redux/slices/interfaceSlice'
+import { setEditTaskMenuId, setOpenMenu, toggleContextmenu } from '../../redux/slices/interfaceSlice'
 import { toggleLineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
-import { ClickAwayListener, Menu, MenuItem, MenuProps } from '@mui/material'
+import { Menu, MenuItem, } from '@mui/material'
 
-function ContextMenu(props: MenuProps) {
-
-   const name = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.taskMenuData.name
-   )
-   const id = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.taskMenuData.id
-   )
-
+function ContextMenu() {
    const dispatch = useDispatch()
+
+   const id = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.contextMenu.contextMenuTaskId
+   )
+   const name = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.contextMenu.contextMenuTaskName
+   )
+
+   const isContextMenuOpen = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.contextMenu.isOpen
+   )
+   const anchorPosition = useSelector((state: RootState) =>
+      state.interface.taskBlock.menu.contextMenu.contextMenuPosition)
+
 
    const handleClose = () => {
       dispatch(toggleContextmenu({}))
    }
-   
+
    const handleComplete = (e: React.MouseEvent<HTMLElement>, id: number) => {
       e.stopPropagation()
       dispatch(toggleLineThroughTask({ date: id }))
@@ -33,14 +39,22 @@ function ContextMenu(props: MenuProps) {
 
    const handleEdit = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
       e.stopPropagation()
+      dispatch(setEditTaskMenuId({id}))
       dispatch(setOpenMenu({ menuTypeOpen: 'editMenu' }))
       handleClose()
    }
 
    return (
       <>
-         <ClickAwayListener onClickAway={handleClose}>
-            <Menu open={props.open} anchorEl={props.anchorEl}
+            <Menu 
+            open={isContextMenuOpen}
+            onClose={handleClose}
+            anchorReference='anchorPosition'
+            anchorPosition={
+               anchorPosition !== null 
+               ? {top: anchorPosition.mouseY, left: anchorPosition.mouseX}
+               : undefined
+            }
             elevation={5}
             >
                <MenuItem onClick={(e) => handleComplete(e, id)}>Завершить</MenuItem>
@@ -48,7 +62,6 @@ function ContextMenu(props: MenuProps) {
                <MenuItem onClick={() => { }}>Дублировать</MenuItem>
                <MenuItem onClick={() => { }}>Удалить</MenuItem>
             </Menu>
-         </ClickAwayListener>
       </>
    );
 }

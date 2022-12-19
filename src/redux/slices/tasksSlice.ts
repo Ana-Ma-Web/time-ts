@@ -73,12 +73,19 @@ export const tasksSlice = createSlice({
    name: 'tasks',
    initialState,
    reducers: {
-      taskAdd: (state, action) => {
+      taskAdd: (state, action: PayloadAction<{
+         color: string
+         name: string
+      }>) => {
          state.tasks.push(
             createNewTask(action.payload.color, action.payload.name)
          )
       },
-      addSubTask: (state, action) => {
+      addSubTask: (state, action: PayloadAction<{
+         date: number
+         color: string
+         name: string
+      }>) => {
          const pushTask = (item: TaskType) => {
             if (item.childrens !== null) {
                item.childrens.push(
@@ -101,7 +108,12 @@ export const tasksSlice = createSlice({
          }
          find(action.payload.date, state.tasks)
       },
-      editTask: (state, action) => {
+      editTask: (state, action: PayloadAction<{
+         date: number
+         color: string
+         name: string
+         description: string
+      }>) => {
          const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {
@@ -116,7 +128,9 @@ export const tasksSlice = createSlice({
          find(action.payload.date, state.tasks)
       },
 
-      toggleLineThroughTask: (state, action) => {
+      toggleLineThroughTask: (state, action: PayloadAction<{
+         date: number
+      }>) => {
          const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {
@@ -128,7 +142,9 @@ export const tasksSlice = createSlice({
          }
          find(action.payload.date, state.tasks)
       },
-      toggleExpandTask: (state, action) => {
+      toggleExpandTask: (state, action: PayloadAction<{
+         taskIds: string[]
+      }>) => {
          const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {
@@ -143,7 +159,9 @@ export const tasksSlice = createSlice({
          });
       },
 
-      taskDone: (state, action) => {
+      taskDone: (state, action: PayloadAction<{
+         date: number
+      }>) => {
          const find = (date: number, items: TaskType[]) => {
             items.forEach((item: TaskType) => {
                if (item.date === date) {

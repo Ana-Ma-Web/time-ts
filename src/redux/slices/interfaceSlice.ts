@@ -1,4 +1,4 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, PayloadAction } from '@reduxjs/toolkit'
 
 export interface InterfaceState {
    taskBlock: {
@@ -7,13 +7,15 @@ export interface InterfaceState {
          contextMenu: {
             isOpen: boolean
             contextMenuTaskId: number
-         }
-         taskMenuData: {
-            id: number
-            name: string
-            color: string
+            contextMenuTaskName: string
+            contextMenuTaskColor: string
+            contextMenuPosition: {
+               mouseX: number
+               mouseY: number
+            } | null
          }
          editMenuData: {
+            id: number
             newName: string
             newDescription: string
             newColor: string
@@ -21,13 +23,11 @@ export interface InterfaceState {
       }
       addRootTask: {
          isOpenTaskInput: boolean
-         inputText: string
       }
       addSubTask: [
          {
             subTaskId: number
             isOpenSubTaskInput: boolean
-            inputText: string
          },
       ]
    }
@@ -40,13 +40,12 @@ const initialState: InterfaceState = {
          contextMenu: {
             isOpen: false,
             contextMenuTaskId: 0,
-         },
-         taskMenuData: {
-            id: 0,
-            name: '',
-            color: '',
+            contextMenuTaskName: '',
+            contextMenuTaskColor: '',
+            contextMenuPosition: null,
          },
          editMenuData: {
+            id: 0,
             newName: '',
             newDescription: '',
             newColor: '',
@@ -54,13 +53,11 @@ const initialState: InterfaceState = {
       },
       addRootTask: {
          isOpenTaskInput: false,
-         inputText: '',
       },
       addSubTask: [
          {
             subTaskId: 0,
             isOpenSubTaskInput: false,
-            inputText: '',
          },
       ]
    },
@@ -70,40 +67,62 @@ export const interfaceSlice = createSlice({
    name: 'interface',
    initialState,
    reducers: {
-      setOpenMenu(state, action) {
+      setOpenMenu(state, action: PayloadAction<{
+         menuTypeOpen: false | 'editMenu'
+      }>) {
          state.taskBlock.menu.menuTypeOpen = action.payload.menuTypeOpen
       },
       toggleContextmenu(state, action) {
-         state.taskBlock.menu.contextMenu.isOpen = 
-         !state.taskBlock.menu.contextMenu.isOpen
+         state.taskBlock.menu.contextMenu.isOpen =
+            !state.taskBlock.menu.contextMenu.isOpen
       },
-      setTaskMenuData(state, action) {
-            state.taskBlock.menu.taskMenuData.name = action.payload.name
-            state.taskBlock.menu.taskMenuData.id = action.payload.id
-            state.taskBlock.menu.taskMenuData.color = action.payload.color
+      setTaskContextMenuData(state, action: PayloadAction<{
+         id: number
+         name: string
+         color: string
+         position: {
+            mouseX: number
+            mouseY: number
+         } | null
+      }>) {
+         state.taskBlock.menu.contextMenu.contextMenuTaskId = action.payload.id
+         state.taskBlock.menu.contextMenu.contextMenuTaskName = action.payload.name
+         state.taskBlock.menu.contextMenu.contextMenuTaskColor = action.payload.color
+         state.taskBlock.menu.contextMenu.contextMenuPosition = action.payload.position
       },
-      setEditTaskMenuName(state, action) {
+
+      setEditTaskMenuId(state, action: PayloadAction<{
+         id: number
+      }>) {
+         state.taskBlock.menu.editMenuData.id = action.payload.id
+      },
+      setEditTaskMenuName(state, action: PayloadAction<{
+         name: string
+      }>) {
          state.taskBlock.menu.editMenuData.newName = action.payload.name
       },
-      setEditTaskMenuColor(state, action) {
+      setEditTaskMenuColor(state, action: PayloadAction<{
+         color: string
+      }>) {
          state.taskBlock.menu.editMenuData.newColor = action.payload.color
       },
-      setEditTaskMenuDescription(state, action) {
+      setEditTaskMenuDescription(state, action: PayloadAction<{
+         description: string
+      }>) {
          state.taskBlock.menu.editMenuData.newDescription =
             action.payload.description
       },
 
-      setIsOpenRootTaskInput(state, action) {
+      setIsOpenRootTaskInput(state, action: PayloadAction<{
+         isOpenTaskInput: boolean
+      }>) {
          state.taskBlock.addRootTask.isOpenTaskInput = action.payload.isOpenTaskInput
       },
-      setRootTaskInputText(state, action) {
-         state.taskBlock.addRootTask.inputText = action.payload.inputText
-      },
-      clearRootTaskInput(state, action) {
-         state.taskBlock.addRootTask.inputText = ''
-      },
 
-      setIsOpenSubTaskInput(state, action) {
+      setIsOpenSubTaskInput(state, action: PayloadAction<{
+         subTaskId: number
+         isOpenSubTaskInput: boolean
+      }>) {
          const i = state.taskBlock.addSubTask.findIndex(e => (
             e.subTaskId === action.payload.subTaskId
          ))
@@ -114,23 +133,8 @@ export const interfaceSlice = createSlice({
             state.taskBlock.addSubTask.push({
                subTaskId: action.payload.subTaskId,
                isOpenSubTaskInput: action.payload.isOpenSubTaskInput,
-               inputText: '',
             })
          }
-      },
-      setSubTaskInputText(state, action) {
-         const i = state.taskBlock.addSubTask.findIndex(e => (
-            e.subTaskId === action.payload.subTaskId
-         ))
-         const subTask = state.taskBlock.addSubTask[i]
-         subTask.inputText = action.payload.inputText
-      },
-      clearSubTaskInput(state, action) {
-         const i = state.taskBlock.addSubTask.findIndex(e => (
-            e.subTaskId === action.payload.subTaskId
-         ))
-         const subTask = state.taskBlock.addSubTask[i]
-         subTask.inputText = ''
       },
    },
 })
@@ -138,14 +142,13 @@ export const interfaceSlice = createSlice({
 export const {
    setOpenMenu,
    toggleContextmenu,
-   setTaskMenuData,
+   setTaskContextMenuData,
+   setEditTaskMenuId,
    setEditTaskMenuName,
    setEditTaskMenuColor,
    setEditTaskMenuDescription,
    setIsOpenRootTaskInput,
    setIsOpenSubTaskInput,
-   setSubTaskInputText,
-   clearSubTaskInput,
 } = interfaceSlice.actions
 
 export default interfaceSlice.reducer
