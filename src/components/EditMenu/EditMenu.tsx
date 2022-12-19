@@ -38,7 +38,7 @@ export default function EditMenu(props: Props) {
    }
 
    const id = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.contextMenu.contextMenuTaskId
+      state.interface.taskBlock.menu.editMenuData.id
    )
    const task = useSelector((state: RootState) =>
       taskFind(id, state.tasks.tasks)
@@ -72,8 +72,6 @@ export default function EditMenu(props: Props) {
    const clearMenuData = () => {
       dispatch(setTaskContextMenuData({
          id: 0,
-         name: '',
-         color: '',
          position: null,
       }))
       dispatch(setEditTaskMenuName({

@@ -2,7 +2,7 @@ import React from 'react'
 
 import type { RootState } from '../../redux/store'
 import { useSelector, useDispatch } from 'react-redux'
-import { setEditTaskMenuId, setOpenMenu, toggleContextmenu } from '../../redux/slices/interfaceSlice'
+import { setEditTaskMenuId, setOpenMenu, setTaskContextMenuData, toggleContextmenu } from '../../redux/slices/interfaceSlice'
 import { toggleLineThroughTask, taskDone } from '../../redux/slices/tasksSlice'
 
 import { Menu, MenuItem, } from '@mui/material'
@@ -13,9 +13,6 @@ function ContextMenu() {
    const id = useSelector((state: RootState) =>
       state.interface.taskBlock.menu.contextMenu.contextMenuTaskId
    )
-   const name = useSelector((state: RootState) =>
-      state.interface.taskBlock.menu.contextMenu.contextMenuTaskName
-   )
 
    const isContextMenuOpen = useSelector((state: RootState) =>
       state.interface.taskBlock.menu.contextMenu.isOpen
@@ -23,8 +20,11 @@ function ContextMenu() {
    const anchorPosition = useSelector((state: RootState) =>
       state.interface.taskBlock.menu.contextMenu.contextMenuPosition)
 
-
    const handleClose = () => {
+      dispatch(setTaskContextMenuData({
+         id: 0,
+         position: null,
+      }))
       dispatch(toggleContextmenu({}))
    }
 
@@ -37,15 +37,14 @@ function ContextMenu() {
       handleClose()
    }
 
-   const handleEdit = (e: React.MouseEvent<HTMLElement>, id: number, name: string) => {
+   const handleEdit = (e: React.MouseEvent<HTMLElement>, id: number) => {
       e.stopPropagation()
       dispatch(setEditTaskMenuId({id}))
       dispatch(setOpenMenu({ menuTypeOpen: 'editMenu' }))
-      handleClose()
+      dispatch(toggleContextmenu({}))
    }
 
    return (
-      <>
             <Menu 
             open={isContextMenuOpen}
             onClose={handleClose}
@@ -58,11 +57,10 @@ function ContextMenu() {
             elevation={5}
             >
                <MenuItem onClick={(e) => handleComplete(e, id)}>Завершить</MenuItem>
-               <MenuItem onClick={(e) => handleEdit(e, id, name)}>Изменить</MenuItem>
+               <MenuItem onClick={(e) => handleEdit(e, id)}>Изменить</MenuItem>
                <MenuItem onClick={() => { }}>Дублировать</MenuItem>
                <MenuItem onClick={() => { }}>Удалить</MenuItem>
             </Menu>
-      </>
    );
 }
 

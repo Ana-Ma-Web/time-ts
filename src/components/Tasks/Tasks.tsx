@@ -50,9 +50,7 @@ export default function MuiTasks() {
          )
          
          dispatch(setTaskContextMenuData({
-            name: name,
             id: id,
-            color: color,
             position: position(),
          }))
          

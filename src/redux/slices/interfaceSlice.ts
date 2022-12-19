@@ -7,8 +7,6 @@ export interface InterfaceState {
          contextMenu: {
             isOpen: boolean
             contextMenuTaskId: number
-            contextMenuTaskName: string
-            contextMenuTaskColor: string
             contextMenuPosition: {
                mouseX: number
                mouseY: number
@@ -40,8 +38,6 @@ const initialState: InterfaceState = {
          contextMenu: {
             isOpen: false,
             contextMenuTaskId: 0,
-            contextMenuTaskName: '',
-            contextMenuTaskColor: '',
             contextMenuPosition: null,
          },
          editMenuData: {
@@ -78,16 +74,12 @@ export const interfaceSlice = createSlice({
       },
       setTaskContextMenuData(state, action: PayloadAction<{
          id: number
-         name: string
-         color: string
          position: {
             mouseX: number
             mouseY: number
          } | null
       }>) {
          state.taskBlock.menu.contextMenu.contextMenuTaskId = action.payload.id
-         state.taskBlock.menu.contextMenu.contextMenuTaskName = action.payload.name
-         state.taskBlock.menu.contextMenu.contextMenuTaskColor = action.payload.color
          state.taskBlock.menu.contextMenu.contextMenuPosition = action.payload.position
       },
 
