@@ -24,7 +24,7 @@ function Widget(props: Props) {
             <button className={styles.button}
             onClick={() => decrement(act.id, icon.id)}>
                <div className={styles.text} >{icon.currentAmount}</div>
-               <Icon width={'20'} height={'20'} color={act.color} svgId={icon.svgId} />
+               {/* <Icon width={'20'} height={'20'} color={act.color} svgId={icon.svgId} /> */}
             </button>
          </div>
       }

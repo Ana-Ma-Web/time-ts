@@ -17,7 +17,7 @@ const root = ReactDOM.createRoot(
 export type IconTimeType = number | null
 export type IconsType = {
   id: number,
-  svgId: number,
+  name: string,
   hours: IconTimeType,
   minutes: IconTimeType,
 }
@@ -34,7 +34,7 @@ export type TaskType = {
 }
 export type WidgetIconsType = {
   id: number,
-  svgId: number,
+  name: string,
   totalIntervalAmount: number,
   currentAmount: number,
   dailyEventIcons: IconsType[] | null,

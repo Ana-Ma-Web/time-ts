@@ -85,9 +85,11 @@ const CustomContent = React.forwardRef(function CustomContent(
             sx={{
                '& button': {
                   opacity: 0,
+                  transition: '0.5s',
                },
                '&:hover button': {
                   opacity: 1,
+                  transition: '0.8s',
                },
             }}
          >
@@ -116,7 +118,9 @@ const CustomContent = React.forwardRef(function CustomContent(
                   transform: {
                      scale: 5,
                   },
-                  padding: 1,
+                  padding: 0,
+                  paddingLeft: 2,
+                  paddingBottom: 1,
                }}
                
             >
@@ -127,7 +131,7 @@ const CustomContent = React.forwardRef(function CustomContent(
                disableRipple
                onClick={() => openTaskInput(Number(nodeId))}
                sx={{
-                  padding: 1,
+                  padding: 0,
                }}
             >
                <AddRoundedIcon />

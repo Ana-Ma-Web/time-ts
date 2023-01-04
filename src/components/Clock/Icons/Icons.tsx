@@ -27,8 +27,8 @@ function ClockIcons() {
                   <button className={styles.button} style={{
                      transform: `rotateZ(-${countRotate(item.hours, item.minutes)}deg)`
                   }}>
-                     <Icon key={item.id} width={'20'} height={'15'}
-                        color={act.color} svgId={item.svgId}></Icon>
+                     {/* <Icon key={item.id} width={'20'} height={'15'}
+                        color={act.color} svgId={item.svgId}></Icon> */}
                   </button>
                </div>
             ))

@@ -17,6 +17,7 @@ import SubTaskInput from './SubTaskInput/SubTaskInput'
 import TaskItem from './TaskItem/TaskItem'
 import EditMenu from '../EditMenu/EditMenu'
 import { Stack } from '@mui/material'
+import GenerateIcon from '../Icons/GenerateIcon'
 
 export default function MuiTasks() {
 
@@ -39,21 +40,21 @@ export default function MuiTasks() {
       name: string, id: number, color: string) => {
       e.stopPropagation()
       e.preventDefault()
-      
+
       const position = () => (
          anchorPosition === null
-         ? {
-            mouseX: e.clientX + 2,
-            mouseY: e.clientY - 6,
-         }
-         : null
-         )
-         
-         dispatch(setTaskContextMenuData({
-            id: id,
-            position: position(),
-         }))
-         
+            ? {
+               mouseX: e.clientX + 2,
+               mouseY: e.clientY - 6,
+            }
+            : null
+      )
+
+      dispatch(setTaskContextMenuData({
+         id: id,
+         position: position(),
+      }))
+
       dispatch(toggleContextmenu({}))
    }
 
@@ -93,7 +94,7 @@ export default function MuiTasks() {
                   {Array.isArray(task.childrens) ? task.childrens.map((node) => renderTree(node)) : null}
                   < SubTaskInput id={task.date} color={task.color} />
                </TaskItem >
-               <ContextMenu/>
+               <ContextMenu />
             </div>
          )
       }
@@ -107,7 +108,7 @@ export default function MuiTasks() {
             return (<>
                <Stack spacing={2}>
 
-                  <Widget iconsActs={iconsInWidget} />
+                  {/* <Widget iconsActs={iconsInWidget} /> */}
                   <TreeView
                      aria-label="icon expansion"
                      defaultCollapseIcon={<ExpandMoreIcon />}

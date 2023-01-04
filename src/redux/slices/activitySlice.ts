@@ -19,13 +19,13 @@ const initialState: ActivityState = {
             widgetIcons: [
                {
                   id: 0,
-                  svgId: 1,
+                  name: '1',
                   totalIntervalAmount: 2,
                   currentAmount: 2,
                   dailyEventIcons: [
                      {
                         id: 1,
-                        svgId: 1,
+                        name: '1',
                         hours: 16,
                         minutes: 0,
                      },
@@ -46,7 +46,7 @@ const initialState: ActivityState = {
                },
                {
                   id: 1,
-                  svgId: 3,
+                  name: '3',
                   totalIntervalAmount: 22,
                   currentAmount: 22,
                   dailyEventIcons: null,
@@ -83,13 +83,13 @@ const initialState: ActivityState = {
                icons: [
                   {
                      id: 1,
-                     svgId: 4,
+                     name: '4',
                      hours: 23,
                      minutes: 0,
                   },
                   {
                      id: 2,
-                     svgId: 6,
+                     name: '6',
                      hours: 18,
                      minutes: 0,
                   },
